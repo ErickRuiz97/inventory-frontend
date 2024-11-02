@@ -1,29 +1,24 @@
 <script setup>
+import BreadcrumbLayout from './layout/BreadcrumbLayout.vue'
 import MenuLayout from './layout/MenuLayout.vue'
+import NavbarLayout from './layout/NavbarLayout.vue'
 </script>
 <template>
   <el-container class="layout-container-demo">
     <el-aside id="aside-menu"><menu-layout /></el-aside>
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <div class="toolbar">
-          <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px">
-              <setting />
-            </el-icon>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
-                <el-dropdown-item>Delete</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-          <span>Tom</span>
-        </div>
+        <navbar-layout />
       </el-header>
       <el-main>
-        <router-view></router-view>
+        <div class="container">
+          <div class="row">
+            <breadcrumb-layout />
+          </div>
+          <div class="row">
+            <router-view></router-view>
+          </div>
+        </div>
       </el-main>
     </el-container>
   </el-container>
