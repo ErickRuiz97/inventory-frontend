@@ -1,7 +1,5 @@
 import { apiServer } from '../globalVars.js'
-
-// eslint-disable-next-line no-undef
-const axios = require('axios').default
+import axios from 'axios'
 
 function createAxios() {
   // return authorization header with jwt token
@@ -16,7 +14,11 @@ function createAxios() {
   })
 
   instance.interceptors.response.use(
-    response => Promise.resolve(response),
+    response =>
+      Promise.resolve({
+        data: response.data,
+        headers: response.headers,
+      }),
     error => {
       if (error.response) {
         if ([401].includes(error.response.status)) {
@@ -35,4 +37,3 @@ function createAxios() {
 }
 
 export default createAxios
-export { createAxios }

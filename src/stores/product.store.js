@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { productService } from '@/_services'
+import { productService } from '@/services'
 
 export const productStore = defineStore('productStore', {
   state: () => ({ list: null, entity: null, createEntity: null, error: null }),

@@ -1,59 +1,42 @@
 <script setup>
+import { computed, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
+
+function routerPush(pathRoute) {
+  router.push({ path: pathRoute })
+}
+
+const currentRoute = computed(() => {
+  return route.path
+})
+
+let activeIndex = ref(currentRoute)
 </script>
 <template>
   <el-scrollbar>
-    <el-menu :default-openeds="['1', '3']" id="menu-layout">
-      <el-sub-menu index="1">
-        <template #title>
-          <el-icon><message /></el-icon>Navigator One
-        </template>
-        <el-menu-item-group>
-          <template #title>Group 1</template>
-          <el-menu-item index="1-1">Option 1</el-menu-item>
-          <el-menu-item index="1-2">Option 2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group 2">
-          <el-menu-item index="1-3">Option 3</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="1-4">
-          <template #title>Option4</template>
-          <el-menu-item index="1-4-1">Option 4-1</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
-      <el-sub-menu index="2">
-        <template #title>
-          <el-icon><icon-menu /></el-icon>Navigator Two
-        </template>
-        <el-menu-item-group>
-          <template #title>Group 1</template>
-          <el-menu-item index="2-1">Option 1</el-menu-item>
-          <el-menu-item index="2-2">Option 2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group 2">
-          <el-menu-item index="2-3">Option 3</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="2-4">
-          <template #title>Option 4</template>
-          <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
-      <el-sub-menu index="3">
-        <template #title>
-          <el-icon><setting /></el-icon>Navigator Three
-        </template>
-        <el-menu-item-group>
-          <template #title>Group 1</template>
-          <el-menu-item index="3-1">Option 1</el-menu-item>
-          <el-menu-item index="3-2">Option 2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="Group 2">
-          <el-menu-item index="3-3">Option 3</el-menu-item>
-        </el-menu-item-group>
-        <el-sub-menu index="3-4">
-          <template #title>Option 4</template>
-          <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
+    <el-menu id="menu-layout" :default-active="activeIndex">
+      <el-menu-item index="/home" @click="routerPush('/home')">
+        <el-icon><trend-charts /></el-icon>
+        Dashboard
+      </el-menu-item>
+      <el-menu-item index="/products" @click="routerPush('/products')">
+        <el-icon><shop /></el-icon>
+        Productos
+      </el-menu-item>
+      <el-menu-item index="3">
+        <el-icon><sell /></el-icon>
+        Compras
+      </el-menu-item>
+      <el-menu-item index="4">
+        <el-icon><sold-out /></el-icon>
+        Ventas
+      </el-menu-item>
+      <el-menu-item index="5">
+        <el-icon><lock /></el-icon>
+        Users
+      </el-menu-item>
     </el-menu>
   </el-scrollbar>
 </template>

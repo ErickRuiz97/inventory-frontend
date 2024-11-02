@@ -1,5 +1,5 @@
-import HomeView from '../views/HomeView.vue'
-
+import HomeView from '@/views/HomeView.vue'
+import ProductsList from '@/views/products/ProductsList.vue'
 export const routes = [
   {
     path: '/',
@@ -10,5 +10,10 @@ export const routes = [
     path: '/home',
     name: 'Home',
     component: HomeView,
+  },
+  {
+    path: '/products',
+    name: 'Productos',
+    component: ProductsList,
   },
 ]

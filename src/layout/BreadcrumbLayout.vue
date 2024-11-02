@@ -11,7 +11,6 @@ const directories = computed(() => {
     breadcrumbs.unshift({ name: ruta.name, path: ruta.path })
     ruta = ruta.matched[0].parent
   }
-  console.log(breadcrumbs)
   return breadcrumbs
 
   /*const dirs = route.path.split("/");
