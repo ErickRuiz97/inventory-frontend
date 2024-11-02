@@ -1,23 +1,8 @@
 <script setup>
-import { ref } from 'vue'
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue'
-
-const isCollapse = ref(true)
-const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
 </script>
 <template>
   <el-scrollbar>
-    <el-menu :default-openeds="['1', '3']">
+    <el-menu :default-openeds="['1', '3']" id="menu-layout">
       <el-sub-menu index="1">
         <template #title>
           <el-icon><message /></el-icon>Navigator One
