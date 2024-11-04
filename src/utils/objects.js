@@ -30,7 +30,23 @@ function copyByValue(object) {
   return JSON.parse(JSON.stringify(object))
 }
 
+function arrayStrUpperToStr(list) {
+  const listaFormateada = list.map(elemento => {
+    return elemento
+      .toLowerCase()
+      .split(' ')
+      .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+      .join(' ')
+  })
+
+  // Unimos los elementos con el separador " | "
+  const stringFinal = listaFormateada.join(' | ')
+
+  return JSON.parse(JSON.stringify(stringFinal))
+}
+
 export const objectUtils = {
   deepCopy,
   copyByValue,
+  arrayStrUpperToStr,
 }

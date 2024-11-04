@@ -1,7 +1,7 @@
 import { apiServer } from '../globalVars.js'
 import axios from 'axios'
 
-function createAxios() {
+function createAxios(withHeaders = false) {
   // return authorization header with jwt token
   const user = JSON.parse(localStorage.getItem('user'))
   const headers = {}
@@ -14,11 +14,13 @@ function createAxios() {
   })
 
   instance.interceptors.response.use(
-    response =>
-      Promise.resolve({
+    response => {
+      const axiosResponse = {
         data: response.data,
-        headers: response.headers,
-      }),
+        headers: withHeaders ? response.headers : {},
+      }
+      return Promise.resolve(axiosResponse)
+    },
     error => {
       if (error.response) {
         if ([401].includes(error.response.status)) {

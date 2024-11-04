@@ -7,19 +7,19 @@ export const productStore = defineStore('productStore', {
     getProducts(query) {
       productService
         .getProducts(query)
-        .then(results => (this.list = results))
+        .then(results => (this.list = results.data))
         .catch(reason => (this.error = reason))
     },
     getProductById(idProduct) {
       productService
         .getProductById(idProduct)
-        .then(results => (this.entity = results))
+        .then(results => (this.entity = results.data))
         .catch(reason => (this.error = reason))
     },
     createProduct(body) {
       productService
         .createProduct(body)
-        .then(results => (this.createEntity = results))
+        .then(results => (this.createEntity = results.data))
         .catch(reason => (this.error = reason))
     },
   },

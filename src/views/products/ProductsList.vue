@@ -19,7 +19,6 @@ function getProducts() {
 watch(
   () => productsStore.list,
   value => {
-    console.log(value)
     products.value = value.items
     total.value = value.total
   }
@@ -44,7 +43,7 @@ function handleCurrentChange(val) {
       </div>
     </div>
     <div class="row table-content">
-      <products-table />
+      <products-table v-model="products" />
     </div>
   </div>
 </template>

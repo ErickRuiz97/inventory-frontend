@@ -2,15 +2,20 @@ import createAxios from './axiosHttp'
 
 function getProductById(idProduct) {
   const axios = createAxios()
-  let urlPath = `products/${idProduct}`
+  const urlPath = `products/${idProduct}`
   return axios.get(urlPath)
 }
 
-function getProducts(query) {
+async function getProducts(query) {
   const axios = createAxios()
   const queryParams = new URLSearchParams(query).toString()
   const urlPath = `products?${queryParams}`
-  return axios.get(urlPath)
+  try {
+    const response = await axios.get(urlPath)
+    return response
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }
 
 function createProduct(body) {
