@@ -25,7 +25,7 @@ defineProps({
         show-overflow-tooltip
       >
         <template #default="scope">{{
-          objectUtils.arrayStrUpperToStr(scope.row.categories)
+          objectUtils.arrayStrUpperToStr(scope.row.categories, ' | ')
         }}</template>
       </el-table-column>
       <el-table-column

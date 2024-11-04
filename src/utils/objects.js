@@ -30,7 +30,7 @@ function copyByValue(object) {
   return JSON.parse(JSON.stringify(object))
 }
 
-function arrayStrUpperToStr(list) {
+function arrayStrUpperToStr(list, separator) {
   const listaFormateada = list.map(elemento => {
     return elemento
       .toLowerCase()
@@ -40,7 +40,7 @@ function arrayStrUpperToStr(list) {
   })
 
   // Unimos los elementos con el separador " | "
-  const stringFinal = listaFormateada.join(' | ')
+  const stringFinal = listaFormateada.join(separator)
 
   return JSON.parse(JSON.stringify(stringFinal))
 }
