@@ -3,6 +3,9 @@ import { onMounted, watch, ref } from 'vue'
 import ProductsTable from './components/ProductsTable.vue'
 import { productStore } from '@/stores'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const productsStore = productStore()
 let products = ref([])
 let paginator = ref({
@@ -34,6 +37,10 @@ watch(
     getProducts()
   }
 )
+
+function clickRow(row) {
+  router.push({ path: `/products/${row._id}` })
+}
 </script>
 
 <template>
@@ -42,7 +49,7 @@ watch(
       <header-table :paginator="paginator" />
     </div>
     <div class="row table-content">
-      <products-table v-model="products" />
+      <products-table v-model="products" @click-row="clickRow" />
     </div>
   </div>
 </template>
