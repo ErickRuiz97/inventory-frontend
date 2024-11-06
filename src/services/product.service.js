@@ -6,9 +6,9 @@ function getProductById(idProduct) {
   return axios.get(urlPath)
 }
 
-async function getProducts(query) {
+async function getProducts(query, paginator) {
   const axios = createAxios()
-  const queryParams = new URLSearchParams(query).toString()
+  const queryParams = new URLSearchParams({ ...query, ...paginator }).toString()
   const urlPath = `products?${queryParams}`
   try {
     const response = await axios.get(urlPath)

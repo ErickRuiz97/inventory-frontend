@@ -4,9 +4,9 @@ import { productService } from '@/services'
 export const productStore = defineStore('productStore', {
   state: () => ({ list: null, entity: null, createEntity: null, error: null }),
   actions: {
-    getProducts(query) {
+    getProducts(query, paginator) {
       productService
-        .getProducts(query)
+        .getProducts(query, paginator)
         .then(results => (this.list = results.data))
         .catch(reason => (this.error = reason))
     },
