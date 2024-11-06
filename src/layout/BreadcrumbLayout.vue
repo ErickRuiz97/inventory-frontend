@@ -1,37 +1,44 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute()
+const router = useRouter()
+const $route = useRoute()
 
-const directories = computed(() => {
-  const breadcrumbs = []
-  let ruta = route
-  while (ruta && ruta.name) {
-    breadcrumbs.unshift({ name: ruta.name, path: ruta.path })
-    ruta = ruta.matched[0].parent
+const breadcrumbs = computed(() => {
+  const currentPath = $route.path
+  const pathSegments = currentPath.split('/')
+  pathSegments.pop() // Eliminamos el último segmento (ruta actual)
+
+  const breadcrumbsArray = []
+  while (pathSegments.length > 1) {
+    const parentPath = pathSegments.join('/')
+    const parentRoute = router.resolve({ path: parentPath })
+
+    breadcrumbsArray.unshift({
+      path: parentRoute.path,
+      text: parentRoute.meta.breadcrumb || parentRoute.name,
+    })
+
+    pathSegments.pop()
   }
-  return breadcrumbs
 
-  /*const dirs = route.path.split("/");
-  const res = []
-  for (const dir of dirs) {
-    const route = {
-      uri: '',
-      name: ''
-    }
-    res.push(route)
-  }
-  return route;*/
+  // Agregamos el breadcrumb de la ruta actual al final
+  breadcrumbsArray.push({
+    path: $route.path,
+    text: $route.meta.breadcrumb || $route.name,
+  })
+
+  return breadcrumbsArray
 })
 </script>
 <template>
   <el-breadcrumb separator=">">
     <el-breadcrumb-item
-      v-for="(dir, key) in directories"
+      v-for="(dir, key) in breadcrumbs"
       :to="{ path: dir.path }"
       :key="key"
-      >{{ dir.name }}</el-breadcrumb-item
+      >{{ dir.text }}</el-breadcrumb-item
     >
   </el-breadcrumb>
 </template>
