@@ -47,7 +47,7 @@ watch(
   value => {
     if (value) {
       loading.value = false
-      ElMessage.success('¡Login exitoso!')
+      ElMessage.success('¡Sesión iniciada!')
       router.push({ path: '/' })
     }
   }
@@ -57,7 +57,7 @@ watch(
   value => {
     if (value) {
       loading.value = false
-      ElMessage.error(value.error)
+      ElMessage.error('Usuario o contraseña incorrecto')
     }
   }
 )
