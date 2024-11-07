@@ -12,7 +12,7 @@ async function getProducts(query, paginator) {
   const urlPath = `products?${queryParams}`
   try {
     const response = await axios.get(urlPath)
-    return response
+    return Promise.resolve(response.data)
   } catch (error) {
     return Promise.reject(error)
   }

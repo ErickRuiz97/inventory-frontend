@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, watch, ref } from 'vue'
-import ProductsTable from './components/ProductsTable.vue'
-import { productStore } from '@/stores'
-import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import { useRouter } from 'vue-router'
+
+import HeaderTable from '@/components/header-table/HeaderTable.vue'
+import ProductsTable from './components/ProductsTable.vue'
+
+import { productStore } from '@/stores'
 const router = useRouter()
 
 const productsStore = productStore()
