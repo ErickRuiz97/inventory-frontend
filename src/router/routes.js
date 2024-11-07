@@ -1,4 +1,8 @@
+//General routes
+import LoginApp from '@/views/login/LoginApp.vue'
 import HomeView from '@/views/HomeView.vue'
+
+//Product routes
 import ProductsList from '@/views/products/ProductsList.vue'
 import ProductDetail from '@/views/product-detail/ProductDetail.vue'
 export const routes = [
@@ -6,6 +10,11 @@ export const routes = [
     path: '/',
     name: '/',
     redirect: '/home',
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginApp,
   },
   {
     path: '/home',
