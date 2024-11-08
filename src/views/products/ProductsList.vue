@@ -1,15 +1,30 @@
 <script setup>
 import { onMounted, watch, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { Plus } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import ProductsTable from './components/ProductsTable.vue'
+import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { productStore } from '@/stores'
 const router = useRouter()
-
 const productsStore = productStore()
+const actions = [
+  {
+    event: 'onNewProduct',
+    type: 'primary',
+    icon: Plus,
+    label: 'Nuevo',
+  },
+]
+const events = {
+  onNewProduct: newProduct,
+  onRefresh: getProducts,
+}
 let products = ref([])
+let loading = ref(true)
 let paginator = ref({
   size: 20,
   current: 1,
@@ -21,7 +36,20 @@ onMounted(() => {
 
 function getProducts() {
   const filters = {}
+  loading.value = true
   productsStore.getProducts(filters, paginator)
+}
+
+function newProduct() {
+  router.push({ path: `/products/create` })
+}
+
+function eventHandler(eventKey) {
+  try {
+    events[eventKey]()
+  } catch {
+    ElMessage.warning('Evento no implementado')
+  }
 }
 
 watch(
@@ -29,6 +57,7 @@ watch(
   value => {
     products.value = value.items
     paginator.value.total = value.total
+    loading.value = false
   }
 )
 
@@ -46,12 +75,22 @@ function clickRow(row) {
 </script>
 
 <template>
-  <div class="container mt-4">
+  <div class="container">
+    <div class="row">
+      <actions-header
+        :actions="actions"
+        @action="eventHandler"
+      ></actions-header>
+    </div>
     <div class="row filtros">
       <header-table :paginator="paginator" />
     </div>
     <div class="row table-content">
-      <products-table v-model="products" @click-row="clickRow" />
+      <products-table
+        v-model="products"
+        @click-row="clickRow"
+        :loading="loading"
+      />
     </div>
   </div>
 </template>

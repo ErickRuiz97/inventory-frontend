@@ -2,12 +2,15 @@
 import { objectUtils } from '@/utils'
 const emit = defineEmits(['clickRow'])
 
-defineProps({
+let props = defineProps({
   modelValue: {
     type: [Array],
     default: () => [],
   },
-  fault: null,
+  loading: {
+    type: Boolean,
+    default: true,
+  },
 })
 function clickRow(row) {
   emit('clickRow', row)
@@ -15,7 +18,12 @@ function clickRow(row) {
 </script>
 <template>
   <div>
-    <el-table :data="modelValue" style="width: 100%" @row-click="clickRow">
+    <el-table
+      :data="props.modelValue"
+      style="width: 100%"
+      @row-click="clickRow"
+      v-loading="props.loading"
+    >
       <el-table-column prop="code" label="Código" width="70" />
       <el-table-column prop="name" label="Nombre" show-overflow-tooltip />
       <el-table-column
