@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive } from 'vue'
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
@@ -14,7 +14,7 @@ const props = defineProps({
     },
   },
 })
-let localValue = ref(props.modelValue)
+let localValue = reactive(props.modelValue)
 
 function handleCurrentChange() {
   emit('update:modelValue', localValue)

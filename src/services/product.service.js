@@ -1,9 +1,14 @@
 import createAxios from './axiosHttp'
 
-function getProductById(idProduct) {
+async function getProductById(idProduct) {
   const axios = createAxios()
   const urlPath = `products/${idProduct}`
-  return axios.get(urlPath)
+  try {
+    const response = await axios.get(urlPath)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }
 
 async function getProducts(query, paginator) {
@@ -21,7 +26,12 @@ async function getProducts(query, paginator) {
 function createProduct(body) {
   const axios = createAxios()
   const urlPath = `products`
-  return axios.post(urlPath, body)
+  try {
+    const response = axios.post(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }
 
 export const productService = {

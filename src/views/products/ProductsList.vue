@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch, ref } from 'vue'
+import { onMounted, watch, ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
@@ -23,9 +23,9 @@ const events = {
   onNewProduct: newProduct,
   onRefresh: getProducts,
 }
-let products = ref([])
+let products = reactive([])
 let loading = ref(true)
-let paginator = ref({
+let paginator = reactive({
   size: 20,
   current: 1,
   total: 0,
@@ -55,8 +55,8 @@ function eventHandler(eventKey) {
 watch(
   () => productsStore.list,
   value => {
-    products.value = value.items
-    paginator.value.total = value.total
+    products = reactive(value.items)
+    paginator.total = value.total
     loading.value = false
   }
 )
@@ -64,7 +64,7 @@ watch(
 watch(
   () => paginator,
   value => {
-    paginator.value = value
+    paginator = value
     getProducts()
   }
 )

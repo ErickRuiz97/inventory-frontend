@@ -1,6 +1,6 @@
 <script setup>
 import PaginatorTable from './PaginatorTable.vue'
-import { ref, watch } from 'vue'
+import { watch, reactive } from 'vue'
 const emit = defineEmits(['update:paginator'])
 
 const props = defineProps({
@@ -15,7 +15,7 @@ const props = defineProps({
     },
   },
 })
-let paginator = ref(props.paginator)
+let paginator = reactive(props.paginator)
 
 watch(
   () => paginator,
