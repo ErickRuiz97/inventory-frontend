@@ -60,7 +60,7 @@ const rules = reactive({
           <el-input v-model="productForm.code" />
         </el-form-item>
         <el-form-item
-          label="nombre"
+          label="Nombre"
           prop="name"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
@@ -69,19 +69,21 @@ const rules = reactive({
       </div>
       <div class="row">
         <el-form-item
-          label="Código"
-          prop="code"
+          label="Descripción"
+          prop="description"
           class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
         >
           <el-input
             v-model="productForm.description"
             type="textarea"
+            maxlength="100"
             :autosize="{ minRows: 2, maxRows: 4 }"
+            show-word-limit
           />
         </el-form-item>
         <el-form-item
-          label="Código"
-          prop="code"
+          label="Categorías"
+          prop="categories"
           class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
         >
           <el-select
