@@ -1,6 +1,6 @@
 <script setup>
 import PaginatorTable from './PaginatorTable.vue'
-import { watch, reactive } from 'vue'
+import { reactive } from 'vue'
 const emit = defineEmits(['change'])
 
 const props = defineProps({
