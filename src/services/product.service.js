@@ -23,22 +23,22 @@ async function getProducts(query, paginator) {
   }
 }
 
-function createProduct(body) {
+async function createProduct(body) {
   const axios = createAxios()
   const urlPath = `products`
   try {
-    const response = axios.post(urlPath, body)
+    const response = await axios.post(urlPath, body)
     return Promise.resolve(response.data)
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
-function updateProduct(id, body) {
+async function updateProduct(id, body) {
   const axios = createAxios()
   const urlPath = `products/${id}`
   try {
-    const response = axios.put(urlPath, body)
+    const response = await axios.put(urlPath, body)
     return Promise.resolve(response.data)
   } catch (error) {
     return Promise.reject(error)

@@ -31,7 +31,7 @@ export const productStore = defineStore('productStore', {
     updateProduct(id, body) {
       productService
         .updateProduct(id, body)
-        .then(results => (this.create = results))
+        .then(results => (this.update = results))
         .catch(reason => (this.error = reason))
     },
   },

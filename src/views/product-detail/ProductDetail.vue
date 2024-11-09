@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { Check } from '@element-plus/icons-vue'
 
 import ProductForm from './components/ProductForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
-import { ElMessage } from 'element-plus'
 
 import { productStore } from '@/stores'
 
@@ -68,8 +68,9 @@ watch(
 )
 
 watch(
-  () => storeProduct.watch,
+  () => storeProduct.update,
   value => {
+    console.log(value)
     if (value) {
       ElMessage.success('Producto actualizado')
     }
