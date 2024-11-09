@@ -26,8 +26,8 @@ const events = {
 let products = reactive([])
 let loading = ref(true)
 let paginator = reactive({
-  size: 20,
-  current: 1,
+  limit: 20,
+  page: 1,
   total: 0,
 })
 onMounted(() => {
@@ -83,7 +83,7 @@ function clickRow(row) {
       ></actions-header>
     </div>
     <div class="row filtros">
-      <header-table :paginator="paginator" />
+      <header-table :paginator="paginator" @change="getProducts" />
     </div>
     <div class="row table-content">
       <products-table

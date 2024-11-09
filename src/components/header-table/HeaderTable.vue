@@ -1,15 +1,15 @@
 <script setup>
 import PaginatorTable from './PaginatorTable.vue'
 import { watch, reactive } from 'vue'
-const emit = defineEmits(['update:paginator'])
+const emit = defineEmits(['change'])
 
 const props = defineProps({
   paginator: {
     type: Object,
     default: () => {
       return {
-        size: 20,
-        current: 0,
+        limit: 20,
+        page: 1,
         total: 0,
       }
     },
@@ -17,17 +17,14 @@ const props = defineProps({
 })
 let paginator = reactive(props.paginator)
 
-watch(
-  () => paginator,
-  value => {
-    emit('update:paginator', value)
-  }
-)
+function handleChange() {
+  emit('change')
+}
 </script>
 <template>
   <div class="clearfix">
     <div class="float-start">
-      <paginator-table v-model="paginator" />
+      <paginator-table v-model="paginator" @change="handleChange" />
     </div>
   </div>
 </template>

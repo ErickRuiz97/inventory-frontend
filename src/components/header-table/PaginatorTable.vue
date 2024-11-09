@@ -1,14 +1,14 @@
 <script setup>
 import { reactive } from 'vue'
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['change'])
 
 const props = defineProps({
   modelValue: {
     type: Object,
     default: () => {
       return {
-        size: 20,
-        current: 1,
+        limit: 20,
+        page: 1,
         total: 0,
       }
     },
@@ -16,17 +16,17 @@ const props = defineProps({
 })
 let localValue = reactive(props.modelValue)
 
-function handleCurrentChange() {
-  emit('update:modelValue', localValue)
+function handleChange() {
+  emit('change')
 }
 </script>
 <template>
   <el-pagination
-    v-model:current-page="localValue.current"
-    :page-size="localValue.size"
+    v-model:current-page="localValue.page"
+    :page-size="localValue.limit"
     layout="total, prev, pager, next"
     :total="localValue.total"
-    @current-change="handleCurrentChange"
+    @change="handleChange"
   />
 </template>
 
