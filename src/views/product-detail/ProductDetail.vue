@@ -1,14 +1,30 @@
 <script setup>
 import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { Check } from '@element-plus/icons-vue'
 
 import ProductForm from './components/ProductForm.vue'
+import ActionsHeader from '@/components/ActionsHeader.vue'
+import { ElMessage } from 'element-plus'
 
 import { productStore } from '@/stores'
 
 const route = useRoute()
 const isEdit = ref(false)
 const storeProduct = productStore()
+const formProduct = ref()
+const actions = [
+  {
+    event: 'onSave',
+    type: 'primary',
+    icon: Check,
+    label: 'Guardar',
+  },
+]
+const events = {
+  onSave: saveProduct,
+}
+
 let product = ref({
   code: '',
   name: '',
@@ -21,6 +37,18 @@ onMounted(() => {
   if (isEdit.value) storeProduct.getProductById(route.params.id)
 })
 
+function eventHandler(eventKey) {
+  events[eventKey]()
+}
+
+async function saveProduct() {
+  const valid = await formProduct.value.validForm()
+  if (valid) {
+    if (isEdit.value) storeProduct.updateProduct(route.params.id, product.value)
+    else storeProduct.createProduct(product.value)
+  }
+}
+
 watch(
   () => storeProduct.entity,
   value => {
@@ -29,12 +57,45 @@ watch(
     }
   }
 )
+
+watch(
+  () => storeProduct.create,
+  value => {
+    if (value) {
+      ElMessage.success('Producto creado')
+    }
+  }
+)
+
+watch(
+  () => storeProduct.watch,
+  value => {
+    if (value) {
+      ElMessage.success('Producto actualizado')
+    }
+  }
+)
+
+watch(
+  () => storeProduct.error,
+  value => {
+    if (value) {
+      ElMessage.error(value)
+    }
+  }
+)
 </script>
 <template>
-  <div class="container mt-4">
-    <div class="row acciones"></div>
+  <div class="container">
+    <div class="row">
+      <actions-header
+        :actions="actions"
+        :refresh="false"
+        @action="eventHandler"
+      ></actions-header>
+    </div>
     <div class="row formulario">
-      <product-form v-model="product" />
+      <product-form ref="formProduct" v-model="product" />
     </div>
   </div>
 </template>

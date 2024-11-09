@@ -34,8 +34,20 @@ function createProduct(body) {
   }
 }
 
+function updateProduct(id, body) {
+  const axios = createAxios()
+  const urlPath = `products/${id}`
+  try {
+    const response = axios.put(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const productService = {
   getProducts,
   getProductById,
   createProduct,
+  updateProduct,
 }

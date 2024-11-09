@@ -66,6 +66,11 @@ const rules = reactive({
     },
   ],
 })
+
+function validForm() {
+  return productElForm.value.validate(valid => valid)
+}
+defineExpose({ validForm })
 </script>
 <template>
   <div>
@@ -114,6 +119,7 @@ const rules = reactive({
             v-model="localValue.categories"
             style="width: 100%"
             multiple
+            filterable
           >
             <el-option
               v-for="item in categories"

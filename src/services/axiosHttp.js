@@ -29,7 +29,8 @@ function createAxios(withHeaders = false) {
         } else if ([403].includes(error.response.status)) {
           location.hash = '#/inventory/forbidden'
         }
-        return Promise.reject(error.response.data)
+        console.log(error.response.data.detail)
+        return Promise.reject(error.response.data.detail)
       } else {
         return Promise.reject('Error al acceder a los servicios API')
       }
