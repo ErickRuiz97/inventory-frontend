@@ -10,7 +10,7 @@ import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { productStore } from '@/stores'
 const router = useRouter()
-const productsStore = productStore()
+const storeProduct = productStore()
 const actions = [
   {
     event: 'onNewProduct',
@@ -37,7 +37,7 @@ onMounted(() => {
 function getProducts() {
   const filters = {}
   loading.value = true
-  productsStore.getProducts(filters, paginator)
+  storeProduct.getProducts(filters, paginator)
 }
 
 function newProduct() {
@@ -53,7 +53,7 @@ function eventHandler(eventKey) {
 }
 
 watch(
-  () => productsStore.list,
+  () => storeProduct.list,
   value => {
     products = reactive(value.items)
     paginator.total = value.total

@@ -1,13 +1,36 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { onMounted, ref, reactive, watch } from 'vue'
 
 const productElForm = ref()
-let productForm = reactive({
-  name: '',
+
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => {
+      return { code: '', name: '', description: '', categories: [] }
+    },
+  },
+})
+let localValue = ref({
   code: '',
+  name: '',
   description: '',
   categories: [],
 })
+
+onMounted(() => {
+  localValue.value = props.modelValue
+})
+
+watch(
+  () => props.modelValue,
+  value => {
+    if (value) {
+      localValue.value = value
+    }
+  }
+)
+
 const categories = [
   { label: 'Comestibles', value: 'COMESTIBLES' },
   { label: 'Limpieza', value: 'LIMPIEZA' },
@@ -23,6 +46,8 @@ const categories = [
   { label: 'Cuidado del bebé', value: 'CUIDADO_BEBE' },
   { label: 'Mascotas', value: 'MASCOTAS' },
   { label: 'Otros', value: 'OTROS' },
+  { label: 'Canasta basica', value: 'CANASTA_BASICA' },
+  { label: 'Seriales', value: 'SERIALES' },
 ]
 
 const rules = reactive({
@@ -31,7 +56,6 @@ const rules = reactive({
       required: true,
       message: 'Por favor ingrese nombre del producto',
       trigger: 'blur',
-      type: 'email',
     },
   ],
   code: [
@@ -47,7 +71,7 @@ const rules = reactive({
   <div>
     <el-form
       ref="productElForm"
-      :model="productForm"
+      :model="localValue"
       :rules="rules"
       label-position="top"
     >
@@ -57,14 +81,14 @@ const rules = reactive({
           prop="code"
           class="col-sm-12 col-md-4 col-lg-3 col-xl-2"
         >
-          <el-input v-model="productForm.code" />
+          <el-input v-model="localValue.code" />
         </el-form-item>
         <el-form-item
           label="Nombre"
           prop="name"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
-          <el-input v-model="productForm.name" />
+          <el-input v-model="localValue.name" />
         </el-form-item>
       </div>
       <div class="row">
@@ -74,7 +98,7 @@ const rules = reactive({
           class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
         >
           <el-input
-            v-model="productForm.description"
+            v-model="localValue.description"
             type="textarea"
             maxlength="100"
             :autosize="{ minRows: 2, maxRows: 4 }"
@@ -87,7 +111,7 @@ const rules = reactive({
           class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
         >
           <el-select
-            v-model="productForm.categories"
+            v-model="localValue.categories"
             style="width: 100%"
             multiple
           >

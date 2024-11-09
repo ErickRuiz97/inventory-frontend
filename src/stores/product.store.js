@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { productService } from '@/services'
 
 export const productStore = defineStore('productStore', {
-  state: () => ({ list: null, entity: null, createEntity: null, error: null }),
+  state: () => ({ list: null, entity: null, create: null, error: null }),
   actions: {
     getProducts(query, paginator) {
       productService
@@ -19,7 +19,7 @@ export const productStore = defineStore('productStore', {
     createProduct(body) {
       productService
         .createProduct(body)
-        .then(results => (this.createEntity = results))
+        .then(results => (this.create = results))
         .catch(reason => (this.error = reason))
     },
   },
