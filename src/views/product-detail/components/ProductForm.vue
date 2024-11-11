@@ -86,7 +86,7 @@ defineExpose({ validForm })
           prop="code"
           class="col-sm-12 col-md-4 col-lg-3 col-xl-2"
         >
-          <el-input v-model="localValue.code" />
+          <el-input v-model="localValue.code" maxlength="8" show-word-limit />
         </el-form-item>
         <el-form-item
           label="Nombre"
