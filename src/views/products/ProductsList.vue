@@ -75,14 +75,14 @@ function clickRow(row) {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row">
+  <div>
+    <div class="row header-content">
       <actions-header
         :actions="actions"
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row filtros">
+    <div class="row">
       <header-table :paginator="paginator" @change="getProducts" />
     </div>
     <div class="row table-content">

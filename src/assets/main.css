@@ -15,6 +15,43 @@
   min-height: 100vh;
 }
 
+#navbar-layout {
+  text-align: right;
+  font-size: 12px;
+  max-height: 10vh;
+  min-height: 10vh;
+}
+
+#main-layout {
+  max-height: 90vh;
+  min-height: 90vh;
+}
+
+#main-layout .container {
+  max-height: 90vh;
+  min-height: 90vh;
+}
+
+#main-layout .container #breadcrumb {
+  max-height: 5vh;
+  min-height: 5vh;
+}
+
+#main-layout .container #routing {
+  max-height: 85vh;
+  min-height: 85vh;
+}
+
+.header-content {
+  max-height: 5vh;
+  min-height: 5vh;
+}
+
+.table-content {
+  max-height: 70vh;
+  min-height: 70vh;
+}
+
 .layout-container-demo .el-header {
   position: relative;
 }

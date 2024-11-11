@@ -18,7 +18,7 @@ function eventHandler(val) {
 }
 </script>
 <template>
-  <div class="clearfix mt-4 mb-2">
+  <div class="clearfix">
     <div class="float-start">
       <el-button
         v-for="action in actions"

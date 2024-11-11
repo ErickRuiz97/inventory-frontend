@@ -88,7 +88,7 @@ watch(
 </script>
 <template>
   <div class="container">
-    <div class="row">
+    <div class="row header-content">
       <actions-header
         :actions="actions"
         :refresh="false"
