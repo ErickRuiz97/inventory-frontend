@@ -87,7 +87,7 @@ watch(
 )
 </script>
 <template>
-  <div class="container">
+  <div class="">
     <div class="row header-content">
       <actions-header
         :actions="actions"
@@ -95,7 +95,7 @@ watch(
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row formulario">
+    <div class="row formulario-content">
       <product-form ref="formProduct" v-model="product" />
     </div>
   </div>

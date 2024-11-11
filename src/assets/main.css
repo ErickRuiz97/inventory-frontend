@@ -52,6 +52,11 @@
   min-height: 70vh;
 }
 
+.formulario-content {
+  max-height: 75vh;
+  min-height: 75vh;
+}
+
 .layout-container-demo .el-header {
   position: relative;
 }
