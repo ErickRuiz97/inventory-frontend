@@ -87,7 +87,7 @@ watch(
 )
 </script>
 <template>
-  <div class="">
+  <div>
     <div class="row header-content">
       <actions-header
         :actions="actions"
@@ -95,8 +95,10 @@ watch(
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row formulario-content">
-      <product-form ref="formProduct" v-model="product" />
+    <div class="row formulario-content p-2">
+      <el-card shadow="always">
+        <product-form ref="formProduct" v-model="product" />
+      </el-card>
     </div>
   </div>
 </template>
