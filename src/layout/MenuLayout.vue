@@ -25,17 +25,9 @@ let activeIndex = ref(currentRoute)
         <el-icon><shop /></el-icon>
         Productos
       </el-menu-item>
-      <el-menu-item index="3">
-        <el-icon><sell /></el-icon>
-        Compras
-      </el-menu-item>
-      <el-menu-item index="4">
-        <el-icon><sold-out /></el-icon>
-        Ventas
-      </el-menu-item>
-      <el-menu-item index="5">
-        <el-icon><lock /></el-icon>
-        Users
+      <el-menu-item index="/users" @click="routerPush('/users')">
+        <el-icon><user /></el-icon>
+        Usuarios
       </el-menu-item>
     </el-menu>
   </el-scrollbar>
