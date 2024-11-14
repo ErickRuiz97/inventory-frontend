@@ -9,16 +9,29 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login']
-
-  const authRequired = !publicPages.includes(to.path)
+  const requiredRoles = to.meta.requiresAuth
   const user = JSON.parse(localStorage.getItem('user'))
 
-  if (authRequired) {
+  if (requiredRoles) {
     if (!user || !user.token) return next('/login')
+    const userRoles = user.roles
+    if (Array.isArray(requiredRoles)) {
+      const hasAccess = requiredRoles.some(role => userRoles.includes(role))
+      if (hasAccess) {
+        next()
+      } else {
+        next({ name: 'No autorizado' })
+      }
+    } else {
+      if (userRoles.includes(requiredRoles)) {
+        next()
+      } else {
+        next({ name: 'No autorizado' })
+      }
+    }
+  } else {
+    next()
   }
-
-  next()
 })
 
 export default router
