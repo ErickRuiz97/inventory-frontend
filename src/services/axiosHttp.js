@@ -27,7 +27,7 @@ function createAxios(withHeaders = false) {
           localStorage.removeItem('user')
           location.reload(true)
         } else if ([403].includes(error.response.status)) {
-          location.hash = '#/inventory/forbidden'
+          location.hash = '/no-auth'
         }
         console.log(error.response.data.detail)
         return Promise.reject(error.response.data.detail)
