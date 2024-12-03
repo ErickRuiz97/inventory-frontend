@@ -45,9 +45,21 @@ async function updateUser(id, body) {
   }
 }
 
+async function deleteUser(id) {
+  const axios = createAxios()
+  const urlPath = `users/delete/${id}`
+  try {
+    const response = await axios.delete(urlPath)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const userService = {
   createUser,
   getUsers,
   getUserById,
-  updateUser
+  updateUser,
+  deleteUser
 }

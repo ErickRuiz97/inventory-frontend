@@ -8,6 +8,7 @@ export const userStore = defineStore('userStore', {
     create: null,
     update: null,
     error: null,
+    delete: null
   }),
   actions: {
     getUsers(query, paginator) {
@@ -32,6 +33,12 @@ export const userStore = defineStore('userStore', {
       userService
         .updateUser(id, body)
         .then(results => (this.update = results))
+        .catch(reason => (this.error = reason))
+    },
+    deleteUser(id) {
+      userService
+        .deleteUser(id)
+        .then(results => (this.delete = results))
         .catch(reason => (this.error = reason))
     },
   },
