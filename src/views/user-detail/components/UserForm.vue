@@ -105,7 +105,7 @@ defineExpose({ validForm })
           class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
         >
           <el-select
-            v-model="localValue.rolesUser"
+            v-model="localValue.roles"
             style="width: 100%"
             multiple
             filterable
