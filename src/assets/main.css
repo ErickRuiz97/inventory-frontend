@@ -10,6 +10,10 @@
   overflow-x: hidden;
 }
 
+.color-back-primary :not(.no-background) {
+  background-color: #384150;
+}
+
 #aside-menu {
   max-height: 100vh;
   min-height: 100vh;
@@ -18,8 +22,8 @@
 #navbar-layout {
   text-align: right;
   font-size: 12px;
-  max-height: 10vh;
-  min-height: 10vh;
+  max-height: 1vh;
+  min-height: 5vh;
 }
 
 #main-layout {

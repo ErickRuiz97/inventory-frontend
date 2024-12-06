@@ -16,7 +16,7 @@ let activeIndex = ref(currentRoute)
 </script>
 <template>
   <el-scrollbar>
-    <el-menu id="menu-layout" :default-active="activeIndex">
+    <el-menu id="menu-layout" class="sideNav" :default-active="activeIndex" style="background-color: #384150;">
       <el-menu-item index="/home" @click="routerPush('/home')">
         <el-icon><trend-charts /></el-icon>
         Dashboard
@@ -29,10 +29,20 @@ let activeIndex = ref(currentRoute)
         <el-icon><user /></el-icon>
         Usuarios
       </el-menu-item>
+      <el-menu-item index="/sales" @click="routerPush('/sales')">
+        <el-icon><user /></el-icon>
+        Ventas
+      </el-menu-item>
     </el-menu>
   </el-scrollbar>
 </template>
 
 
 <style lang="scss" scoped>
+.el-menu-item {
+  color: #4A90E2;
+}
+.el-menu-item.is-active {
+  color: gray ; 
+}
 </style>

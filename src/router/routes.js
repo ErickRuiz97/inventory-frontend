@@ -9,6 +9,8 @@ import ProductDetail from '@/views/product-detail/ProductDetail.vue'
 // Users routes
 import UsersList from '@/views/users/UsersList.vue'
 import UserDetail from '@/views/user-detail/UserDetail.vue'
+//ventas routes
+import SalesList from '@/views/sales/SalesList.vue'
 export const routes = [
   {
     path: '/',
@@ -85,5 +87,11 @@ export const routes = [
     component: UserDetail,
     props: true,
     meta: { breadcrumb: 'Editar usuario' },
+  },
+  {
+    path: '/sales',
+    name: 'Ventas',
+    component: SalesList,
+    meta: { breadcrumb: 'Ventas' },
   },
 ]
