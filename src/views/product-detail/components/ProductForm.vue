@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, reactive, watch } from 'vue'
+import { onMounted, ref, reactive, watch } from 'vue';
 
 const productElForm = ref()
 
@@ -20,7 +20,7 @@ let localValue = ref({
 
 onMounted(() => {
   localValue.value = props.modelValue
-})
+});
 
 watch(
   () => props.modelValue,

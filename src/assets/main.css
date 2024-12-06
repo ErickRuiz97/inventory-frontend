@@ -10,8 +10,14 @@
   overflow-x: hidden;
 }
 
-.color-back-primary :not(.no-background) {
+.color-back-primary {
   background-color: #384150;
+}
+.color-back-gray {
+  background-color: #f5f5f5;
+}
+#app .el-table {
+  background-color: #f5f5f5;
 }
 
 #aside-menu {
