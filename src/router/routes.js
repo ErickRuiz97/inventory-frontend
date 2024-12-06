@@ -7,6 +7,13 @@ import NoAuth from '@/views/noAuth/NoAuth.vue'
 import ProductsList from '@/views/products/ProductsList.vue'
 import ProductDetail from '@/views/product-detail/ProductDetail.vue'
 
+// Users routes
+import UsersList from '@/views/users/UsersList.vue'
+import UserDetail from '@/views/user-detail/UserDetail.vue'
+//ventas routes
+import SalesList from '@/views/sales/SalesList.vue'
+=======
+
 // Config routes
 import ConfigApp from '@/views/config/ConfigApp.vue'
 
@@ -67,5 +74,30 @@ export const routes = [
     meta: {
       breadcrumb: 'No autorizado',
     },
+  },
+  {
+    path: '/users',
+    name: 'Usuarios',
+    component: UsersList,
+    meta: { breadcrumb: 'Usuarios' },
+  },
+  {
+    path: '/users/create',
+    name: 'Crear usuario',
+    component: UserDetail,
+    meta: { breadcrumb: 'Crear usuario' },
+  },
+  {
+    path: '/users/:id',
+    name: 'Editar usuario',
+    component: UserDetail,
+    props: true,
+    meta: { breadcrumb: 'Editar usuario' },
+  },
+  {
+    path: '/sales',
+    name: 'Ventas',
+    component: SalesList,
+    meta: { breadcrumb: 'Ventas' },
   },
 ]

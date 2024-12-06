@@ -63,12 +63,11 @@ watch(
 )
 </script>
 <template>
-  <div class="container h-100 align-middle">
-    <div class="row justify-content-center mt-4">
-      <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12">
+  <div class="container h-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100">
+      <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 mx-auto">
         <el-card class="card">
-          <div class="card-body">
-            <h4 class="card-title">Inventario</h4>
+          <div class="card-body ps-0">
             <h5 class="card-subtitle mb-2 text-muted">Inicio de sesión</h5>
           </div>
           <el-form
@@ -77,16 +76,16 @@ watch(
             :rules="rules"
             label-position="top"
           >
-            <el-form-item label="Email" prop="email">
+            <el-form-item label="Usuario" prop="email">
               <el-input v-model="loginForm.email" />
             </el-form-item>
-            <el-form-item label="Password" prop="password">
+            <el-form-item label="Contraseña" prop="password">
               <el-input v-model="loginForm.password" type="password" />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit" v-loading="loading"
-                >Login</el-button
-              >
+              <el-button type="primary" @click="onSubmit" v-loading="loading">
+                Iniciar sesión
+              </el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -94,6 +93,7 @@ watch(
     </div>
   </div>
 </template>
+
 
 
 <style lang="scss" scoped>

@@ -20,9 +20,9 @@ function goToConfig() {
 </script>
 <template>
   <div class="toolbar">
-    <span>{{ user.email }}</span>
+    <span class="primary-color">{{ user.email }}</span>
     <el-dropdown>
-      <el-icon class="ms-1">
+      <el-icon class="ms-1 primary-color">
         <setting />
       </el-icon>
       <template #dropdown>
@@ -36,4 +36,7 @@ function goToConfig() {
   </div>
 </template>
 <style>
+.primary-color {
+  color: #4A90E2;
+}
 </style>
