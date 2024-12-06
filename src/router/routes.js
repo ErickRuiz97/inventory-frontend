@@ -12,7 +12,6 @@ import UsersList from '@/views/users/UsersList.vue'
 import UserDetail from '@/views/user-detail/UserDetail.vue'
 //ventas routes
 import SalesList from '@/views/sales/SalesList.vue'
-=======
 
 // Config routes
 import ConfigApp from '@/views/config/ConfigApp.vue'
