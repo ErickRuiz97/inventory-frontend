@@ -13,6 +13,10 @@ function singOut() {
   localStorage.removeItem('user')
   router.push({ name: 'Login' })
 }
+
+function goToConfig() {
+  router.push({ name: 'Configuración de la aplicación' })
+}
 </script>
 <template>
   <div class="toolbar">
@@ -23,6 +27,7 @@ function singOut() {
       </el-icon>
       <template #dropdown>
         <el-dropdown-menu>
+          <el-dropdown-item @click="goToConfig">Configuración</el-dropdown-item>
           <el-dropdown-item>Cambiar contraseña</el-dropdown-item>
           <el-dropdown-item @click="singOut">Cerrar sesión</el-dropdown-item>
         </el-dropdown-menu>

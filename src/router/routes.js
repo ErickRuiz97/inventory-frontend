@@ -1,11 +1,14 @@
 //General routes
 import LoginApp from '@/views/login/LoginApp.vue'
 import HomeView from '@/views/HomeView.vue'
-import NoAuth from '@/views/NoAuth/NoAuth.vue'
+import NoAuth from '@/views/noAuth/NoAuth.vue'
 
 //Product routes
 import ProductsList from '@/views/products/ProductsList.vue'
 import ProductDetail from '@/views/product-detail/ProductDetail.vue'
+
+// Config routes
+import ConfigApp from '@/views/config/ConfigApp.vue'
 
 export const routes = [
   {
@@ -49,7 +52,7 @@ export const routes = [
   {
     path: '/config-app',
     name: 'Configuración de la aplicación',
-    component: ProductDetail,
+    component: ConfigApp,
     props: true,
     meta: {
       breadcrumb: 'Configuración de la aplicación',
