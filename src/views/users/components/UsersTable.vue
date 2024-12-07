@@ -1,5 +1,4 @@
 <script setup>
-import { objectUtils } from '@/utils'
 const emit = defineEmits(['clickRow'])
 
 let props = defineProps({
@@ -28,6 +27,16 @@ function clickRow(row) {
       <el-table-column prop="email" label="Email" />
       <el-table-column prop="full_name" label="Nombre completo" />
       <el-table-column prop="roles" label="Roles" />
+      <el-table-column
+        label="Activo"
+        width="100"
+        align="center"
+        header-align="center"
+      >
+        <template #default="scope">
+          <el-icon v-if="scope.row.active"><check /></el-icon>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
