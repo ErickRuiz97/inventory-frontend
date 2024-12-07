@@ -47,7 +47,7 @@ async function updateUser(id, body) {
 
 async function deleteUser(id) {
   const axios = createAxios()
-  const urlPath = `users/delete/${id}`
+  const urlPath = `users/${id}`
   try {
     const response = await axios.delete(urlPath)
     return Promise.resolve(response.data)
@@ -61,5 +61,5 @@ export const userService = {
   getUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
 }

@@ -16,7 +16,7 @@ function createAxios(withHeaders = false) {
   instance.interceptors.response.use(
     response => {
       const axiosResponse = {
-        data: response.data,
+        data: response.data ? response.data : 'ok',
         headers: withHeaders ? response.headers : {},
       }
       return Promise.resolve(axiosResponse)
@@ -29,7 +29,6 @@ function createAxios(withHeaders = false) {
         } else if ([403].includes(error.response.status)) {
           location.hash = '/no-auth'
         }
-        console.log(error.response.data.detail)
         return Promise.reject(error.response.data.detail)
       } else {
         return Promise.reject('Error al acceder a los servicios API')
