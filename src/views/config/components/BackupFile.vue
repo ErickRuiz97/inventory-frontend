@@ -12,7 +12,9 @@ async function createBackup() {
 
 function downloadFile(blob) {
   const contentDisposition = blob.headers['content-disposition']
-  const fileName = contentDisposition.split('filename=')[1]
+  const fileName = contentDisposition
+    ? contentDisposition.split('filename=')[1]?.replace(/["']/g, '')
+    : 'backup.zip'
   const url = window.URL.createObjectURL(new Blob([blob.data]))
   const link = document.createElement('a')
   link.href = url
@@ -32,7 +34,7 @@ watch(
 )
 
 watch(
-  () => storeConfig.error,
+  () => storeConfig.errorBackup,
   value => {
     if (value) {
       ElMessage.error(value)

@@ -23,7 +23,7 @@ function goToConfig() {
     <span class="primary-color">{{ user.email }}</span>
     <el-dropdown>
       <el-icon class="ms-1 primary-color">
-        <setting />
+        <CaretBottom />
       </el-icon>
       <template #dropdown>
         <el-dropdown-menu>
@@ -37,6 +37,6 @@ function goToConfig() {
 </template>
 <style>
 .primary-color {
-  color: #4A90E2;
+  color: #4a90e2;
 }
 </style>
