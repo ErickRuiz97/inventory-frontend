@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, watch, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+
 import { ElMessage } from 'element-plus'
 import { Check } from '@element-plus/icons-vue'
 
@@ -10,6 +11,7 @@ import ActionsHeader from '@/components/ActionsHeader.vue'
 import { supplierStore } from '@/stores'
 
 const route = useRoute()
+const router = useRouter()
 const isEdit = ref(false)
 const storeSupplier = supplierStore()
 const formSupplier = ref()
@@ -67,6 +69,7 @@ watch(
   value => {
     if (value) {
       ElMessage.success('Proveedor creado')
+      router.push({ path: '/suppliers' })
     }
   }
 )
@@ -77,6 +80,7 @@ watch(
     console.log(value)
     if (value) {
       ElMessage.success('Proveedor actualizado')
+      router.push({ path: '/suppliers' })
     }
   }
 )
