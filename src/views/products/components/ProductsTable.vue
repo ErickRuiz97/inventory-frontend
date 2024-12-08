@@ -20,10 +20,10 @@ function clickRow(row) {
   <div>
     <el-table
       :data="props.modelValue"
-      style="width: 100%"
       max-height="70vh"
       @row-click="clickRow"
       v-loading="props.loading"
+      class="tables"
     >
       <el-table-column prop="code" label="Código" width="70" />
       <el-table-column prop="name" label="Nombre" show-overflow-tooltip />

@@ -1,8 +1,8 @@
 <script setup>
-import moment from "moment";
-import { ref, watch } from "vue";
+import moment from 'moment'
+import { ref, watch } from 'vue'
 
-const emit = defineEmits(["clickRow"]);
+const emit = defineEmits(['clickRow'])
 
 const props = defineProps({
   modelValue: {
@@ -13,21 +13,21 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-});
+})
 
-const formattedData = ref([]);
+const formattedData = ref([])
 
 const formatData = () => {
   formattedData.value = props.modelValue.map(item => ({
     ...item,
-    sale_date: moment(item.sale_date).format("DD/MM/YYYY"),
-  }));
-};
+    sale_date: moment(item.sale_date).format('DD/MM/YYYY'),
+  }))
+}
 
-watch(() => props.modelValue, formatData, { immediate: true });
+watch(() => props.modelValue, formatData, { immediate: true })
 
 function clickRow(row) {
-  emit("clickRow", row);
+  emit('clickRow', row)
 }
 </script>
 
@@ -35,9 +35,9 @@ function clickRow(row) {
   <div>
     <el-table
       :data="formattedData"
-      style="width: 100%"
       max-height="70vh"
       v-loading="props.loading"
+      class="tables"
     >
       <el-table-column prop="total_amount" label="Monto total" />
       <el-table-column prop="sale_date" label="Fecha de venta" />

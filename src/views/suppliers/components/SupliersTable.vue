@@ -19,26 +19,32 @@ function clickRow(row) {
   <div>
     <el-table
       :data="props.modelValue"
+      v-loading="props.loading"
       max-height="70vh"
       @row-click="clickRow"
-      v-loading="props.loading"
       class="tables"
     >
-      <el-table-column prop="email" label="Email" />
-      <el-table-column prop="full_name" label="Nombre completo" />
-      <el-table-column prop="roles" label="Roles" />
+      <el-table-column prop="code" label="Código" width="70" />
+      <el-table-column prop="name" label="Nombre" show-overflow-tooltip />
       <el-table-column
-        label="Activo"
-        width="100"
-        align="center"
-        header-align="center"
-      >
-        <template #default="scope">
-          <el-icon v-if="scope.row.active"><check /></el-icon>
-        </template>
-      </el-table-column>
+        prop="contact.name"
+        label="Contacto"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="contact.email"
+        label="Email"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="contact.phone"
+        label="Teléfono"
+        show-overflow-tooltip
+      />
     </el-table>
   </div>
 </template>
+
+
 <style lang="scss" scoped>
 </style>

@@ -3,14 +3,18 @@ import LoginApp from '@/views/login/LoginApp.vue'
 import HomeView from '@/views/HomeView.vue'
 import NoAuth from '@/views/noAuth/NoAuth.vue'
 
-//Product routes
+// Product routes
 import ProductsList from '@/views/products/ProductsList.vue'
 import ProductDetail from '@/views/product-detail/ProductDetail.vue'
+
+// Suppliers routes
+import SuppliersList from '@/views/suppliers/SuppliersList.vue'
 
 // Users routes
 import UsersList from '@/views/users/UsersList.vue'
 import UserDetail from '@/views/user-detail/UserDetail.vue'
-//ventas routes
+
+// Sales routes
 import SalesList from '@/views/sales/SalesList.vue'
 
 // Config routes
@@ -97,6 +101,7 @@ export const routes = [
   {
     path: '/suppliers',
     name: 'SuppliersList',
+    component: SuppliersList,
     props: true,
     meta: { breadcrumb: 'Proveedores', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
