@@ -15,7 +15,7 @@ function singOut() {
 }
 
 function goToConfig() {
-  router.push({ name: 'Configuración de la aplicación' })
+  router.push({ name: 'ConfigApp' })
 }
 </script>
 <template>

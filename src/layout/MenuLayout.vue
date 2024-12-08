@@ -16,10 +16,27 @@ let activeIndex = ref(currentRoute)
 </script>
 <template>
   <el-scrollbar>
-    <el-menu id="menu-layout" class="sideNav" :default-active="activeIndex" style="background-color: #384150;">
+    <el-menu
+      id="menu-layout"
+      class="sideNav"
+      :default-active="activeIndex"
+      style="background-color: #384150"
+    >
       <el-menu-item index="/home" @click="routerPush('/home')">
         <el-icon><trend-charts /></el-icon>
         Dashboard
+      </el-menu-item>
+      <el-menu-item index="/sales" @click="routerPush('/sales')">
+        <el-icon><sell /></el-icon>
+        Ventas
+      </el-menu-item>
+      <el-menu-item index="/sales" @click="routerPush('/sales')">
+        <el-icon><sold-out /></el-icon>
+        Compras
+      </el-menu-item>
+      <el-menu-item index="/suppliers" @click="routerPush('/suppliers')">
+        <el-icon><office-building /></el-icon>
+        Proveedores
       </el-menu-item>
       <el-menu-item index="/products" @click="routerPush('/products')">
         <el-icon><shop /></el-icon>
@@ -29,10 +46,6 @@ let activeIndex = ref(currentRoute)
         <el-icon><user /></el-icon>
         Usuarios
       </el-menu-item>
-      <el-menu-item index="/sales" @click="routerPush('/sales')">
-        <el-icon><user /></el-icon>
-        Ventas
-      </el-menu-item>
     </el-menu>
   </el-scrollbar>
 </template>
@@ -40,9 +53,9 @@ let activeIndex = ref(currentRoute)
 
 <style lang="scss" scoped>
 .el-menu-item {
-  color: #4A90E2;
+  color: #4a90e2;
 }
 .el-menu-item.is-active {
-  color: gray ; 
+  color: gray;
 }
 </style>

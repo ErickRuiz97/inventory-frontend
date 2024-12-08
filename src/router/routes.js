@@ -37,7 +37,7 @@ export const routes = [
   //product routes
   {
     path: '/products',
-    name: 'Productos',
+    name: 'ProductsList',
     component: ProductsList,
     meta: {
       breadcrumb: 'Productos',
@@ -45,20 +45,20 @@ export const routes = [
   },
   {
     path: '/products/create',
-    name: 'Crear producto',
+    name: 'ProductCreate',
     component: ProductDetail,
     meta: { breadcrumb: 'Crear producto', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
   {
     path: '/products/:id',
-    name: 'Editar producto',
+    name: 'ProductEdit',
     component: ProductDetail,
     props: true,
     meta: { breadcrumb: 'Editar producto', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
   {
     path: '/config-app',
-    name: 'Configuración de la aplicación',
+    name: 'ConfigApp',
     component: ConfigApp,
     props: true,
     meta: {
@@ -68,7 +68,7 @@ export const routes = [
   },
   {
     path: '/no-auth',
-    name: 'No autorizado',
+    name: 'NoAuth',
     component: NoAuth,
     props: true,
     meta: {
@@ -77,26 +77,32 @@ export const routes = [
   },
   {
     path: '/users',
-    name: 'Usuarios',
+    name: 'UserList',
     component: UsersList,
-    meta: { breadcrumb: 'Usuarios' },
+    meta: { breadcrumb: 'Usuarios', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
   {
     path: '/users/create',
-    name: 'Crear usuario',
+    name: 'UserCreate',
     component: UserDetail,
-    meta: { breadcrumb: 'Crear usuario' },
+    meta: { breadcrumb: 'Crear usuario', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
   {
     path: '/users/:id',
-    name: 'Editar usuario',
+    name: 'UserUpdate',
     component: UserDetail,
     props: true,
-    meta: { breadcrumb: 'Editar usuario' },
+    meta: { breadcrumb: 'Editar usuario', requiresAuth: ['ADMIN', 'MANAGER'] },
+  },
+  {
+    path: '/suppliers',
+    name: 'SuppliersList',
+    props: true,
+    meta: { breadcrumb: 'Proveedores', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
   {
     path: '/sales',
-    name: 'Ventas',
+    name: 'SalesList',
     component: SalesList,
     meta: { breadcrumb: 'Ventas' },
   },

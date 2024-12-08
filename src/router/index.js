@@ -21,13 +21,13 @@ router.beforeEach((to, from, next) => {
       if (hasAccess) {
         next()
       } else {
-        next({ name: 'No autorizado' })
+        next({ name: 'NoAuth' })
       }
     } else {
       if (userRoles.includes(requiredRoles)) {
         next()
       } else {
-        next({ name: 'No autorizado' })
+        next({ name: 'NoAuth' })
       }
     }
   } else {
