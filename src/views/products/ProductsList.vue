@@ -7,6 +7,7 @@ import { ElMessage } from 'element-plus'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import ProductsTable from './components/ProductsTable.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
+import ProductFilters from './components/ProductFilters.vue'
 
 import { productStore } from '@/stores'
 const router = useRouter()
@@ -22,9 +23,11 @@ const actions = [
 const events = {
   onNewProduct: newProduct,
   onRefresh: getProducts,
+  onFilter: showFilters,
 }
 let products = reactive([])
 let loading = ref(true)
+let onShowFilters = ref(false)
 let paginator = reactive({
   limit: 20,
   page: 1,
@@ -42,6 +45,10 @@ function getProducts() {
 
 function newProduct() {
   router.push({ path: `/products/create` })
+}
+
+function showFilters() {
+  onShowFilters.value = true
 }
 
 function eventHandler(eventKey) {
@@ -92,5 +99,20 @@ function clickRow(row) {
         :loading="loading"
       />
     </div>
+
+    <el-drawer v-model="onShowFilters" direction="rtl">
+      <template #header>
+        <h4>Filtro de búsqueda</h4>
+      </template>
+      <template #default>
+        <product-filters />
+      </template>
+      <template #footer>
+        <div style="flex: auto">
+          <el-button @click="cancelFilter">Cancelar</el-button>
+          <el-button type="primary" @click="confirmFilter">Aceptar</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>
