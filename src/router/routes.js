@@ -26,6 +26,7 @@ export const routes = [
     path: '/login',
     name: 'Login',
     component: LoginApp,
+    meta: { public: true },
   },
   {
     path: '/home',
