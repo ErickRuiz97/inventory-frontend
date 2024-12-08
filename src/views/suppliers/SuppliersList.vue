@@ -5,7 +5,7 @@ import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
-import SuppliersTable from './components/SupliersTable.vue'
+import SuppliersTable from './components/SuppliersTable.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { supplierStore } from '@/stores'

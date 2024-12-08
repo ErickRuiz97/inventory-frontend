@@ -9,6 +9,7 @@ import ProductDetail from '@/views/product-detail/ProductDetail.vue'
 
 // Suppliers routes
 import SuppliersList from '@/views/suppliers/SuppliersList.vue'
+import SupplierDetail from '@/views/supplier-detail/SupplierDetail.vue'
 
 // Users routes
 import UsersList from '@/views/users/UsersList.vue'
@@ -38,6 +39,25 @@ export const routes = [
     component: HomeView,
     meta: { breadcrumb: 'Home' },
   },
+  {
+    path: '/no-auth',
+    name: 'NoAuth',
+    component: NoAuth,
+    props: true,
+    meta: {
+      breadcrumb: 'No autorizado',
+    },
+  },
+  {
+    path: '/config-app',
+    name: 'ConfigApp',
+    component: ConfigApp,
+    props: true,
+    meta: {
+      breadcrumb: 'Configuración de la aplicación',
+      requiresAuth: 'ADMIN',
+    },
+  },
   //product routes
   {
     path: '/products',
@@ -60,25 +80,7 @@ export const routes = [
     props: true,
     meta: { breadcrumb: 'Editar producto', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
-  {
-    path: '/config-app',
-    name: 'ConfigApp',
-    component: ConfigApp,
-    props: true,
-    meta: {
-      breadcrumb: 'Configuración de la aplicación',
-      requiresAuth: 'ADMIN',
-    },
-  },
-  {
-    path: '/no-auth',
-    name: 'NoAuth',
-    component: NoAuth,
-    props: true,
-    meta: {
-      breadcrumb: 'No autorizado',
-    },
-  },
+  //user routes
   {
     path: '/users',
     name: 'UserList',
@@ -98,6 +100,7 @@ export const routes = [
     props: true,
     meta: { breadcrumb: 'Editar usuario', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
+  //supplier routes
   {
     path: '/suppliers',
     name: 'SuppliersList',
@@ -105,6 +108,23 @@ export const routes = [
     props: true,
     meta: { breadcrumb: 'Proveedores', requiresAuth: ['ADMIN', 'MANAGER'] },
   },
+  {
+    path: '/suppliers/create',
+    name: 'SupplierCreate',
+    component: SupplierDetail,
+    meta: { breadcrumb: 'Crear proveedor', requiresAuth: ['ADMIN', 'MANAGER'] },
+  },
+  {
+    path: '/suppliers/:id',
+    name: 'SupplierEdit',
+    component: SupplierDetail,
+    props: true,
+    meta: {
+      breadcrumb: 'Editar proveedor',
+      requiresAuth: ['ADMIN', 'MANAGER'],
+    },
+  },
+  //sales routes
   {
     path: '/sales',
     name: 'SalesList',

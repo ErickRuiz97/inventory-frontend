@@ -24,7 +24,7 @@ function clickRow(row) {
       @row-click="clickRow"
       class="tables"
     >
-      <el-table-column prop="code" label="Código" width="70" />
+      <el-table-column prop="code" label="Código" width="80" />
       <el-table-column prop="name" label="Nombre" show-overflow-tooltip />
       <el-table-column
         prop="contact.name"
