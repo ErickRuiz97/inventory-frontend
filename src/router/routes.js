@@ -131,4 +131,10 @@ export const routes = [
     component: SalesList,
     meta: { breadcrumb: 'Ventas' },
   },
+  //purchases routes
+  {
+    path: '/purchases',
+    name: 'PurchasesList',
+    meta: { breadcrumb: 'Compras' },
+  },
 ]
