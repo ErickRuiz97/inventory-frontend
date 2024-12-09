@@ -3,10 +3,12 @@ import { onMounted, watch, ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { objectUtils } from '@/utils'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import SuppliersTable from './components/SuppliersTable.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
+import SupplierFilters from './components/SupplierFilters.vue'
 
 import { supplierStore } from '@/stores'
 const router = useRouter()
@@ -22,26 +24,44 @@ const actions = [
 const events = {
   onNewSupplier: newSupplier,
   onRefresh: getSuppliers,
+  onFilter: showFilters,
+  onCleanFilter: cleanFilter,
 }
 let suppliers = reactive([])
 let loading = ref(true)
+let onShowFilters = ref(false)
 let paginator = reactive({
   limit: 20,
   page: 1,
   total: 0,
 })
+let filters = ref({
+  name: '',
+  code: '',
+  contact_name: '',
+  contact_email: '',
+  contact_phone: '',
+})
+
 onMounted(() => {
+  filters.value = objectUtils.copyByValue(storeSupplier.filters)
   getSuppliers()
 })
 
 function getSuppliers() {
-  const filters = {}
   loading.value = true
-  storeSupplier.getSuppliers(filters, paginator)
+  storeSupplier.getSuppliers(
+    objectUtils.cleanQueryEmpties(storeSupplier.filters),
+    paginator
+  )
 }
 
 function newSupplier() {
   router.push({ path: `/suppliers/create` })
+}
+
+function showFilters() {
+  onShowFilters.value = true
 }
 
 function eventHandler(eventKey) {
@@ -72,6 +92,29 @@ watch(
 function clickRow(row) {
   router.push({ path: `/suppliers/${row._id}` })
 }
+
+function cancelFilter() {
+  filters.value = objectUtils.copyByValue(storeSupplier.filters)
+  onShowFilters.value = false
+}
+
+function confirmFilter() {
+  storeSupplier.filters = objectUtils.copyByValue(filters.value)
+  onShowFilters.value = false
+  getSuppliers()
+}
+
+function cleanFilter() {
+  filters.value = {
+    name: '',
+    code: '',
+    contact_name: '',
+    contact_email: '',
+    contact_phone: '',
+  }
+  storeSupplier.filters = objectUtils.copyByValue(filters.value)
+  getSuppliers()
+}
 </script>
 
 <template>
@@ -92,5 +135,20 @@ function clickRow(row) {
         :loading="loading"
       />
     </div>
+
+    <el-drawer v-model="onShowFilters" direction="rtl">
+      <template #header>
+        <h4>Filtro de búsqueda</h4>
+      </template>
+      <template #default>
+        <supplier-filters v-model="filters" />
+      </template>
+      <template #footer>
+        <div style="flex: auto">
+          <el-button @click="cancelFilter">Cancelar</el-button>
+          <el-button type="primary" @click="confirmFilter">Aceptar</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>

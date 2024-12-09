@@ -8,6 +8,13 @@ export const supplierStore = defineStore('supplierStore', {
     create: null,
     update: null,
     error: null,
+    filters: {
+      name: '',
+      code: '',
+      contact_name: '',
+      contact_email: '',
+      contact_phone: '',
+    },
   }),
   actions: {
     getSuppliers(query, paginator) {
