@@ -30,7 +30,7 @@ let activeIndex = ref(currentRoute)
         <el-icon><sell /></el-icon>
         Ventas
       </el-menu-item>
-      <el-menu-item index="/sales" @click="routerPush('/purchases')">
+      <el-menu-item index="/buys" @click="routerPush('/purchases')">
         <el-icon><sold-out /></el-icon>
         Compras
       </el-menu-item>
