@@ -1,6 +1,6 @@
 <script setup>
+import { Refresh, Filter, Delete } from '@element-plus/icons-vue'
 const emit = defineEmits(['action'])
-import { Refresh, Filter, RemoveFilled } from '@element-plus/icons-vue'
 
 const props = defineProps({
   actions: {
@@ -11,7 +11,7 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  filter_active: {
+  filterActive: {
     type: Boolean,
     default: false,
   },
@@ -43,15 +43,17 @@ function eventHandler(val) {
         round
         >Refrescar</el-button
       >
-      <el-button-group v-if="props.refresh" class="ms-1">
+      <el-button-group class="ms-1">
         <el-button
-          :type="filter_active ? 'primary' : 'default'"
-          :icon="RemoveFilled"
+          v-if="props.refresh && filterActive"
+          type="warning"
+          :icon="Delete"
           @click="eventHandler('onCleanFilter')"
           round
         ></el-button>
         <el-button
-          :type="filter_active ? 'primary' : 'default'"
+          v-if="props.refresh"
+          :type="filterActive ? 'success' : 'default'"
           :icon="Filter"
           @click="eventHandler('onFilter')"
           round

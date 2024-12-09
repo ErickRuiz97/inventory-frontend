@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted, ref, reactive, watch } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
+import { rolesUser } from '@/constants'
 
 const userElForm = ref()
-const route = useRoute();
+const route = useRoute()
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -18,9 +19,11 @@ let localValue = ref({
   roles: [],
   full_name: [],
 })
+let isEdit = ref(false)
 
 onMounted(() => {
   localValue.value = props.modelValue
+  isEdit.value = route.params.id ? true : false
 })
 
 watch(
@@ -32,30 +35,24 @@ watch(
   }
 )
 
-const rolesUser = [
-  { label: 'Administrador', value: 'ADMIN' },
-  { label: 'Vendedor', value: 'SALES' },
-  { label: 'Gerente', value: 'MANAGER' },
-  
-]
-
 const rules = reactive({
   email: [
     {
       required: true,
       message: 'Por favor ingrese email valido',
       trigger: ['blur', 'change'],
-      type: 'email'
+      type: 'email',
     },
   ],
   password: [
-  { required: true, message: "Contraseña requerida!", trigger: "blur" },
-          {
-            min: 5,
-            message: "Contraseña debe tener al menos 5 caracteres.",
-            trigger: "blur",
-          },
+    { required: true, message: 'Contraseña requerida!', trigger: 'blur' },
+    {
+      min: 5,
+      message: 'Contraseña debe tener al menos 5 caracteres.',
+      trigger: 'blur',
+    },
   ],
+  roles: [{ required: true, message: 'Roles requeridos!', trigger: 'blur' }],
 })
 
 function validForm() {
@@ -77,7 +74,11 @@ defineExpose({ validForm })
           prop="email"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
-          <el-input v-model="localValue.email" type="email" :disabled="route.params.id" />
+          <el-input
+            v-model="localValue.email"
+            type="email"
+            :disabled="isEdit"
+          />
         </el-form-item>
       </div>
       <div class="row">
@@ -95,14 +96,18 @@ defineExpose({ validForm })
           prop="password"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
-          <el-input v-model="localValue.password" type="password" show-password />
+          <el-input
+            v-model="localValue.password"
+            type="password"
+            show-password
+          />
         </el-form-item>
       </div>
       <div class="row">
         <el-form-item
           label="Roles"
-          prop="rolesUser"
-          class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+          prop="roles"
+          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
           <el-select
             v-model="localValue.roles"

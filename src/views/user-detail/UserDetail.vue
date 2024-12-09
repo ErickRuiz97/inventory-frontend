@@ -1,9 +1,8 @@
 <script setup>
-import { onMounted, watch, ref, reactive } from 'vue'
+import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Check } from '@element-plus/icons-vue'
-import { Delete } from '@element-plus/icons-vue'
+import { Check, Delete } from '@element-plus/icons-vue'
 
 import UserForm from './components/UserForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
@@ -16,7 +15,7 @@ const router = useRouter()
 const isEdit = ref(false)
 const storeUser = userStore()
 const formUser = ref()
-const actions = reactive([
+const actions = ref([
   {
     event: 'onSave',
     type: 'primary',
@@ -39,7 +38,7 @@ onMounted(() => {
   if (route.params.id) isEdit.value = true
   if (isEdit.value) {
     storeUser.getUserById(route.params.id)
-    actions.push({
+    actions.value.push({
       event: 'onDelete',
       type: 'danger',
       icon: Delete,
@@ -120,7 +119,7 @@ watch(
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row formulario-content p-2">
+    <div class="row formulario-content">
       <el-card shadow="always">
         <user-form ref="formUser" v-model="user" />
       </el-card>

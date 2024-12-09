@@ -102,7 +102,7 @@ watch(
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row formulario-content p-2">
+    <div class="row formulario-content">
       <el-card shadow="always">
         <supplier-form ref="formSupplier" v-model="supplier" />
       </el-card>
