@@ -26,10 +26,6 @@ function deepCopy(objetoBase, entidad) {
   return contract
 }
 
-function copyByValue(object) {
-  return JSON.parse(JSON.stringify(object))
-}
-
 function arrayStrUpperToStr(list, separator) {
   const listaFormateada = list.map(elemento => {
     return elemento
@@ -59,7 +55,6 @@ function cleanQueryEmpties(query) {
 
 export const objectUtils = {
   deepCopy,
-  copyByValue,
   arrayStrUpperToStr,
   cleanQueryEmpties,
 }

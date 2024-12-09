@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, watch, ref, reactive } from 'vue'
+import _ from 'lodash'
+import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
@@ -44,7 +45,7 @@ let filters = ref({
 })
 
 onMounted(() => {
-  filters.value = objectUtils.copyByValue(storeSupplier.filters)
+  filters.value = _.cloneDeep(storeSupplier.filters)
   getSuppliers()
 })
 
@@ -94,12 +95,12 @@ function clickRow(row) {
 }
 
 function cancelFilter() {
-  filters.value = objectUtils.copyByValue(storeSupplier.filters)
+  filters.value = _.cloneDeep(storeSupplier.filters)
   onShowFilters.value = false
 }
 
 function confirmFilter() {
-  storeSupplier.filters = objectUtils.copyByValue(filters.value)
+  storeSupplier.filters = _.cloneDeep(filters.value)
   onShowFilters.value = false
   getSuppliers()
 }
@@ -112,9 +113,19 @@ function cleanFilter() {
     contact_email: '',
     contact_phone: '',
   }
-  storeSupplier.filters = objectUtils.copyByValue(filters.value)
+  storeSupplier.filters = _.cloneDeep(filters.value)
   getSuppliers()
 }
+
+const isFiltered = computed(() =>
+  _.isEqual(filters.value, {
+    name: '',
+    code: '',
+    contact_name: '',
+    contact_email: '',
+    contact_phone: '',
+  })
+)
 </script>
 
 <template>
@@ -123,6 +134,7 @@ function cleanFilter() {
       <actions-header
         :actions="actions"
         @action="eventHandler"
+        :filter-active="!isFiltered"
       ></actions-header>
     </div>
     <div class="row">
