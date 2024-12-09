@@ -1,10 +1,13 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import ActionsHeader from '@/components/ActionsHeader.vue';
 import { Check } from '@element-plus/icons-vue'
-import { userStore } from '@/stores'
+import { userStore } from '@/stores';
+import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router'
 
-const storeUser = userStore()
+const router = useRouter()
+const storeUser = reactive(userStore());
 const changePasswordForm = ref();
 const actions = [
   {
@@ -29,10 +32,9 @@ async function saveNewPassword() {
     let body = {
       email: user.email,
       password: infoNewPassword.value.newPassword,
-      oldPassword: infoNewPassword.value.oldPassword
+      oldPassword: infoNewPassword.value.password
     }
     storeUser.changePassword(body);
-    console.log('Formulario válido:', body);
   } else {
     console.log('Formulario inválido');
   }
@@ -84,6 +86,21 @@ const rules = reactive({
     },
   ],
 });
+watch(
+  () => storeUser.changePsw,
+  value => {
+    if (value) {
+      ElMessage.success('Contraseña cambiada exitosamente!')
+      router.push({ path: '/' })
+    }
+  }
+)
+watch(
+  () => storeUser.error,
+  value => {
+    ElMessage.error(value)
+  }
+)
 </script>
 
 <template>
@@ -105,21 +122,21 @@ const rules = reactive({
         <el-form-item
           label="Contraseña"
           prop="password"
-          class="col-sm-12 col-md-4 col-lg-3 col-xl-12"
+          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
           <el-input v-model="infoNewPassword.password" type="password" show-password />
         </el-form-item>
         <el-form-item
           label="Nueva contraseña"
           prop="newPassword"
-          class="col-sm-12 col-md-4 col-lg-3 col-xl-12"
+          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
           <el-input v-model="infoNewPassword.newPassword" type="password" show-password />
         </el-form-item>
         <el-form-item
           label="Confirmar nueva contraseña"
           prop="confirmNewPassword"
-          class="col-sm-12 col-md-4 col-lg-3 col-xl-12"
+          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
           <el-input v-model="infoNewPassword.confirmNewPassword" type="password" show-password />
         </el-form-item>

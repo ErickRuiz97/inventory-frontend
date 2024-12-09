@@ -48,9 +48,9 @@ export const userStore = defineStore('userStore', {
         .then(results => (this.delete = results))
         .catch(reason => (this.error = reason))
     },
-    changePassword(id, body) {
+    changePassword(body) {
       userService
-        .changePassword(id, body)
+        .changePassword(body)
         .then(results => (this.changePsw = results))
         .catch(reason => (this.error = reason))
     },
