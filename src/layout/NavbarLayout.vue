@@ -1,13 +1,9 @@
 <script setup>
-import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { authStore } from '@/stores'
 
 const router = useRouter()
-const user = ref({})
-
-onMounted(() => {
-  user.value = JSON.parse(localStorage.getItem('user'))
-})
+const storeAuth = authStore()
 
 function singOut() {
   localStorage.removeItem('user')
@@ -20,14 +16,16 @@ function goToConfig() {
 </script>
 <template>
   <div class="toolbar">
-    <span class="primary-color">{{ user.email }}</span>
+    <span class="primary-color">{{ storeAuth.userEmail }}</span>
     <el-dropdown>
       <el-icon class="ms-1 primary-color">
         <CaretBottom />
       </el-icon>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="goToConfig">Configuración</el-dropdown-item>
+          <el-dropdown-item v-if="storeAuth.isAdmin()" @click="goToConfig"
+            >Configuración</el-dropdown-item
+          >
           <el-dropdown-item>Cambiar contraseña</el-dropdown-item>
           <el-dropdown-item @click="singOut">Cerrar sesión</el-dropdown-item>
         </el-dropdown-menu>

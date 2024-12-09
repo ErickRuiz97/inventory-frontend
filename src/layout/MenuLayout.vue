@@ -1,8 +1,11 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { authStore } from '@/stores'
+
 const router = useRouter()
 const route = useRoute()
+const storeAuth = authStore()
 
 function routerPush(pathRoute) {
   router.push({ path: pathRoute })
@@ -10,6 +13,12 @@ function routerPush(pathRoute) {
 
 const currentRoute = computed(() => {
   return route.path
+})
+
+onMounted(() => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  storeAuth.roles = user.roles
+  storeAuth.userEmail = user.email
 })
 
 let activeIndex = ref(currentRoute)
@@ -22,27 +31,51 @@ let activeIndex = ref(currentRoute)
       :default-active="activeIndex"
       style="background-color: #384150"
     >
-      <el-menu-item index="/home" @click="routerPush('/home')">
+      <el-menu-item
+        v-if="storeAuth.isSales()"
+        index="/home"
+        @click="routerPush('/home')"
+      >
         <el-icon><trend-charts /></el-icon>
         Dashboard
       </el-menu-item>
-      <el-menu-item index="/sales" @click="routerPush('/sales')">
+      <el-menu-item
+        v-if="storeAuth.isSales()"
+        index="/sales"
+        @click="routerPush('/sales')"
+      >
         <el-icon><sell /></el-icon>
         Ventas
       </el-menu-item>
-      <el-menu-item index="/sales" @click="routerPush('/purchases')">
+      <el-menu-item
+        v-if="storeAuth.isManager()"
+        index="/sales"
+        @click="routerPush('/purchases')"
+      >
         <el-icon><sold-out /></el-icon>
         Compras
       </el-menu-item>
-      <el-menu-item index="/suppliers" @click="routerPush('/suppliers')">
+      <el-menu-item
+        v-if="storeAuth.isAdmin()"
+        index="/suppliers"
+        @click="routerPush('/suppliers')"
+      >
         <el-icon><office-building /></el-icon>
         Proveedores
       </el-menu-item>
-      <el-menu-item index="/products" @click="routerPush('/products')">
+      <el-menu-item
+        v-if="storeAuth.isSales()"
+        index="/products"
+        @click="routerPush('/products')"
+      >
         <el-icon><shop /></el-icon>
         Productos
       </el-menu-item>
-      <el-menu-item index="/users" @click="routerPush('/users')">
+      <el-menu-item
+        v-if="storeAuth.isAdmin()"
+        index="/users"
+        @click="routerPush('/users')"
+      >
         <el-icon><user /></el-icon>
         Usuarios
       </el-menu-item>
