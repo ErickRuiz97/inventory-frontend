@@ -14,9 +14,14 @@ const isShowLayout = computed(() => {
 </script>
 <template>
   <el-container class="layout-container-demo color-back-gray">
-    <el-aside v-if="isShowLayout" id="aside-menu" width="200px" class="color-back-primary"
-      ><menu-layout
-    /></el-aside>
+    <el-aside
+      v-if="isShowLayout"
+      id="aside-menu"
+      width="200px"
+      class="color-back-primary"
+    >
+      <menu-layout />
+    </el-aside>
     <el-container>
       <el-header v-if="isShowLayout" id="navbar-layout">
         <navbar-layout />

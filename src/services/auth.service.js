@@ -3,6 +3,7 @@ import createAxios from './axiosHttp'
 async function loginRequest(body) {
   const axios = createAxios()
   const urlPath = `login`
+
   try {
     const response = await axios.post(urlPath, body)
     localStorage.setItem('user', JSON.stringify(response.data))

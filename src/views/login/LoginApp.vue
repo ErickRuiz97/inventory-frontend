@@ -9,7 +9,7 @@ const router = useRouter()
 const storeAuth = authStore()
 
 const loginElForm = ref()
-const loginForm = reactive({
+const loginForm = ref({
   email: '',
   password: '',
 })
@@ -33,11 +33,15 @@ const rules = reactive({
   ],
 })
 
-const onSubmit = () => {
+function onSubmit() {
   loginElForm.value.validate(valid => {
     if (valid) {
       loading.value = true
-      storeAuth.loginRequest(loginForm)
+      const body = {
+        email: loginForm.value.email,
+        password: loginForm.value.password,
+      }
+      storeAuth.loginRequest(body)
     }
   })
 }
@@ -46,9 +50,10 @@ watch(
   () => storeAuth.login,
   value => {
     if (value) {
-      loading.value = false
-      ElMessage.success('¡Sesión iniciada!')
-      router.push({ path: '/' })
+      setTimeout(() => {
+        loading.value = false
+        router.push({ path: '/' })
+      }, '4000')
     }
   }
 )

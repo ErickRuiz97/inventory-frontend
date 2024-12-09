@@ -17,8 +17,10 @@ const currentRoute = computed(() => {
 
 onMounted(() => {
   const user = JSON.parse(localStorage.getItem('user'))
-  storeAuth.roles = user.roles
-  storeAuth.userEmail = user.email
+  if (user) {
+    storeAuth.roles = user.roles
+    storeAuth.userEmail = user.email
+  }
 })
 
 let activeIndex = ref(currentRoute)
