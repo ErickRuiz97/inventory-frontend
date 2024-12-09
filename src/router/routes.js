@@ -144,6 +144,11 @@ export const routes = [
     component: PurchasesList,
     meta: { breadcrumb: 'Compras' },
   },
+  {
+    path: '/purchases/create',
+    name: 'PurchaseCreate',
+    meta: { breadcrumb: 'Registrar compra' },
+  },
   // Change password
   {
     path: '/change-password',

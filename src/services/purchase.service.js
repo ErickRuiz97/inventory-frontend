@@ -12,6 +12,30 @@ async function getPurchases(query, paginator) {
   }
 }
 
+async function getPurchaseById(idPurchase) {
+  const axios = createAxios()
+  const urlPath = `purchases/${idPurchase}`
+  try {
+    const response = await axios.get(urlPath)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+async function createPurchase(body) {
+  const axios = createAxios()
+  const urlPath = `purchases`
+  try {
+    const response = await axios.post(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const purchaseService = {
-  getPurchases
+  getPurchases,
+  getPurchaseById,
+  createPurchase,
 }
