@@ -39,7 +39,7 @@ let paginator = reactive({
 let filters = ref({
   date: [],
   supplier: '',
-  amount: [0, 'MAX'],
+  amount: [0, 10000],
 })
 
 onMounted(() => {
@@ -107,7 +107,7 @@ function cleanFilter() {
   filters.value = {
     date: [],
     supplier: '',
-    amount: [0, 'MAX'],
+    amount: [0, 10000],
   }
   storePurchase.filters = _.cloneDeep(filters.value)
   getPurchases()
@@ -117,7 +117,7 @@ const isFiltered = computed(() =>
   _.isEqual(filters.value, {
     date: [],
     supplier: '',
-    amount: [0, 'MAX'],
+    amount: [0, 10000],
   })
 )
 </script>

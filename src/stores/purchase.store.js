@@ -10,7 +10,7 @@ export const purchaseStore = defineStore('purchaseStore', {
     filters: {
       date: [],
       supplier: '',
-      amount: [0, 'MAX'],
+      amount: [0, 10000],
     },
   }),
   actions: {
