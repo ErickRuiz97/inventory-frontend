@@ -8,6 +8,12 @@ export const productStore = defineStore('productStore', {
     create: null,
     update: null,
     error: null,
+    filters: {
+      name: '',
+      code: '',
+      categories: [],
+      stock: 'ALL',
+    },
   }),
   actions: {
     getProducts(query, paginator) {

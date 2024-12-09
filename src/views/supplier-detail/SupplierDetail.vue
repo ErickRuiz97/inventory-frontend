@@ -77,7 +77,6 @@ watch(
 watch(
   () => storeSupplier.update,
   value => {
-    console.log(value)
     if (value) {
       ElMessage.success('Proveedor actualizado')
       router.push({ path: '/suppliers' })

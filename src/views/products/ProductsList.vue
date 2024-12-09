@@ -3,6 +3,7 @@ import { onMounted, watch, ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { objectUtils } from '@/utils'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import ProductsTable from './components/ProductsTable.vue'
@@ -24,6 +25,7 @@ const events = {
   onNewProduct: newProduct,
   onRefresh: getProducts,
   onFilter: showFilters,
+  onCleanFilter: cleanFilter,
 }
 let products = reactive([])
 let loading = ref(true)
@@ -33,14 +35,24 @@ let paginator = reactive({
   page: 1,
   total: 0,
 })
+let filters = ref({
+  name: '',
+  code: '',
+  categories: [],
+  stock: 'ALL',
+})
+
 onMounted(() => {
+  filters.value = objectUtils.copyByValue(storeProduct.filters)
   getProducts()
 })
 
 function getProducts() {
-  const filters = {}
   loading.value = true
-  storeProduct.getProducts(filters, paginator)
+  storeProduct.getProducts(
+    objectUtils.cleanQueryEmpties(storeProduct.filters),
+    paginator
+  )
 }
 
 function newProduct() {
@@ -79,6 +91,28 @@ watch(
 function clickRow(row) {
   router.push({ path: `/products/${row._id}` })
 }
+
+function cancelFilter() {
+  filters.value = objectUtils.copyByValue(storeProduct.filters)
+  onShowFilters.value = false
+}
+
+function confirmFilter() {
+  storeProduct.filters = objectUtils.copyByValue(filters.value)
+  onShowFilters.value = false
+  getProducts()
+}
+
+function cleanFilter() {
+  filters.value = {
+    name: '',
+    code: '',
+    categories: [],
+    stock: 'ALL',
+  }
+  storeProduct.filters = objectUtils.copyByValue(filters.value)
+  getProducts()
+}
 </script>
 
 <template>
@@ -105,7 +139,7 @@ function clickRow(row) {
         <h4>Filtro de búsqueda</h4>
       </template>
       <template #default>
-        <product-filters />
+        <product-filters v-model="filters" />
       </template>
       <template #footer>
         <div style="flex: auto">

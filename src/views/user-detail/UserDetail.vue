@@ -2,17 +2,17 @@
 import { onMounted, watch, ref, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Check } from '@element-plus/icons-vue';
+import { Check } from '@element-plus/icons-vue'
 import { Delete } from '@element-plus/icons-vue'
 
 import UserForm from './components/UserForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
-import { userStore } from '@/stores';
+import { userStore } from '@/stores'
 import { useRouter } from 'vue-router'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 const isEdit = ref(false)
 const storeUser = userStore()
 const formUser = ref()
@@ -22,8 +22,8 @@ const actions = reactive([
     type: 'primary',
     icon: Check,
     label: 'Guardar',
-  }
-]);
+  },
+])
 const events = {
   onSave: saveUser,
   onDelete: deleteUser,
@@ -38,14 +38,13 @@ let user = ref({
 onMounted(() => {
   if (route.params.id) isEdit.value = true
   if (isEdit.value) {
-    console.log('hola')
-    storeUser.getUserById(route.params.id);
+    storeUser.getUserById(route.params.id)
     actions.push({
       event: 'onDelete',
       type: 'danger',
       icon: Delete,
       label: 'Eliminar',
-    });
+    })
   }
 })
 
@@ -77,8 +76,8 @@ watch(
   () => storeUser.delete,
   value => {
     if (value) {
-      ElMessage.success('Usuario eliminado');
-      router.push({ path: "/users" });
+      ElMessage.success('Usuario eliminado')
+      router.push({ path: '/users' })
     }
   }
 )
@@ -87,8 +86,8 @@ watch(
   () => storeUser.create,
   value => {
     if (value) {
-      ElMessage.success('Usuario creado');
-      router.push({ path: "/users" });
+      ElMessage.success('Usuario creado')
+      router.push({ path: '/users' })
     }
   }
 )
@@ -98,7 +97,7 @@ watch(
   value => {
     if (value) {
       ElMessage.success('Usuario actualizado')
-      router.push({ path: "/users" });
+      router.push({ path: '/users' })
     }
   }
 )
