@@ -19,9 +19,11 @@ let localValue = ref({
   roles: [],
   full_name: [],
 })
+let isEdit = ref(false)
 
 onMounted(() => {
   localValue.value = props.modelValue
+  isEdit.value = route.params.id ? true : false
 })
 
 watch(
@@ -50,6 +52,7 @@ const rules = reactive({
       trigger: 'blur',
     },
   ],
+  roles: [{ required: true, message: 'Roles requeridos!', trigger: 'blur' }],
 })
 
 function validForm() {
@@ -74,7 +77,7 @@ defineExpose({ validForm })
           <el-input
             v-model="localValue.email"
             type="email"
-            :disabled="route.params.id"
+            :disabled="isEdit"
           />
         </el-form-item>
       </div>
@@ -103,8 +106,8 @@ defineExpose({ validForm })
       <div class="row">
         <el-form-item
           label="Roles"
-          prop="rolesUser"
-          class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+          prop="roles"
+          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
           <el-select
             v-model="localValue.roles"
