@@ -8,7 +8,13 @@ export const userStore = defineStore('userStore', {
     create: null,
     update: null,
     error: null,
-    delete: null
+    delete: null,
+    filters: {
+      full_name: '',
+      email: '',
+      roles: [],
+      state: 'ALL',
+    },
   }),
   actions: {
     getUsers(query, paginator) {
