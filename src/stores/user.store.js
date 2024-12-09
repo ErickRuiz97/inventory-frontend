@@ -15,6 +15,7 @@ export const userStore = defineStore('userStore', {
       roles: [],
       state: 'ALL',
     },
+    changePsw: null,
   }),
   actions: {
     getUsers(query, paginator) {
@@ -45,6 +46,12 @@ export const userStore = defineStore('userStore', {
       userService
         .deleteUser(id)
         .then(results => (this.delete = results))
+        .catch(reason => (this.error = reason))
+    },
+    changePassword(id, body) {
+      userService
+        .changePassword(id, body)
+        .then(results => (this.changePsw = results))
         .catch(reason => (this.error = reason))
     },
   },

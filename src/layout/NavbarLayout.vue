@@ -13,6 +13,9 @@ function singOut() {
 function goToConfig() {
   router.push({ name: 'ConfigApp' })
 }
+function ChangePassword() {
+  router.push({ name: 'ChangePassword' })
+}
 </script>
 <template>
   <div class="toolbar">
@@ -26,7 +29,7 @@ function goToConfig() {
           <el-dropdown-item v-if="storeAuth.isAdmin()" @click="goToConfig"
             >Configuración</el-dropdown-item
           >
-          <el-dropdown-item>Cambiar contraseña</el-dropdown-item>
+          <el-dropdown-item @click="ChangePassword">Cambiar contraseña</el-dropdown-item>
           <el-dropdown-item @click="singOut">Cerrar sesión</el-dropdown-item>
         </el-dropdown-menu>
       </template>

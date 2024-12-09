@@ -45,6 +45,17 @@ async function updateUser(id, body) {
   }
 }
 
+async function changePassword(id, body) {
+  const axios = createAxios()
+  const urlPath = `/users/${id}/password`
+  try {
+    const response = await axios.post(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 async function deleteUser(id) {
   const axios = createAxios()
   const urlPath = `users/${id}`
@@ -62,4 +73,5 @@ export const userService = {
   getUserById,
   updateUser,
   deleteUser,
+  changePassword
 }
