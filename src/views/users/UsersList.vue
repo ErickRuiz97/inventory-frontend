@@ -131,12 +131,21 @@ const isFiltered = computed(() =>
         :filter-active="!isFiltered"
       ></actions-header>
     </div>
-    <div class="row">
-      <header-table :paginator="paginator" @change="getUsers" />
-    </div>
     <div class="row table-content">
-      <users-table v-model="users" @click-row="clickRow" :loading="loading" />
+      <el-card shadow="always">
+        <div class="row">
+          <header-table :paginator="paginator" @change="getUsers" />
+        </div>
+        <div class="row">
+          <users-table
+            v-model="users"
+            @click-row="clickRow"
+            :loading="loading"
+          />
+        </div>
+      </el-card>
     </div>
+
     <el-drawer v-model="onShowFilters" direction="rtl">
       <template #header>
         <h4>Filtro de búsqueda</h4>

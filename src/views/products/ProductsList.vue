@@ -134,15 +134,19 @@ const isFiltered = computed(() =>
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row">
-      <header-table :paginator="paginator" @change="getProducts" />
-    </div>
     <div class="row table-content">
-      <products-table
-        v-model="products"
-        @click-row="clickRow"
-        :loading="loading"
-      />
+      <el-card shadow="always">
+        <div class="row">
+          <header-table :paginator="paginator" @change="getProducts" />
+        </div>
+        <div class="row">
+          <products-table
+            v-model="products"
+            @click-row="clickRow"
+            :loading="loading"
+          />
+        </div>
+      </el-card>
     </div>
 
     <el-drawer v-model="onShowFilters" direction="rtl">

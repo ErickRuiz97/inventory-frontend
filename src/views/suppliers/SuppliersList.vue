@@ -137,17 +137,20 @@ const isFiltered = computed(() =>
         :filter-active="!isFiltered"
       ></actions-header>
     </div>
-    <div class="row">
-      <header-table :paginator="paginator" @change="getSuppliers" />
-    </div>
     <div class="row table-content">
-      <suppliers-table
-        v-model="suppliers"
-        @click-row="clickRow"
-        :loading="loading"
-      />
+      <el-card shadow="always">
+        <div class="row">
+          <header-table :paginator="paginator" @change="getSuppliers" />
+        </div>
+        <div class="row">
+          <suppliers-table
+            v-model="suppliers"
+            @click-row="clickRow"
+            :loading="loading"
+          />
+        </div>
+      </el-card>
     </div>
-
     <el-drawer v-model="onShowFilters" direction="rtl">
       <template #header>
         <h4>Filtro de búsqueda</h4>
