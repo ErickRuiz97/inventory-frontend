@@ -38,6 +38,7 @@ watch(
           range-separator="Hasta"
           start-placeholder="Fecha inicial"
           end-placeholder="Fecha final"
+          value-format="YYYY-MM-DD"
         />
       </el-form-item>
       <el-form-item label="Gasto total" prop="amount" class="row">
