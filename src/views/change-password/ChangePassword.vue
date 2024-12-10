@@ -1,14 +1,14 @@
 <script setup>
-import { ref, reactive, watch } from 'vue';
-import ActionsHeader from '@/components/ActionsHeader.vue';
+import { ref, reactive, watch } from 'vue'
+import ActionsHeader from '@/components/ActionsHeader.vue'
 import { Check } from '@element-plus/icons-vue'
-import { userStore } from '@/stores';
-import { ElMessage } from 'element-plus';
+import { userStore } from '@/stores'
+import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const storeUser = reactive(userStore());
-const changePasswordForm = ref();
+const storeUser = reactive(userStore())
+const changePasswordForm = ref()
 const actions = [
   {
     event: 'onSave',
@@ -16,43 +16,43 @@ const actions = [
     icon: Check,
     label: 'Guardar',
   },
-];
+]
 const events = {
   onSave: saveNewPassword,
-};
+}
 
 function eventHandler(eventKey) {
-  events[eventKey]();
+  events[eventKey]()
 }
 
 async function saveNewPassword() {
-  const valid = await validForm();
+  const valid = await validForm()
   if (valid) {
-    let user = JSON.parse(localStorage.getItem('user'));
+    let user = JSON.parse(localStorage.getItem('user'))
     let body = {
       email: user.email,
       password: infoNewPassword.value.newPassword,
-      oldPassword: infoNewPassword.value.password
+      oldPassword: infoNewPassword.value.password,
     }
-    storeUser.changePassword(body);
+    storeUser.changePassword(body)
   } else {
-    console.log('Formulario inválido');
+    console.log('Formulario inválido')
   }
 }
 
 function validForm() {
-  return new Promise((resolve) => {
-    changePasswordForm.value.validate((valid) => {
-      resolve(valid);
-    });
-  });
+  return new Promise(resolve => {
+    changePasswordForm.value.validate(valid => {
+      resolve(valid)
+    })
+  })
 }
 
 let infoNewPassword = ref({
-  password: "",
-  newPassword: "",
-  confirmNewPassword: ""
-});
+  password: '',
+  newPassword: '',
+  confirmNewPassword: '',
+})
 
 const rules = reactive({
   password: [
@@ -78,14 +78,14 @@ const rules = reactive({
     {
       validator: (rule, value) => {
         if (value !== infoNewPassword.value.newPassword) {
-          return new Error('Las contraseñas no coinciden');
+          return new Error('Las contraseñas no coinciden')
         }
-        return true;
+        return true
       },
       trigger: 'blur',
     },
   ],
-});
+})
 watch(
   () => storeUser.changePsw,
   value => {
@@ -98,7 +98,10 @@ watch(
 watch(
   () => storeUser.error,
   value => {
-    ElMessage.error(value)
+    if (value) {
+      ElMessage.error(value)
+      storeUser.error = null
+    }
   }
 )
 </script>
@@ -124,21 +127,33 @@ watch(
           prop="password"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
-          <el-input v-model="infoNewPassword.password" type="password" show-password />
+          <el-input
+            v-model="infoNewPassword.password"
+            type="password"
+            show-password
+          />
         </el-form-item>
         <el-form-item
           label="Nueva contraseña"
           prop="newPassword"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
-          <el-input v-model="infoNewPassword.newPassword" type="password" show-password />
+          <el-input
+            v-model="infoNewPassword.newPassword"
+            type="password"
+            show-password
+          />
         </el-form-item>
         <el-form-item
           label="Confirmar nueva contraseña"
           prop="confirmNewPassword"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
-          <el-input v-model="infoNewPassword.confirmNewPassword" type="password" show-password />
+          <el-input
+            v-model="infoNewPassword.confirmNewPassword"
+            type="password"
+            show-password
+          />
         </el-form-item>
       </el-form>
     </el-card>

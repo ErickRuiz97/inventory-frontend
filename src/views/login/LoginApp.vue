@@ -63,6 +63,7 @@ watch(
     if (value) {
       loading.value = false
       ElMessage.error('Usuario o contraseña incorrecto')
+      storeAuth.error = null
     }
   }
 )
