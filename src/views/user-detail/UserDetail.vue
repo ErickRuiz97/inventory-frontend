@@ -106,6 +106,7 @@ watch(
   value => {
     if (value) {
       ElMessage.error(value)
+      storeUser.error = null
     }
   }
 )

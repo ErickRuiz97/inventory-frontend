@@ -24,6 +24,7 @@ watch(
   value => {
     if (value) {
       ElMessage.error(value)
+      storeConfig.error = null
     }
   }
 )

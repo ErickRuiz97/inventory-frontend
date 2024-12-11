@@ -7,28 +7,28 @@ import { ElMessage } from 'element-plus'
 import { objectUtils } from '@/utils'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
-import SalesTable from './components/SalesTable.vue'
+import PurchasesTable from './components/PurchasesTable.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
-import SaleFilters from './components/SaleFilters.vue'
+import PurchaseFilters from './components/PurchaseFilters.vue'
 
-import { saleStore } from '@/stores'
+import { purchaseStore } from '@/stores'
 const router = useRouter()
-const storeSale = saleStore()
+const storePurchase = purchaseStore()
 const actions = [
   {
-    event: 'onNewSales',
+    event: 'onNewPurchase',
     type: 'primary',
     icon: Plus,
     label: 'Nuevo',
   },
 ]
 const events = {
-  onNewSale: newSale,
-  onRefresh: getSales,
+  onNewPurchase: newPurchase,
+  onRefresh: getPurchases,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
 }
-let sales = reactive([])
+let purchases = reactive([])
 let loading = ref(true)
 let onShowFilters = ref(false)
 let paginator = reactive({
@@ -38,26 +38,25 @@ let paginator = reactive({
 })
 let filters = ref({
   date: [],
-  customer: '',
-  pay_types: '',
-  amount: [0, 5000],
+  supplier: '',
+  amount: [0, 10000],
 })
 
 onMounted(() => {
-  filters.value = _.cloneDeep(storeSale.filters)
-  getSales()
+  filters.value = _.cloneDeep(storePurchase.filters)
+  getPurchases()
 })
 
-function getSales() {
+function getPurchases() {
   loading.value = true
-  storeSale.getSales(
-    objectUtils.cleanQueryEmpties(storeSale.filters),
+  storePurchase.getPurchases(
+    objectUtils.cleanQueryEmpties(storePurchase.filters),
     paginator
   )
 }
 
-function newSale() {
-  router.push({ path: `/sales/create` })
+function newPurchase() {
+  router.push({ path: `/purchases/create` })
 }
 
 function showFilters() {
@@ -73,9 +72,9 @@ function eventHandler(eventKey) {
 }
 
 watch(
-  () => storeSale.list,
+  () => storePurchase.list,
   value => {
-    sales = reactive(value.items)
+    purchases = reactive(value.items)
     paginator.total = value.total
     loading.value = false
   }
@@ -85,42 +84,40 @@ watch(
   () => paginator,
   value => {
     paginator = value
-    getSales()
+    getPurchases()
   }
 )
 
 function clickRow(row) {
-  router.push({ path: `/sales/${row._id}` })
+  router.push({ path: `/purchases/${row._id}` })
 }
 
 function cancelFilter() {
-  filters.value = _.cloneDeep(storeSale.filters)
+  filters.value = _.cloneDeep(storePurchase.filters)
   onShowFilters.value = false
 }
 
 function confirmFilter() {
-  storeSale.filters = _.cloneDeep(filters.value)
+  storePurchase.filters = _.cloneDeep(filters.value)
   onShowFilters.value = false
-  getSales()
+  getPurchases()
 }
 
 function cleanFilter() {
   filters.value = {
     date: [],
-    customer: '',
-    pay_types: '',
-    amount: [0, 5000],
+    supplier: '',
+    amount: [0, 10000],
   }
-  storeSale.filters = _.cloneDeep(filters.value)
-  getSales()
+  storePurchase.filters = _.cloneDeep(filters.value)
+  getPurchases()
 }
 
 const isFiltered = computed(() =>
   _.isEqual(filters.value, {
     date: [],
-    customer: '',
-    pay_types: '',
-    amount: [0, 5000],
+    supplier: '',
+    amount: [0, 10000],
   })
 )
 </script>
@@ -137,11 +134,11 @@ const isFiltered = computed(() =>
     <div class="row table-content">
       <el-card shadow="always">
         <div class="row">
-          <header-table :paginator="paginator" @change="getSales" />
+          <header-table :paginator="paginator" @change="getPurchases" />
         </div>
         <div class="row">
-          <sales-table
-            v-model="sales"
+          <purchases-table
+            v-model="purchases"
             @click-row="clickRow"
             :loading="loading"
           />
@@ -153,7 +150,7 @@ const isFiltered = computed(() =>
         <h4>Filtro de búsqueda</h4>
       </template>
       <template #default>
-        <sale-filters v-model="filters" />
+        <purchase-filters v-model="filters" />
       </template>
       <template #footer>
         <div style="flex: auto">

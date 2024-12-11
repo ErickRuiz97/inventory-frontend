@@ -1,5 +1,7 @@
 <script setup>
+import _ from 'lodash'
 import { objectUtils } from '@/utils'
+import { categories } from '@/constants'
 const emit = defineEmits(['clickRow'])
 
 let props = defineProps({
@@ -38,7 +40,12 @@ function clickRow(row) {
         show-overflow-tooltip
       >
         <template #default="scope">{{
-          objectUtils.arrayStrUpperToStr(scope.row.categories, ' | ')
+          objectUtils.arrayStrUpperToStr(
+            scope.row.categories.map(
+              val => _.find(categories, { value: val })?.label
+            ),
+            ' | '
+          )
         }}</template>
       </el-table-column>
       <el-table-column

@@ -84,6 +84,7 @@ watch(
   value => {
     if (value) {
       ElMessage.error(value)
+      storeProduct.error = null
     }
   }
 )

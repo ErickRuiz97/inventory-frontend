@@ -5,6 +5,12 @@ export const saleStore = defineStore('saleStore', {
   state: () => ({
     list: null,
     error: null,
+    filters: {
+      date: [],
+      customer: '',
+      pay_types: '',
+      amount: [0, 5000],
+    },
   }),
   actions: {
     getSales(query, paginator) {

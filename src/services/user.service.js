@@ -34,11 +34,23 @@ async function createUser(body) {
   }
 }
 
-async function updateUser(id, body) {
-  const axios = createAxios()
+async function updateUser(body) {
+  const axios = createAxios();
   const urlPath = `users/${id}`
   try {
     const response = await axios.put(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+async function changePassword(body) {
+  const axios = createAxios();
+  let user = JSON.parse(localStorage.getItem('user'));
+  const urlPath = `/users/${user._id}/password`
+  try {
+    const response = await axios.post(urlPath, body)
     return Promise.resolve(response.data)
   } catch (error) {
     return Promise.reject(error)
@@ -62,4 +74,5 @@ export const userService = {
   getUserById,
   updateUser,
   deleteUser,
+  changePassword
 }

@@ -18,8 +18,14 @@ import UserDetail from '@/views/user-detail/UserDetail.vue'
 // Sales routes
 import SalesList from '@/views/sales/SalesList.vue'
 
+// Purchases routes
+import PurchasesList from '@/views/purchases/PurchasesList.vue'
+
 // Config routes
 import ConfigApp from '@/views/config/ConfigApp.vue'
+
+// Change password
+import ChangePassword from '@/views/change-password/ChangePassword.vue'
 
 export const routes = [
   {
@@ -135,6 +141,19 @@ export const routes = [
   {
     path: '/purchases',
     name: 'PurchasesList',
+    component: PurchasesList,
     meta: { breadcrumb: 'Compras' },
+  },
+  {
+    path: '/purchases/create',
+    name: 'PurchaseCreate',
+    meta: { breadcrumb: 'Registrar compra' },
+  },
+  // Change password
+  {
+    path: '/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword,
+    meta: { breadcrumb: 'Cambiar Contraseña' },
   },
 ]

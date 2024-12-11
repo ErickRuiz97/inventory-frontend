@@ -1,4 +1,7 @@
 <script setup>
+import _ from 'lodash'
+import { objectUtils } from '@/utils'
+import { rolesUser } from '@/constants'
 const emit = defineEmits(['clickRow'])
 
 let props = defineProps({
@@ -26,7 +29,18 @@ function clickRow(row) {
     >
       <el-table-column prop="email" label="Email" />
       <el-table-column prop="full_name" label="Nombre completo" />
-      <el-table-column prop="roles" label="Roles" />
+      <el-table-column prop="roles" label="Roles">
+        <template #default="scope">
+          {{
+            objectUtils.arrayStrUpperToStr(
+              scope.row.roles.map(
+                val => _.find(rolesUser, { value: val })?.label
+              ),
+              ' | '
+            )
+          }}
+        </template>
+      </el-table-column>
       <el-table-column
         label="Activo"
         width="100"
