@@ -4,6 +4,10 @@ import { supplierStore } from '@/stores'
 
 const purchaseQueryElForm = ref()
 const storeSupplier = supplierStore()
+const defaultTime = ref([
+  new Date(1970, 0, 1, 0, 0, 0), // Hora predeterminada para la fecha inicial: 00:00:00
+  new Date(1970, 0, 1, 23, 59, 59), // Hora predeterminada para la fecha final: 23:59:59
+])
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -38,10 +42,11 @@ watch(
         <el-date-picker
           v-model="localValue.date"
           type="daterange"
-          range-separator="Hasta"
+          range-separator="a"
           start-placeholder="Fecha inicial"
           end-placeholder="Fecha final"
-          value-format="YYYY-MM-DD"
+          :default-time="defaultTime"
+          value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
         />
       </el-form-item>
       <el-form-item label="Proveedor" prop="supplier" class="row">
