@@ -1,6 +1,5 @@
 <script setup>
 import moment from 'moment'
-import { ref, watch } from 'vue'
 
 const emit = defineEmits(['clickRow'])
 
@@ -15,16 +14,9 @@ const props = defineProps({
   },
 })
 
-const formattedData = ref([])
-
-const formatData = () => {
-  formattedData.value = props.modelValue.map(item => ({
-    ...item,
-    sale_date: moment(item.sale_date).format('DD/MM/YYYY'),
-  }))
+function formatDate(date) {
+  return moment.utc(date).local().format('DD/MM/YYYY HH:mm')
 }
-
-watch(() => props.modelValue, formatData, { immediate: true })
 
 function clickRow(row) {
   emit('clickRow', row)
@@ -37,13 +29,25 @@ function clickRow(row) {
       :data="formattedData"
       max-height="70vh"
       v-loading="props.loading"
+      @row-click="clickRow"
       class="tables"
     >
-      <el-table-column prop="total_amount" label="Monto total" />
-      <el-table-column prop="sale_date" label="Fecha de venta" />
+      <el-table-column prop="created_at" label="Fecha" width="150">
+        <template #default="scope">{{
+          formatDate(scope.row.created_at)
+        }}</template>
+      </el-table-column>
+      <el-table-column prop="customer" label="Cliente" show-overflow-tooltip />
+      <el-table-column prop="pay_type" label="Forma de pago" width="200" />
+      <el-table-column
+        prop="total_amount"
+        label="Cantidad total C$"
+        width="150"
+        align="right"
+        header-align="right"
+      />
     </el-table>
   </div>
 </template>
-
 <style lang="scss" scoped>
 </style>

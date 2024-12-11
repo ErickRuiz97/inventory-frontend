@@ -28,8 +28,8 @@ function clickRow(row) {
     <el-table
       :data="props.modelValue"
       max-height="70vh"
-      @row-click="clickRow"
       v-loading="props.loading"
+      @row-click="clickRow"
       class="tables"
     >
       <el-table-column prop="created_at" label="Fecha" width="150">

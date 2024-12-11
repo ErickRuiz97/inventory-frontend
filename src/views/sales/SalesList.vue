@@ -1,16 +1,19 @@
 <script setup>
-import { onMounted, watch, ref, reactive } from 'vue'
+import _ from 'lodash'
+import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { objectUtils } from '@/utils'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import SalesTable from './components/SalesTable.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
+import SaleFilters from './components/SaleFilters.vue'
 
 import { saleStore } from '@/stores'
 const router = useRouter()
-const storeSales = saleStore()
+const storeSale = saleStore()
 const actions = [
   {
     event: 'onNewSales',
@@ -22,26 +25,43 @@ const actions = [
 const events = {
   onNewSale: newSale,
   onRefresh: getSales,
+  onFilter: showFilters,
+  onCleanFilter: cleanFilter,
 }
 let sales = reactive([])
 let loading = ref(true)
+let onShowFilters = ref(false)
 let paginator = reactive({
   limit: 20,
   page: 1,
   total: 0,
 })
+let filters = ref({
+  date: [],
+  customer: '',
+  pay_types: '',
+  amount: [0, 5000],
+})
+
 onMounted(() => {
+  filters.value = _.cloneDeep(storeSale.filters)
   getSales()
 })
 
 function getSales() {
-  const filters = {}
   loading.value = true
-  storeSales.getSales(filters, paginator)
+  storeSale.getSales(
+    objectUtils.cleanQueryEmpties(storeSale.filters),
+    paginator
+  )
 }
 
 function newSale() {
   router.push({ path: `/sales/create` })
+}
+
+function showFilters() {
+  onShowFilters.value = true
 }
 
 function eventHandler(eventKey) {
@@ -53,7 +73,7 @@ function eventHandler(eventKey) {
 }
 
 watch(
-  () => storeSales.list,
+  () => storeSale.list,
   value => {
     sales = reactive(value.items)
     paginator.total = value.total
@@ -72,6 +92,37 @@ watch(
 function clickRow(row) {
   router.push({ path: `/sales/${row._id}` })
 }
+
+function cancelFilter() {
+  filters.value = _.cloneDeep(storeSale.filters)
+  onShowFilters.value = false
+}
+
+function confirmFilter() {
+  storeSale.filters = _.cloneDeep(filters.value)
+  onShowFilters.value = false
+  getSales()
+}
+
+function cleanFilter() {
+  filters.value = {
+    date: [],
+    customer: '',
+    pay_types: '',
+    amount: [0, 5000],
+  }
+  storeSale.filters = _.cloneDeep(filters.value)
+  getSales()
+}
+
+const isFiltered = computed(() =>
+  _.isEqual(filters.value, {
+    date: [],
+    customer: '',
+    pay_types: '',
+    amount: [0, 5000],
+  })
+)
 </script>
 
 <template>
@@ -79,18 +130,37 @@ function clickRow(row) {
     <div class="row header-content">
       <actions-header
         :actions="actions"
+        :filter-active="!isFiltered"
         @action="eventHandler"
       ></actions-header>
     </div>
-    <div class="row">
-      <header-table :paginator="paginator" @change="getSales" />
-    </div>
     <div class="row table-content">
-      <sales-table
-        v-model="sales"
-        @click-row="clickRow"
-        :loading="loading"
-      />
+      <el-card shadow="always">
+        <div class="row">
+          <header-table :paginator="paginator" @change="getSales" />
+        </div>
+        <div class="row">
+          <sales-table
+            v-model="sales"
+            @click-row="clickRow"
+            :loading="loading"
+          />
+        </div>
+      </el-card>
     </div>
+    <el-drawer v-model="onShowFilters" direction="rtl">
+      <template #header>
+        <h4>Filtro de búsqueda</h4>
+      </template>
+      <template #default>
+        <sale-filters v-model="filters" />
+      </template>
+      <template #footer>
+        <div style="flex: auto">
+          <el-button @click="cancelFilter">Cancelar</el-button>
+          <el-button type="primary" @click="confirmFilter">Aceptar</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>
