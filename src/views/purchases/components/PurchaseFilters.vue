@@ -1,7 +1,9 @@
 <script setup>
 import { onMounted, ref, watch, reactive } from 'vue'
+import { supplierStore } from '@/stores'
 
 const purchaseQueryElForm = ref()
+const storeSupplier = supplierStore()
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -16,6 +18,7 @@ const marks = reactive({
 })
 
 onMounted(() => {
+  storeSupplier.getSuppliers({}, {})
   localValue.value = props.modelValue
 })
 
@@ -40,6 +43,16 @@ watch(
           end-placeholder="Fecha final"
           value-format="YYYY-MM-DD"
         />
+      </el-form-item>
+      <el-form-item label="Proveedor" prop="supplier" class="row">
+        <el-select v-model="localValue.supplier" style="width: 100%" filterable>
+          <el-option
+            v-for="item in storeSupplier.list?.items"
+            :key="item.code"
+            :label="`${item.code} - ${item.name}`"
+            :value="item._id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="Gasto total" prop="amount" class="row">
         <el-slider
