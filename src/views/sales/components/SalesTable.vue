@@ -28,7 +28,7 @@ function clickRow(row) {
 <template>
   <div>
     <el-table
-      :data="formattedData"
+      :data="props.modelValue"
       max-height="70vh"
       v-loading="props.loading"
       @row-click="clickRow"
