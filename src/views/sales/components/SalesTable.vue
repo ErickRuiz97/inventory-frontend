@@ -1,5 +1,7 @@
 <script setup>
+import _ from 'lodash'
 import moment from 'moment'
+import { payTypes } from '@/constants'
 
 const emit = defineEmits(['clickRow'])
 
@@ -38,7 +40,11 @@ function clickRow(row) {
         }}</template>
       </el-table-column>
       <el-table-column prop="customer" label="Cliente" show-overflow-tooltip />
-      <el-table-column prop="pay_type" label="Forma de pago" width="200" />
+      <el-table-column prop="pay_type" label="Forma de pago" width="200">
+        <template #default="scope">
+          {{ _.find(payTypes, { value: scope.row.pay_type })?.label }}
+        </template>
+      </el-table-column>
       <el-table-column
         prop="total_amount"
         label="Cantidad total C$"
