@@ -35,8 +35,6 @@ async function saveNewPassword() {
       oldPassword: infoNewPassword.value.password,
     }
     storeUser.changePassword(body)
-  } else {
-    console.log('Formulario inválido')
   }
 }
 
