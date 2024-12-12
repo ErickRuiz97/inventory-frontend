@@ -9,6 +9,7 @@ export const userStore = defineStore('userStore', {
     update: null,
     error: null,
     delete: null,
+    active: null,
     filters: {
       full_name: '',
       email: '',
@@ -46,6 +47,12 @@ export const userStore = defineStore('userStore', {
       userService
         .deleteUser(id)
         .then(results => (this.delete = results))
+        .catch(reason => (this.error = reason))
+    },
+    activeUser(id) {
+      userService
+        .activeUser(id)
+        .then(results => (this.active = results))
         .catch(reason => (this.error = reason))
     },
     changePassword(body) {
