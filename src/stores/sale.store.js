@@ -11,11 +11,16 @@ export const saleStore = defineStore('saleStore', {
       pay_types: '',
       amount: [0, 5000],
     },
+    paginator: {
+      limit: 20,
+      page: 1,
+      total: 0,
+    },
   }),
   actions: {
-    getSales(query, paginator) {
+    getSales(query) {
       saleService
-        .getSales(query, paginator)
+        .getSales(query, this.paginator)
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },

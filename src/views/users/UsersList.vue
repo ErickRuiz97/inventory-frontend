@@ -4,6 +4,7 @@ import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
 
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
@@ -32,11 +33,8 @@ const events = {
 let users = reactive([])
 let loading = ref(true)
 let onShowFilters = ref(false)
-let paginator = reactive({
-  limit: 20,
-  page: 1,
-  total: 0,
-})
+const { paginator } = storeToRefs(storeUser)
+
 let filters = ref({
   full_name: '',
   email: '',
@@ -50,10 +48,7 @@ onMounted(() => {
 
 function getUsers() {
   loading.value = true
-  storeUser.getUsers(
-    objectUtils.cleanQueryEmpties(storeUser.filters),
-    paginator
-  )
+  storeUser.getUsers(objectUtils.cleanQueryEmpties(storeUser.filters))
 }
 
 function newUser() {
@@ -75,7 +70,7 @@ watch(
   () => storeUser.list,
   value => {
     users = reactive(value.items)
-    paginator.total = value.total
+    _.merge(storeUser.paginator, { total: value.total })
     loading.value = false
   }
 )
@@ -83,7 +78,7 @@ watch(
 watch(
   () => paginator,
   value => {
-    paginator = value
+    _.merge(storeUser.paginator, value)
     getUsers()
   }
 )
@@ -97,12 +92,14 @@ function cancelFilter() {
 }
 
 function confirmFilter() {
+  _.merge(storeUser.paginator, { page: 1 })
   storeUser.filters = _.cloneDeep(filters.value)
   onShowFilters.value = false
   getUsers()
 }
 
 function cleanFilter() {
+  _.merge(storeUser.paginator, { page: 1 })
   filters.value = {
     full_name: '',
     email: '',

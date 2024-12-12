@@ -10,18 +10,23 @@ export const userStore = defineStore('userStore', {
     error: null,
     delete: null,
     active: null,
+    changePsw: null,
     filters: {
       full_name: '',
       email: '',
       roles: [],
       state: 'ALL',
     },
-    changePsw: null,
+    paginator: {
+      limit: 20,
+      page: 1,
+      total: 0,
+    },
   }),
   actions: {
-    getUsers(query, paginator) {
+    getUsers(query) {
       userService
-        .getUsers(query, paginator)
+        .getUsers(query, this.paginator)
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },

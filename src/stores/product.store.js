@@ -14,11 +14,16 @@ export const productStore = defineStore('productStore', {
       categories: [],
       stock: 'ALL',
     },
+    paginator: {
+      limit: 20,
+      page: 1,
+      total: 0,
+    },
   }),
   actions: {
-    getProducts(query, paginator) {
+    getProducts(query) {
       productService
-        .getProducts(query, paginator)
+        .getProducts(query, this.paginator)
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
