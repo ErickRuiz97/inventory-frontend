@@ -2,7 +2,9 @@
 import { onMounted, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Check } from '@element-plus/icons-vue'
+import { Check } from '@element-plus/icons-vue';
+import SelectPurchases from '@/components/SelectPurchases.vue';
+import SelectSales from '@/components/SelectSales.vue'
 
 import ProductForm from './components/ProductForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
@@ -101,6 +103,8 @@ watch(
     <div class="row formulario-content">
       <el-card shadow="always">
         <product-form ref="formProduct" v-model="product" />
+        <select-purchases />
+        <select-sales />
       </el-card>
     </div>
   </div>
