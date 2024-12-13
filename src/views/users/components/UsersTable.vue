@@ -19,40 +19,38 @@ function clickRow(row) {
 }
 </script>
 <template>
-  <div>
-    <el-table
-      :data="props.modelValue"
-      max-height="70vh"
-      @row-click="clickRow"
-      v-loading="props.loading"
-      class="tables"
+  <el-table
+    :data="props.modelValue"
+    max-height="70vh"
+    @row-click="clickRow"
+    v-loading="props.loading"
+    class="tables"
+  >
+    <el-table-column prop="email" label="Email" />
+    <el-table-column prop="full_name" label="Nombre completo" />
+    <el-table-column prop="roles" label="Roles">
+      <template #default="scope">
+        {{
+          objectUtils.arrayStrUpperToStr(
+            scope.row.roles.map(
+              val => _.find(rolesUser, { value: val })?.label
+            ),
+            ' | '
+          )
+        }}
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="Activo"
+      width="100"
+      align="center"
+      header-align="center"
     >
-      <el-table-column prop="email" label="Email" />
-      <el-table-column prop="full_name" label="Nombre completo" />
-      <el-table-column prop="roles" label="Roles">
-        <template #default="scope">
-          {{
-            objectUtils.arrayStrUpperToStr(
-              scope.row.roles.map(
-                val => _.find(rolesUser, { value: val })?.label
-              ),
-              ' | '
-            )
-          }}
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="Activo"
-        width="100"
-        align="center"
-        header-align="center"
-      >
-        <template #default="scope">
-          <el-icon v-if="scope.row.active"><check /></el-icon>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
+      <template #default="scope">
+        <el-icon v-if="scope.row.active"><check /></el-icon>
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 <style lang="scss" scoped>
 </style>
