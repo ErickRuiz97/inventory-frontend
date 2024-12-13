@@ -210,8 +210,8 @@ function validForm() {
         <el-button type="primary" @click="addProduct" :icon="Plus" />
       </el-form-item>
     </el-form>
-    <div class="mt-4">
-      <el-table :data="localValue" class="tables">
+    <div class="mt-5">
+      <el-table :data="localValue" class="tables" show-summary>
         <el-table-column
           prop="name"
           label="Producto"
