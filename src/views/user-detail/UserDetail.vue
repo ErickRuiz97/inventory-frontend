@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Check, CircleClose, CirclePlus } from '@element-plus/icons-vue'
 
+import DetailGeneral from '@/components/DetailGeneral.vue'
 import UserForm from './components/UserForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
@@ -135,20 +136,18 @@ watch(
 )
 </script>
 <template>
-  <div>
-    <div class="row header-content">
+  <detail-general>
+    <template #header>
       <actions-header
         :actions="actions"
         :refresh="false"
         @action="eventHandler"
       ></actions-header>
-    </div>
-    <div class="row formulario-content">
-      <el-card shadow="always">
-        <user-form ref="formUser" v-model="user" />
-      </el-card>
-    </div>
-  </div>
+    </template>
+    <template #body>
+      <user-form ref="formUser" v-model="user" />
+    </template>
+  </detail-general>
 </template>
 <style lang="scss" scoped>
 </style>

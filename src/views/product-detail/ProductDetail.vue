@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Check } from '@element-plus/icons-vue'
 
+import DetailGeneral from '@/components/DetailGeneral.vue'
 import ProductForm from './components/ProductForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
@@ -90,20 +91,18 @@ watch(
 )
 </script>
 <template>
-  <div>
-    <div class="row header-content">
+  <detail-general>
+    <template #header>
       <actions-header
         :actions="actions"
         :refresh="false"
         @action="eventHandler"
       ></actions-header>
-    </div>
-    <div class="row formulario-content">
-      <el-card shadow="always">
-        <product-form ref="formProduct" v-model="product" />
-      </el-card>
-    </div>
-  </div>
+    </template>
+    <template #body>
+      <product-form ref="formProduct" v-model="product" />
+    </template>
+  </detail-general>
 </template>
 
 
