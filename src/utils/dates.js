@@ -6,7 +6,7 @@ function getToday() {
 
 function formatDateTime(fecha) {
   const momentoLocal = moment.utc(fecha).local()
-  return momentoLocal.format('DD/MM/YYYY HH:mm:ss')
+  return momentoLocal.format('DD/MM/YYYY h:mm A')
 }
 
 function formatDate(fecha) {

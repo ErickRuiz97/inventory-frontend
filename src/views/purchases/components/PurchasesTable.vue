@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 function formatDate(date) {
-  return moment.utc(date).local().format('DD/MM/YYYY HH:mm')
+  return moment.utc(date).local().format('DD/MM/YYYY h:mm A')
 }
 
 function clickRow(row) {
