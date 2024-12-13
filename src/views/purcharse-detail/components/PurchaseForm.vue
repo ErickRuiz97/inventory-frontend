@@ -21,7 +21,7 @@ let localValue = ref({
 
 onMounted(() => {
   localValue.value = props.modelValue
-  storeSupplier.getSuppliers({})
+  storeSupplier.getSuppliers({}, false)
 })
 
 watch(

@@ -49,7 +49,7 @@ watch(
 )
 
 function getProducts() {
-  storeProduct.getProducts({})
+  storeProduct.getProducts({}, false)
 }
 
 async function addProduct() {

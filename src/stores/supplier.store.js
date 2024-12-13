@@ -22,9 +22,9 @@ export const supplierStore = defineStore('supplierStore', {
     },
   }),
   actions: {
-    getSuppliers(query) {
+    getSuppliers(query, withPaginator = true) {
       supplierService
-        .getSuppliers(query, this.paginator)
+        .getSuppliers(query, withPaginator ? this.paginator : {})
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
