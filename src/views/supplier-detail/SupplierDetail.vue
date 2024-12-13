@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-
 import { ElMessage } from 'element-plus'
 import { Check } from '@element-plus/icons-vue'
 
+import DetailGeneral from '@/components/DetailGeneral.vue'
 import SupplierForm from './components/SupplierForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
@@ -95,20 +95,18 @@ watch(
 )
 </script>
 <template>
-  <div>
-    <div class="row header-content">
+  <detail-general>
+    <template #header>
       <actions-header
         :actions="actions"
         :refresh="false"
         @action="eventHandler"
       ></actions-header>
-    </div>
-    <div class="row formulario-content">
-      <el-card shadow="always">
-        <supplier-form ref="formSupplier" v-model="supplier" />
-      </el-card>
-    </div>
-  </div>
+    </template>
+    <template #body>
+      <supplier-form ref="formSupplier" v-model="supplier" />
+    </template>
+  </detail-general>
 </template>
 
 

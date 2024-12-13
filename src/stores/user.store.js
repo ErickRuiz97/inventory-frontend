@@ -9,18 +9,24 @@ export const userStore = defineStore('userStore', {
     update: null,
     error: null,
     delete: null,
+    active: null,
+    changePsw: null,
     filters: {
       full_name: '',
       email: '',
       roles: [],
       state: 'ALL',
     },
-    changePsw: null,
+    paginator: {
+      limit: 20,
+      page: 1,
+      total: 0,
+    },
   }),
   actions: {
-    getUsers(query, paginator) {
+    getUsers(query) {
       userService
-        .getUsers(query, paginator)
+        .getUsers(query, this.paginator)
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
@@ -46,6 +52,12 @@ export const userStore = defineStore('userStore', {
       userService
         .deleteUser(id)
         .then(results => (this.delete = results))
+        .catch(reason => (this.error = reason))
+    },
+    activeUser(id) {
+      userService
+        .activeUser(id)
+        .then(results => (this.active = results))
         .catch(reason => (this.error = reason))
     },
     changePassword(body) {

@@ -61,71 +61,61 @@ function validForm() {
 defineExpose({ validForm })
 </script>
 <template>
-  <div>
-    <el-form
-      ref="userElForm"
-      :model="localValue"
-      :rules="rules"
-      label-position="top"
-    >
-      <div class="row">
-        <el-form-item
-          label="Email"
-          prop="email"
-          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+  <el-form
+    ref="userElForm"
+    :model="localValue"
+    :rules="rules"
+    label-position="top"
+  >
+    <div class="row">
+      <el-form-item
+        label="Email"
+        prop="email"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+      >
+        <el-input v-model="localValue.email" type="email" :disabled="isEdit" />
+      </el-form-item>
+    </div>
+    <div class="row">
+      <el-form-item
+        label="Nombre completo"
+        prop="full_name"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+      >
+        <el-input v-model="localValue.full_name" />
+      </el-form-item>
+    </div>
+    <div class="row" v-if="!route.params.id">
+      <el-form-item
+        label="Contraseña"
+        prop="password"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+      >
+        <el-input v-model="localValue.password" type="password" show-password />
+      </el-form-item>
+    </div>
+    <div class="row">
+      <el-form-item
+        label="Roles"
+        prop="roles"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+      >
+        <el-select
+          v-model="localValue.roles"
+          style="width: 100%"
+          multiple
+          filterable
         >
-          <el-input
-            v-model="localValue.email"
-            type="email"
-            :disabled="isEdit"
+          <el-option
+            v-for="item in rolesUser"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
           />
-        </el-form-item>
-      </div>
-      <div class="row">
-        <el-form-item
-          label="Nombre completo"
-          prop="full_name"
-          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
-        >
-          <el-input v-model="localValue.full_name" />
-        </el-form-item>
-      </div>
-      <div class="row" v-if="!route.params.id">
-        <el-form-item
-          label="Contraseña"
-          prop="password"
-          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
-        >
-          <el-input
-            v-model="localValue.password"
-            type="password"
-            show-password
-          />
-        </el-form-item>
-      </div>
-      <div class="row">
-        <el-form-item
-          label="Roles"
-          prop="roles"
-          class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
-        >
-          <el-select
-            v-model="localValue.roles"
-            style="width: 100%"
-            multiple
-            filterable
-          >
-            <el-option
-              v-for="item in rolesUser"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-      </div>
-    </el-form>
-  </div>
+        </el-select>
+      </el-form-item>
+    </div>
+  </el-form>
 </template>
 <style lang="scss" scoped>
 </style>

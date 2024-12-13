@@ -12,11 +12,16 @@ export const purchaseStore = defineStore('purchaseStore', {
       supplier: '',
       amount: [0, 10000],
     },
+    paginator: {
+      limit: 20,
+      page: 1,
+      total: 0,
+    },
   }),
   actions: {
-    getPurchases(query, paginator) {
+    getPurchases(query) {
       purchaseService
-        .getPurchases(query, paginator)
+        .getPurchases(query, this.paginator)
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },

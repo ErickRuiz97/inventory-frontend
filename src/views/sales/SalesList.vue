@@ -4,8 +4,10 @@ import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
 
+import ListGeneral from '@/components/ListGeneral.vue'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
 import SalesTable from './components/SalesTable.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
@@ -31,11 +33,8 @@ const events = {
 let sales = reactive([])
 let loading = ref(true)
 let onShowFilters = ref(false)
-let paginator = reactive({
-  limit: 20,
-  page: 1,
-  total: 0,
-})
+const { paginator } = storeToRefs(storeSale)
+
 let filters = ref({
   date: [],
   customer: '',
@@ -50,10 +49,7 @@ onMounted(() => {
 
 function getSales() {
   loading.value = true
-  storeSale.getSales(
-    objectUtils.cleanQueryEmpties(storeSale.filters),
-    paginator
-  )
+  storeSale.getSales(objectUtils.cleanQueryEmpties(storeSale.filters))
 }
 
 function newSale() {
@@ -76,7 +72,7 @@ watch(
   () => storeSale.list,
   value => {
     sales = reactive(value.items)
-    paginator.total = value.total
+    _.merge(storeSale.paginator, { total: value.total })
     loading.value = false
   }
 )
@@ -84,7 +80,7 @@ watch(
 watch(
   () => paginator,
   value => {
-    paginator = value
+    _.merge(storeSale.paginator, value)
     getSales()
   }
 )
@@ -99,12 +95,14 @@ function cancelFilter() {
 }
 
 function confirmFilter() {
+  _.merge(storeSale.paginator, { page: 1 })
   storeSale.filters = _.cloneDeep(filters.value)
   onShowFilters.value = false
   getSales()
 }
 
 function cleanFilter() {
+  _.merge(storeSale.paginator, { page: 1 })
   filters.value = {
     date: [],
     customer: '',
@@ -126,41 +124,26 @@ const isFiltered = computed(() =>
 </script>
 
 <template>
-  <div>
-    <div class="row header-content">
+  <list-general
+    :is-show-filters="onShowFilters"
+    @cancel-filter="cancelFilter"
+    @confirm-filter="confirmFilter"
+  >
+    <template #actions>
       <actions-header
         :actions="actions"
         :filter-active="!isFiltered"
         @action="eventHandler"
       ></actions-header>
-    </div>
-    <div class="row table-content">
-      <el-card shadow="always">
-        <div class="row">
-          <header-table :paginator="paginator" @change="getSales" />
-        </div>
-        <div class="row">
-          <sales-table
-            v-model="sales"
-            @click-row="clickRow"
-            :loading="loading"
-          />
-        </div>
-      </el-card>
-    </div>
-    <el-drawer v-model="onShowFilters" direction="rtl">
-      <template #header>
-        <h4>Filtro de búsqueda</h4>
-      </template>
-      <template #default>
-        <sale-filters v-model="filters" />
-      </template>
-      <template #footer>
-        <div style="flex: auto">
-          <el-button @click="cancelFilter">Cancelar</el-button>
-          <el-button type="primary" @click="confirmFilter">Aceptar</el-button>
-        </div>
-      </template>
-    </el-drawer>
-  </div>
+    </template>
+    <template #header>
+      <header-table :paginator="paginator" @change="getSales" />
+    </template>
+    <template #table>
+      <sales-table v-model="sales" @click-row="clickRow" :loading="loading" />
+    </template>
+    <template #filters>
+      <sale-filters v-model="filters" />
+    </template>
+  </list-general>
 </template>

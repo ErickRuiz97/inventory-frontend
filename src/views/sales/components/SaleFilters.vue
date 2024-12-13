@@ -34,48 +34,46 @@ watch(
 )
 </script>
 <template>
-  <div>
-    <el-form ref="purchaseQueryElForm" :model="localValue" label-position="top">
-      <el-form-item label="Fecha" prop="date" class="row">
-        <el-date-picker
-          v-model="localValue.date"
-          type="daterange"
-          range-separator="a"
-          start-placeholder="Fecha inicial"
-          end-placeholder="Fecha final"
-          :default-time="defaultTime"
-          value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
+  <el-form ref="purchaseQueryElForm" :model="localValue" label-position="top">
+    <el-form-item label="Fecha" prop="date" class="row">
+      <el-date-picker
+        v-model="localValue.date"
+        type="daterange"
+        range-separator="a"
+        start-placeholder="Fecha inicial"
+        end-placeholder="Fecha final"
+        :default-time="defaultTime"
+        value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
+      />
+    </el-form-item>
+    <el-form-item label="Cliente" prop="customer" class="row">
+      <el-input v-model="localValue.customer" />
+    </el-form-item>
+    <el-form-item label="Formas de pago" prop="pay_types" class="row">
+      <el-select
+        v-model="localValue.pay_types"
+        style="width: 100%"
+        multiple
+        filterable
+      >
+        <el-option
+          v-for="item in payTypes"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
         />
-      </el-form-item>
-      <el-form-item label="Cliente" prop="customer" class="row">
-        <el-input v-model="localValue.customer" />
-      </el-form-item>
-      <el-form-item label="Formas de pago" prop="pay_types" class="row">
-        <el-select
-          v-model="localValue.pay_types"
-          style="width: 100%"
-          multiple
-          filterable
-        >
-          <el-option
-            v-for="item in payTypes"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Gasto total" prop="amount" class="row">
-        <el-slider
-          v-model="localValue.amount"
-          range
-          :marks="marks"
-          :step="100"
-          :max="5000"
-        />
-      </el-form-item>
-    </el-form>
-  </div>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="Gasto total" prop="amount" class="row">
+      <el-slider
+        v-model="localValue.amount"
+        range
+        :marks="marks"
+        :step="100"
+        :max="5000"
+      />
+    </el-form-item>
+  </el-form>
 </template>
 <style lang="scss" scoped>
 </style>

@@ -15,11 +15,16 @@ export const supplierStore = defineStore('supplierStore', {
       contact_email: '',
       contact_phone: '',
     },
+    paginator: {
+      limit: 20,
+      page: 1,
+      total: 0,
+    },
   }),
   actions: {
-    getSuppliers(query, paginator) {
+    getSuppliers(query) {
       supplierService
-        .getSuppliers(query, paginator)
+        .getSuppliers(query, this.paginator)
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
