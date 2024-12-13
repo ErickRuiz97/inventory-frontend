@@ -17,7 +17,7 @@ import UserDetail from '@/views/user-detail/UserDetail.vue'
 
 // Sales routes
 import SalesList from '@/views/sales/SalesList.vue'
-
+import SaleDetail from '@/views/sale-detail/SaleDetail.vue'
 // Purchases routes
 import PurchasesList from '@/views/purchases/PurchasesList.vue'
 import PurchaseDetail from '@/views/purcharse-detail/PurchaseDetail.vue'
@@ -137,6 +137,18 @@ export const routes = [
     name: 'SalesList',
     component: SalesList,
     meta: { breadcrumb: 'Ventas' },
+  },
+  {
+    path: '/sales/create',
+    name: 'SaleCreate',
+    component: SaleDetail,
+    meta: { breadcrumb: 'Registrar venta' },
+  },
+  {
+    path: '/sales/:id',
+    name: 'SaleDetail',
+    component: SaleDetail,
+    meta: { breadcrumb: 'Detalle venta' },
   },
   //purchases routes
   {

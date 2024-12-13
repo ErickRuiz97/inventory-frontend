@@ -1,6 +1,6 @@
 <script setup>
 import _ from 'lodash'
-import { onMounted, ref, reactive, watch } from 'vue'
+import { onMounted, watch, ref, reactive } from 'vue'
 import { productStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
@@ -12,13 +12,12 @@ let props = defineProps({
     default: () => [],
   },
 })
-let localValue = ref([])
+const localValue = ref()
 const unitsInput = ref()
 const productSelectedElForm = ref()
 let product = reactive({
-  _id: '',
+  id: '',
   units: '',
-  purchase_price: '',
   sale_price: '',
 })
 
@@ -33,9 +32,8 @@ function makeProduct(val) {
     _id: entity._id,
     name: `${entity.code} ${entity.name}`,
     units: product.units,
-    purchase_price: product.purchase_price,
     sale_price: product.sale_price,
-    total_price: product.purchase_price * product.units,
+    total_price: product.sale_price * product.units,
   }
 }
 
@@ -49,17 +47,17 @@ watch(
 )
 
 function getProducts() {
-  storeProduct.getProducts({}, false)
+  storeProduct.getProducts({ stock: 'IN_STOCK' }, false)
 }
 
 async function addProduct() {
   const valid = await validForm()
   if (valid) {
     localValue.value.push(makeProduct(product._id))
+    productSelectedElForm.value.resetFields()
     _.merge(product, {
       _id: '',
       units: '',
-      purchase_price: '',
       sale_price: '',
     })
   }
@@ -67,7 +65,6 @@ async function addProduct() {
 
 function setValuesByProduct(val) {
   const entity = storeProduct.list?.items.find(item => item._id === val)
-  product.purchase_price = entity.purchase_price
   product.sale_price = entity.sale_price
   unitsInput.value.focus()
 }
@@ -77,38 +74,10 @@ function deleteProduct(index) {
 }
 
 const rules = reactive({
-  _id: [
+  id: [
     {
       required: true,
       message: 'Por favor selecciona un producto',
-      trigger: 'blur',
-    },
-  ],
-  units: [
-    {
-      required: true,
-      message: 'Por favor ingresa un valor',
-      trigger: 'blur',
-    },
-    { type: 'integer', message: 'Debe ser un número entero', trigger: 'blur' },
-    {
-      type: 'integer',
-      min: 1,
-      message: 'Debe ser mayor que 0',
-      trigger: 'blur',
-    },
-  ],
-  purchase_price: [
-    {
-      required: true,
-      message: 'Por favor ingresa un valor',
-      trigger: 'blur',
-    },
-    { type: 'number', message: 'Debe ser un número', trigger: 'blur' },
-    {
-      type: 'number',
-      min: 0.01,
-      message: 'Debe ser mayor que 0',
       trigger: 'blur',
     },
   ],
@@ -124,6 +93,23 @@ const rules = reactive({
       min: 0.01,
       message: 'Debe ser mayor que 0',
       trigger: 'blur',
+    },
+  ],
+  units: [
+    {
+      required: true,
+      message: 'Por favor ingresa un valor',
+      trigger: ['blur', 'change'],
+    },
+    {
+      validator: (rule, value, callback) => {
+        if (value === 0) {
+          callback(new Error('Las unidades deben ser mayores que 0'))
+        } else {
+          callback()
+        }
+      },
+      trigger: ['blur', 'change'],
     },
   ],
 })
@@ -148,7 +134,7 @@ function validForm() {
       <el-form-item
         prop="_id"
         label="Producto"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-5 col-lg-4 col-xl-4"
       >
         <el-select
           v-model="product._id"
@@ -167,7 +153,7 @@ function validForm() {
       <el-form-item
         prop="units"
         label="Unidades"
-        class="col-sm-12 col-md-3 col-lg-2 col-xl-2"
+        class="col-sm-12 col-md-4 col-lg-3 col-xl-3"
       >
         <el-input
           ref="unitsInput"
@@ -178,81 +164,55 @@ function validForm() {
         />
       </el-form-item>
       <el-form-item
-        prop="purchase_price"
-        label="Precio de compra"
-        class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
-      >
-        <el-input
-          v-model.number="product.purchase_price"
-          placeholder="Precio de compra"
-        />
-      </el-form-item>
-      <el-form-item
         prop="sale_price"
         label="Precio de venta"
-        class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
+        class="col-sm-12 col-md-5 col-lg-4 col-xl-4"
       >
         <el-input
           v-model.number="product.sale_price"
           placeholder="Precio de venta"
+          disabled
         />
       </el-form-item>
-      <!-- <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2">
-          <el-form-item label="Precio total">
-            <el-input
-              v-model.number="totalPrice"
-              placeholder="Precio total"
-              disabled
-            />
-          </el-form-item>
-        </div> -->
       <el-form-item label="" class="col-1 mt-4">
         <el-button type="primary" @click="addProduct" :icon="Plus" />
       </el-form-item>
     </el-form>
-    <div class="mt-5">
-      <el-table :data="localValue" class="tables" show-summary>
-        <el-table-column
-          prop="name"
-          label="Producto"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="units"
-          label="Unidades"
-          width="100"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="purchase_price"
-          label="Precio de compra"
-          width="120"
-          align="right"
-        ></el-table-column>
-        <el-table-column
-          prop="sale_price"
-          label="Precio de venta"
-          width="100"
-          align="right"
-        ></el-table-column>
-        <el-table-column
-          prop="total_price"
-          label="Precio total"
-          width="100"
-          align="right"
-        ></el-table-column>
-        <el-table-column label="Acciones" width="100" align="center">
-          <template #default="scope">
-            <el-button
-              type="danger"
-              @click="deleteProduct(scope.$index)"
-              :icon="Delete"
-              circle
-            >
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+    <el-table :data="localValue" class="tables" show-summary>
+      <el-table-column
+        prop="name"
+        label="Producto"
+        show-overflow-tooltip
+      ></el-table-column>
+      <el-table-column
+        prop="units"
+        label="Unidades"
+        width="100"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="sale_price"
+        label="Precio de venta"
+        width="120"
+        align="right"
+      ></el-table-column>
+      <el-table-column
+        prop="total_price"
+        label="Precio total"
+        width="100"
+        align="right"
+      ></el-table-column>
+      <el-table-column label="Acciones" width="100" align="center">
+        <template #default="scope">
+          <el-button
+            type="danger"
+            @click="deleteProduct(scope.$index)"
+            :icon="Delete"
+            circle
+          >
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>

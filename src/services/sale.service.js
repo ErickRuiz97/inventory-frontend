@@ -12,6 +12,30 @@ async function getSales(query, paginator) {
   }
 }
 
+async function getSaleById(idSale) {
+  const axios = createAxios()
+  const urlPath = `sales/${idSale}`
+  try {
+    const response = await axios.get(urlPath)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+async function createSale(body) {
+  const axios = createAxios()
+  const urlPath = `sales`
+  try {
+    const response = await axios.post(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const saleService = {
-  getSales
+  getSales,
+  getSaleById,
+  createSale,
 }

@@ -18,7 +18,7 @@ const router = useRouter()
 const storeSale = saleStore()
 const actions = [
   {
-    event: 'onNewSales',
+    event: 'onNewSale',
     type: 'primary',
     icon: Plus,
     label: 'Nuevo',
