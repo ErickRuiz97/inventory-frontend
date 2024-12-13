@@ -22,7 +22,7 @@ const marks = reactive({
 })
 
 onMounted(() => {
-  storeSupplier.getSuppliers({}, {})
+  storeSupplier.getSuppliers({})
   localValue.value = props.modelValue
 })
 
