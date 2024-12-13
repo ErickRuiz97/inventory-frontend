@@ -14,6 +14,7 @@ let props = defineProps({
 })
 let localValue = ref([])
 const unitsInput = ref()
+const productSelect = ref()
 const productSelectedElForm = ref()
 let product = reactive({
   _id: '',
@@ -62,6 +63,7 @@ async function addProduct() {
       purchase_price: '',
       sale_price: '',
     })
+    productSelect.value.focus()
   }
 }
 
@@ -151,6 +153,7 @@ function validForm() {
         class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
       >
         <el-select
+          ref="productSelect"
           v-model="product._id"
           @change="setValuesByProduct"
           style="width: 100%"

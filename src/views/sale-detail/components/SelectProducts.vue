@@ -12,11 +12,12 @@ let props = defineProps({
     default: () => [],
   },
 })
-const localValue = ref()
+let localValue = ref([])
 const unitsInput = ref()
+const productSelect = ref()
 const productSelectedElForm = ref()
 let product = reactive({
-  id: '',
+  _id: '',
   units: '',
   sale_price: '',
 })
@@ -60,6 +61,7 @@ async function addProduct() {
       units: '',
       sale_price: '',
     })
+    productSelect.value.focus()
   }
 }
 
@@ -74,7 +76,7 @@ function deleteProduct(index) {
 }
 
 const rules = reactive({
-  id: [
+  _id: [
     {
       required: true,
       message: 'Por favor selecciona un producto',
@@ -137,6 +139,7 @@ function validForm() {
         class="col-sm-12 col-md-5 col-lg-4 col-xl-4"
       >
         <el-select
+          ref="productSelect"
           v-model="product._id"
           @change="setValuesByProduct"
           style="width: 100%"
@@ -178,41 +181,43 @@ function validForm() {
         <el-button type="primary" @click="addProduct" :icon="Plus" />
       </el-form-item>
     </el-form>
-    <el-table :data="localValue" class="tables" show-summary>
-      <el-table-column
-        prop="name"
-        label="Producto"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column
-        prop="units"
-        label="Unidades"
-        width="100"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="sale_price"
-        label="Precio de venta"
-        width="120"
-        align="right"
-      ></el-table-column>
-      <el-table-column
-        prop="total_price"
-        label="Precio total"
-        width="100"
-        align="right"
-      ></el-table-column>
-      <el-table-column label="Acciones" width="100" align="center">
-        <template #default="scope">
-          <el-button
-            type="danger"
-            @click="deleteProduct(scope.$index)"
-            :icon="Delete"
-            circle
-          >
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="mt-5">
+      <el-table :data="localValue" class="tables" show-summary>
+        <el-table-column
+          prop="_id"
+          label="Producto"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="units"
+          label="Unidades"
+          width="100"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="sale_price"
+          label="Precio de venta"
+          width="120"
+          align="right"
+        ></el-table-column>
+        <el-table-column
+          prop="total_price"
+          label="Precio total"
+          width="100"
+          align="right"
+        ></el-table-column>
+        <el-table-column label="Acciones" width="100" align="center">
+          <template #default="scope">
+            <el-button
+              type="danger"
+              @click="deleteProduct(scope.$index)"
+              :icon="Delete"
+              circle
+            >
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
