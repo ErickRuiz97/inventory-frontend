@@ -188,7 +188,7 @@ function validForm() {
     </el-button>
   </div>
   <div class="mt-2">
-    <el-table :data="localValue" class="" show-summary>
+    <el-table :data="localValue" class="" show-summary max-height="50vh">
       <el-table-column
         prop="_id"
         label="Producto"

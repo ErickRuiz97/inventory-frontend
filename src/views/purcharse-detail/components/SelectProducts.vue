@@ -219,7 +219,7 @@ function validForm() {
     >
   </div>
   <div class="mt-2">
-    <el-table :data="localValue" class="tables" show-summary>
+    <el-table :data="localValue" class="tables" show-summary max-height="50vh">
       <el-table-column
         prop="name"
         label="Producto"
