@@ -34,7 +34,7 @@ function makeProduct(val) {
     name: `${entity.code} ${entity.name}`,
     units: product.units,
     sale_price: product.sale_price,
-    total_price: product.sale_price * product.units,
+    total_price: (product.sale_price * product.units).toFixed(2),
   }
 }
 

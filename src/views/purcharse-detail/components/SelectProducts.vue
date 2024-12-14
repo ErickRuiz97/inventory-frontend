@@ -36,7 +36,7 @@ function makeProduct(val) {
     units: product.units,
     purchase_price: product.purchase_price,
     sale_price: product.sale_price,
-    total_price: product.purchase_price * product.units,
+    total_price: (product.purchase_price * product.units).toFixed(2),
   }
 }
 
@@ -66,8 +66,9 @@ async function addProduct() {
       localValue.value[index].purchase_price = contract.purchase_price
       localValue.value[index].sale_price = contract.sale_price
       localValue.value[index].units += contract.units
-      localValue.value[index].total_price =
+      localValue.value[index].total_price = (
         contract.purchase_price * localValue.value[index].units
+      ).toFixed(2)
     } else {
       localValue.value.push(contract)
     }
@@ -200,6 +201,8 @@ function validForm() {
       class="col-sm-12 col-md-6 col-lg-3 col-xl-3"
     >
       <el-input
+        type="number"
+        :step="0.01"
         v-model.number="product.purchase_price"
         placeholder="Precio de compra"
       />
@@ -210,6 +213,8 @@ function validForm() {
       class="col-sm-12 col-md-6 col-lg-3 col-xl-3"
     >
       <el-input
+        type="number"
+        :step="0.01"
         v-model.number="product.sale_price"
         placeholder="Precio de venta"
       />
