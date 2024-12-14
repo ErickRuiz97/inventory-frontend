@@ -6,6 +6,8 @@ import { userStore } from '@/stores'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
+import DetailGeneral from '@/components/DetailGeneral.vue'
+
 const router = useRouter()
 const storeUser = reactive(userStore())
 const changePasswordForm = ref()
@@ -105,15 +107,15 @@ watch(
 </script>
 
 <template>
-  <div>
-    <div class="row header-content">
+  <detail-general>
+    <template #header>
       <actions-header
         :actions="actions"
         :refresh="false"
         @action="eventHandler"
       ></actions-header>
-    </div>
-    <el-card shadow="always">
+    </template>
+    <template #body>
       <el-form
         ref="changePasswordForm"
         :model="infoNewPassword"
@@ -154,6 +156,6 @@ watch(
           />
         </el-form-item>
       </el-form>
-    </el-card>
-  </div>
+    </template>
+  </detail-general>
 </template>
