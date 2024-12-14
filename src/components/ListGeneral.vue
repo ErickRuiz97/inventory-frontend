@@ -33,7 +33,13 @@ watch(
       </el-card>
     </div>
 
-    <el-drawer v-model="onShowFilters" direction="rtl">
+    <el-drawer
+      v-model="onShowFilters"
+      direction="rtl"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+      :show-close="false"
+    >
       <template #header>
         <h4>Filtro de búsqueda</h4>
       </template>
