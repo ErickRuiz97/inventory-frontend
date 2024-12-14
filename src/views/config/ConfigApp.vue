@@ -7,7 +7,7 @@ import DetailGeneral from '@/components/DetailGeneral.vue'
 <template>
   <detail-general>
     <template #body>
-      <div class="row table-content">
+      <div class="row">
         <div class="col-6">
           <backup-file></backup-file>
         </div>
