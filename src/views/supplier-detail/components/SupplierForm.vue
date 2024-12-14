@@ -82,14 +82,14 @@ defineExpose({ validForm })
       <el-form-item
         label="Código"
         prop="code"
-        class="col-sm-12 col-md-4 col-lg-3 col-xl-2"
+        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
       >
         <el-input v-model="localValue.code" maxlength="8" show-word-limit />
       </el-form-item>
       <el-form-item
         label="Nombre"
         prop="name"
-        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
+        class="col-sm-12 col-md-7 col-lg-6 col-xl-5"
       >
         <el-input v-model="localValue.name" />
       </el-form-item>
@@ -98,23 +98,21 @@ defineExpose({ validForm })
       <el-form-item
         label="Contacto"
         prop="contact.name"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
       >
         <el-input v-model="localValue.contact.name" />
       </el-form-item>
       <el-form-item
         label="Email"
         prop="contact.email"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
       >
         <el-input v-model="localValue.contact.email" />
       </el-form-item>
-    </div>
-    <div class="row">
       <el-form-item
         label="Teléfono"
         prop="contact.phone"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-2 col-xl-2"
       >
         <el-input v-model="localValue.contact.phone" />
       </el-form-item>

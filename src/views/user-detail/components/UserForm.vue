@@ -75,8 +75,7 @@ defineExpose({ validForm })
       >
         <el-input v-model="localValue.email" type="email" :disabled="isEdit" />
       </el-form-item>
-    </div>
-    <div class="row">
+
       <el-form-item
         label="Nombre completo"
         prop="full_name"
@@ -93,8 +92,7 @@ defineExpose({ validForm })
       >
         <el-input v-model="localValue.password" type="password" show-password />
       </el-form-item>
-    </div>
-    <div class="row">
+
       <el-form-item
         label="Roles"
         prop="roles"

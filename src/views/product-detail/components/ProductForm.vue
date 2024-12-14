@@ -65,7 +65,7 @@ defineExpose({ validForm })
       <el-form-item
         label="Código"
         prop="code"
-        class="col-sm-12 col-md-4 col-lg-3 col-xl-2"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-input v-model="localValue.code" maxlength="8" show-word-limit />
       </el-form-item>
@@ -81,7 +81,7 @@ defineExpose({ validForm })
       <el-form-item
         label="Descripción"
         prop="description"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-input
           v-model="localValue.description"
@@ -94,7 +94,7 @@ defineExpose({ validForm })
       <el-form-item
         label="Categorías"
         prop="categories"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-select
           v-model="localValue.categories"
