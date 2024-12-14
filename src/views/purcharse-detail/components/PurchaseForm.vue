@@ -71,7 +71,7 @@ defineExpose({ validForm })
       <el-form-item
         label="Proveedor"
         prop="supplier_id"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-select
           v-model="localValue.supplier_id"
@@ -88,13 +88,19 @@ defineExpose({ validForm })
       </el-form-item>
     </div>
     <div class="row">
-      <el-form-item
-        prop="products"
-        class="col-sm-12 col-md-10 col-lg-9 col-xl-8"
-      >
+      <div prop="products" class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
         <select-products v-model="localValue.products" />
-      </el-form-item>
+      </div>
     </div>
+    <el-form-item prop="products" class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
+      <el-table
+        v-show="false"
+        :data="localValue.products"
+        class=""
+        show-summary
+      >
+      </el-table>
+    </el-form-item>
   </el-form>
 </template>
 

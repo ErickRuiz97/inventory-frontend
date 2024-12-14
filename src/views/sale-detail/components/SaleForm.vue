@@ -73,14 +73,14 @@ defineExpose({ validForm })
       <el-form-item
         label="Cliente"
         prop="customer"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-input v-model="localValue.customer" placeholder="Cliente" />
       </el-form-item>
       <el-form-item
         label="Tipo de pago"
         prop="pay_type"
-        class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
+        class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-select v-model="localValue.pay_type" style="width: 100%" filterable>
           <el-option
@@ -93,13 +93,19 @@ defineExpose({ validForm })
       </el-form-item>
     </div>
     <div class="row">
-      <el-form-item
-        prop="products"
-        class="col-sm-12 col-md-10 col-lg-9 col-xl-8"
-      >
+      <div prop="products" class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
         <select-products v-model="localValue.products" />
-      </el-form-item>
+      </div>
     </div>
+    <el-form-item prop="products" class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
+      <el-table
+        v-show="false"
+        :data="localValue.products"
+        class=""
+        show-summary
+      >
+      </el-table>
+    </el-form-item>
   </el-form>
 </template>
 
