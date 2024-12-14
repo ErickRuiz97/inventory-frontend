@@ -56,7 +56,22 @@ function getProducts() {
 async function addProduct() {
   const valid = await validForm()
   if (valid) {
-    localValue.value.push(makeProduct(product._id))
+    const contract = makeProduct(product._id)
+
+    const index = localValue.value.findIndex(
+      product => product._id == contract._id
+    )
+
+    if (index !== -1) {
+      localValue.value[index].purchase_price = contract.purchase_price
+      localValue.value[index].sale_price = contract.sale_price
+      localValue.value[index].units += contract.units
+      localValue.value[index].total_price =
+        contract.purchase_price * localValue.value[index].units
+    } else {
+      localValue.value.push(contract)
+    }
+
     _.merge(product, {
       _id: '',
       units: '',

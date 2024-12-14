@@ -54,7 +54,19 @@ function getProducts() {
 async function addProduct() {
   const valid = await validForm()
   if (valid) {
-    localValue.value.push(makeProduct(product._id))
+    const contract = makeProduct(product._id)
+
+    const index = localValue.value.findIndex(
+      product => product._id == contract._id
+    )
+
+    if (index !== -1) {
+      localValue.value[index].units += contract.units
+      localValue.value[index].total_price += contract.total_price
+    } else {
+      localValue.value.push(contract)
+    }
+
     productSelectedElForm.value.resetFields()
     _.merge(product, {
       _id: '',
@@ -190,7 +202,7 @@ function validForm() {
   <div class="mt-2">
     <el-table :data="localValue" class="" show-summary max-height="50vh">
       <el-table-column
-        prop="_id"
+        prop="name"
         label="Producto"
         show-overflow-tooltip
       ></el-table-column>
