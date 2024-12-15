@@ -60,7 +60,19 @@ function clickRow(row) {
         width="85"
         align="right"
       />
-      <el-table-column prop="stock" label="Und" width="70" align="center" />
+      <el-table-column
+        prop="trend"
+        label="Tendencia"
+        width="75"
+        align="center"
+      >
+        <template #default="scope">
+          <el-icon color="mediumseagreen" v-if="scope.row.trend == 'UPWARD'"><caret-top /></el-icon>
+          <el-icon color="red" v-if="scope.row.trend == 'FALLING'"><caret-bottom /></el-icon>
+          <el-icon  v-if="scope.row.trend == 'EQUAL'"><d-caret /></el-icon>
+        </template>
+      </el-table-column>
+      <el-table-column prop="stock" label="Und" width="50" align="center" />
     </el-table>
   </div>
 </template>
