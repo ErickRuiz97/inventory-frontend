@@ -23,6 +23,18 @@ async function getUsers(query, paginator) {
   }
 }
 
+async function getUsersReport(query) {
+  const axios = createAxios(true)
+  const queryParams = new URLSearchParams(query).toString()
+  const urlPath = `users/report?${queryParams}`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 async function createUser(body) {
   const axios = createAxios()
   const urlPath = `/users`
@@ -87,4 +99,5 @@ export const userService = {
   deleteUser,
   activeUser,
   changePassword,
+  getUsersReport,
 }

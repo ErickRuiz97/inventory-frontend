@@ -11,6 +11,7 @@ export const userStore = defineStore('userStore', {
     delete: null,
     active: null,
     changePsw: null,
+    report: null,
     filters: {
       full_name: '',
       email: '',
@@ -28,6 +29,12 @@ export const userStore = defineStore('userStore', {
       userService
         .getUsers(query, this.paginator)
         .then(results => (this.list = results))
+        .catch(reason => (this.error = reason))
+    },
+    getUsersReport(query) {
+      userService
+        .getUsersReport(query)
+        .then(results => (this.report = results))
         .catch(reason => (this.error = reason))
     },
     getUserById(idUser) {

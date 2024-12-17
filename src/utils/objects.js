@@ -25,7 +25,22 @@ function cleanQueryEmpties(query) {
   }, {})
 }
 
+function downloadFile(blob, fileNameDefault) {
+  const contentDisposition = blob.headers['content-disposition']
+  const fileName = contentDisposition
+    ? contentDisposition.split('filename=')[1]?.replace(/["']/g, '')
+    : fileNameDefault
+  const url = window.URL.createObjectURL(new Blob([blob.data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', fileName)
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+}
+
 export const objectUtils = {
   arrayStrUpperToStr,
   cleanQueryEmpties,
+  downloadFile,
 }

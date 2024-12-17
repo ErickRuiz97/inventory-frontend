@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
+import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
@@ -24,12 +24,19 @@ const actions = [
     icon: Plus,
     label: 'Nuevo',
   },
+  {
+    event: 'onUsersReport',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte',
+  },
 ]
 const events = {
   onNewUser: newUser,
   onRefresh: getUsers,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
+  onUsersReport: downloadReport,
 }
 let users = reactive([])
 let loading = ref(true)
@@ -50,6 +57,11 @@ onMounted(() => {
 function getUsers() {
   loading.value = true
   storeUser.getUsers(objectUtils.cleanQueryEmpties(storeUser.filters))
+}
+
+function downloadReport() {
+  loading.value = true
+  storeUser.getUsersReport(objectUtils.cleanQueryEmpties(storeUser.filters))
 }
 
 function newUser() {
@@ -118,6 +130,28 @@ const isFiltered = computed(() =>
     roles: [],
     state: 'ALL',
   })
+)
+
+watch(
+  () => storeUser.report,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+
+      objectUtils.downloadFile(newVal, 'ReporteUsuarios.xlsx')
+    }
+  }
+)
+
+watch(
+  () => storeUser.error,
+  value => {
+    if (value) {
+      loading.value = false
+      ElMessage.error(value)
+      storeUser.error = null
+    }
+  }
 )
 </script>
 <template>
