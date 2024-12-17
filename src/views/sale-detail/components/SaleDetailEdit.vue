@@ -1,0 +1,79 @@
+<script setup>
+import { onMounted, ref, watch } from 'vue'
+import { payTypes } from '@/constants';
+import _ from 'lodash';
+
+
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => {
+      return {
+        customer: '',
+        pay_type: '',
+        products: [],
+      }
+    },
+  },
+})
+
+let localValue = ref({
+  customer: '',
+  pay_type: '',
+  products: [],
+})
+
+onMounted(() => {
+  localValue.value = props.modelValue;
+});
+
+watch(
+  () => props.modelValue,
+  value => {
+    if (value) {
+      localValue.value = value
+    }
+  }
+);
+</script>
+<template>
+  <div>
+    <div class="row" v-if="localValue.sale">
+      <div class="col-4">
+        <label class="fw-bold mb-1">Cliente</label>
+        <p class="text-muted mb-0">{{ localValue.sale.customer }}</p>
+      </div>
+      <div class="col-4">
+        <label class="fw-bold mb-1">Forma de pago</label>
+        <p class="text-muted mb-0">
+        <el-icon>
+          <CreditCard v-if="localValue.sale.pay_type === 'CREDIT_CARD' || localValue.sale.pay_type === 'DEBIT_CARD'" />
+          <Money v-if="localValue.sale.pay_type === 'CASH' || localValue.sale.pay_type === 'TRANSFER'" />
+        </el-icon>
+          {{ _.find(payTypes, { value: localValue.sale.pay_type })?.label }}
+        </p>
+      </div>
+    </div>
+    <div class="mt-2" v-if="localValue.detail">
+  <el-table :data="localValue.detail" fit>
+    <el-table-column
+      prop="product.name"
+      label="Producto"
+      align="left"
+    ></el-table-column>
+    <el-table-column
+      prop="units"
+      label="Unidades"
+      align="center"
+    ></el-table-column>
+    <el-table-column
+      prop="total_price"
+      label="Precio total"
+      align="right"
+    ></el-table-column>
+  </el-table>
+</div>
+
+
+  </div>
+</template>

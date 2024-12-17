@@ -7,7 +7,7 @@ import { Check } from '@element-plus/icons-vue'
 import DetailGeneral from '@/components/DetailGeneral.vue'
 import PurchaseForm from './components/PurchaseForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
-
+import PurchaseDetailEdit from './components/PurchaseDetailEdit.vue'
 import { purchaseStore } from '@/stores'
 
 const route = useRoute()
@@ -87,6 +87,7 @@ watch(
     </template>
     <template #body>
       <purchase-form v-if="!isEdit" ref="formPurchase" v-model="purchase" />
+      <purchase-detail-edit v-else v-model="purchase" />
     </template>
   </detail-general>
 </template>
