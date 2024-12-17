@@ -61,8 +61,10 @@ async function addProduct() {
     )
 
     if (index !== -1) {
-      localValue.value[index].units += contract.units
-      localValue.value[index].total_price += contract.total_price
+      localValue.value[index].units = Number(localValue.value[index].units) + Number(contract.units)
+      localValue.value[index].total_price = (
+        Number(localValue.value[index].total_price) + Number(contract.total_price)
+      ).toFixed(2)
     } else {
       localValue.value.push(contract)
     }
@@ -126,7 +128,21 @@ const rules = reactive({
       trigger: ['blur', 'change'],
     },
   ],
-})
+});
+
+function getSummary({ columns, data }) {
+  const sums = []
+  columns.forEach((column, index) => {
+    if (column.property === 'total_price') {
+      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
+      console.log(total)
+      sums[index] = `Total: $${total.toFixed(2)}`
+    } else {
+      sums[index] = '';
+    }
+  })
+  return sums
+}
 
 function validForm() {
   return new Promise(resolve => {
@@ -200,7 +216,7 @@ function validForm() {
     </el-button>
   </div>
   <div class="mt-2">
-    <el-table :data="localValue" class="" show-summary max-height="50vh">
+    <el-table :data="localValue" class="" show-summary :summary-method="getSummary" sum-text="Total" max-height="50vh">
       <el-table-column
         prop="name"
         label="Producto"
