@@ -66,7 +66,7 @@ async function addProduct() {
       localValue.value[index].purchase_price = contract.purchase_price
       localValue.value[index].sale_price = contract.sale_price
       localValue.value[index].units += contract.units
-      localValue.value[index].total_price = (
+      localValue.value[index].total_price += (
         contract.purchase_price * localValue.value[index].units
       ).toFixed(2)
     } else {
