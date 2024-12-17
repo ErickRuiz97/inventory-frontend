@@ -6,6 +6,7 @@ import { Check } from '@element-plus/icons-vue'
 
 import DetailGeneral from '@/components/DetailGeneral.vue'
 import SaleForm from './components/SaleForm.vue'
+import SaleDetailEdit from './components/SaleDetailEdit.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { saleStore } from '@/stores'
@@ -88,6 +89,7 @@ watch(
     </template>
     <template #body>
       <sale-form v-if="!isEdit" ref="formSale" v-model="sale" />
+      <sale-detail-edit v-else v-model="sale" />
     </template>
   </detail-general>
 </template>

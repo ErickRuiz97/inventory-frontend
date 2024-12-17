@@ -135,7 +135,6 @@ function getSummary({ columns, data }) {
   columns.forEach((column, index) => {
     if (column.property === 'total_price') {
       const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
-      console.log(total)
       sums[index] = `Total: $${total.toFixed(2)}`
     } else {
       sums[index] = '';
