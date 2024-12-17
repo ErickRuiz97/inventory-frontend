@@ -8,18 +8,14 @@ const props = defineProps({
     type: Object,
     default: () => {
       return {
-        customer: '',
-        pay_type: '',
-        products: [],
+        detail: [],
       }
     },
   },
 })
 
 let localValue = ref({
-  customer: '',
-  pay_type: '',
-  products: [],
+  detail: [],
 })
 
 onMounted(() => {
@@ -37,7 +33,7 @@ watch(
 </script>
 <template>
   <div>
-    <div class="row">
+    <div v-if="localValue.sale" class="row">
       <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3">
         <label class="fw-bold mb-1">Cliente</label>
         <p class="text-muted mb-0">{{ localValue.sale.customer }}</p>
