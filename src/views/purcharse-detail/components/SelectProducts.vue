@@ -94,6 +94,21 @@ function deleteProduct(index) {
   localValue.value.splice(index, 1)
 }
 
+function getSummary({ columns, data }) {
+  const sums = []
+  columns.forEach((column, index) => {
+    if (column.property === 'sale_price') {
+      sums[index] = 'Total';
+    } else if (column.property === 'total_price') {
+      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
+      sums[index] = `$${total.toFixed(2)}`;
+    } else {
+      sums[index] = '';
+    }
+  })
+  return sums;
+}
+
 const rules = reactive({
   _id: [
     {
@@ -239,7 +254,7 @@ function validForm() {
     >
   </div>
   <div class="mt-2">
-    <el-table :data="localValue" class="tables" show-summary max-height="50vh">
+    <el-table :data="localValue" class="tables" show-summary :summary-method="getSummary" sum-text="Total" max-height="50vh">
       <el-table-column
         prop="name"
         label="Producto"

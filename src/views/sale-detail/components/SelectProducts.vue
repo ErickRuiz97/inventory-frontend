@@ -133,14 +133,16 @@ const rules = reactive({
 function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
-    if (column.property === 'total_price') {
+    if (column.property === 'sale_price') {
+      sums[index] = 'Total';
+    } else if (column.property === 'total_price') {
       const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
-      sums[index] = `Total: $${total.toFixed(2)}`
+      sums[index] = `$${total.toFixed(2)}`;
     } else {
       sums[index] = '';
     }
   })
-  return sums
+  return sums;
 }
 
 function validForm() {
