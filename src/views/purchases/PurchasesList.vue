@@ -24,6 +24,12 @@ const actions = [
     label: 'Nuevo',
   },
   {
+    event: 'onProductsReport',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte',
+  },
+  {
     event: 'onProductsReportDetail',
     type: 'success',
     icon: Document,
@@ -35,6 +41,7 @@ const events = {
   onRefresh: getPurchases,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
+  onProductsReport: downloadReport,
   onProductsReportDetail: downloadReportDetail,
 }
 let purchases = reactive([])
@@ -135,6 +142,13 @@ function downloadReportDetail() {
   )
 }
 
+function downloadReport() {
+  loading.value = true
+  storePurchase.getPurchasesReport(
+    objectUtils.cleanQueryEmpties(storePurchase.filters)
+  )
+}
+
 const isFiltered = computed(() =>
   _.isEqual(filters.value, {
     date: [],
@@ -150,6 +164,16 @@ watch(
     if (newVal) {
       loading.value = false
       objectUtils.downloadFile(newVal, 'ReporteDetalladoCompras.xlsx')
+    }
+  }
+)
+
+watch(
+  () => storePurchase.report,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ReporteCompras.xlsx')
     }
   }
 )

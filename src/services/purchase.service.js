@@ -46,9 +46,22 @@ async function getPurchasesReportDetail(query, paginator) {
   }
 }
 
+async function getPurchasesReport(query, paginator) {
+  const axios = createAxios(true)
+  const queryParams = new URLSearchParams({ ...query, ...paginator }).toString()
+  const urlPath = `purchases/report?${queryParams}`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const purchaseService = {
   getPurchases,
   getPurchaseById,
   createPurchase,
+  getPurchasesReport,
   getPurchasesReportDetail,
 }
