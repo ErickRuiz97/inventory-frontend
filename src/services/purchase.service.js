@@ -3,7 +3,7 @@ import createAxios from './axiosHttp'
 async function getPurchases(query, paginator) {
   const axios = createAxios()
   const queryParams = new URLSearchParams({ ...query, ...paginator }).toString()
-  const urlPath = `purchases?${queryParams.replace('%2C', ',')}`
+  const urlPath = `purchases?${queryParams}`
   try {
     const response = await axios.get(urlPath)
     return Promise.resolve(response.data)
@@ -34,8 +34,21 @@ async function createPurchase(body) {
   }
 }
 
+async function getPurchasesReportDetail(query, paginator) {
+  const axios = createAxios(true)
+  const queryParams = new URLSearchParams({ ...query, ...paginator }).toString()
+  const urlPath = `purchases/report-detail?${queryParams}`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const purchaseService = {
   getPurchases,
   getPurchaseById,
   createPurchase,
+  getPurchasesReportDetail,
 }

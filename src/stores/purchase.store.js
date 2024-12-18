@@ -7,6 +7,7 @@ export const purchaseStore = defineStore('purchaseStore', {
     entity: null,
     create: null,
     error: null,
+    reportDetail: null,
     filters: {
       date: [],
       code: '',
@@ -28,6 +29,12 @@ export const purchaseStore = defineStore('purchaseStore', {
       purchaseService
         .getPurchases(query, { ...this.paginator, ...this.sort })
         .then(results => (this.list = results))
+        .catch(reason => (this.error = reason))
+    },
+    getPurchasesReportDetail(query) {
+      purchaseService
+        .getPurchasesReportDetail(query, this.sort)
+        .then(results => (this.reportDetail = results))
         .catch(reason => (this.error = reason))
     },
     getPurchaseById(idPurchase) {
