@@ -7,8 +7,11 @@ export const purchaseStore = defineStore('purchaseStore', {
     entity: null,
     create: null,
     error: null,
+    reportDetail: null,
+    report: null,
     filters: {
       date: [],
+      code: '',
       supplier: '',
       amount: [0, 10000],
     },
@@ -27,6 +30,18 @@ export const purchaseStore = defineStore('purchaseStore', {
       purchaseService
         .getPurchases(query, { ...this.paginator, ...this.sort })
         .then(results => (this.list = results))
+        .catch(reason => (this.error = reason))
+    },
+    getPurchasesReportDetail(query) {
+      purchaseService
+        .getPurchasesReportDetail(query, this.sort)
+        .then(results => (this.reportDetail = results))
+        .catch(reason => (this.error = reason))
+    },
+    getPurchasesReport(query) {
+      purchaseService
+        .getPurchasesReport(query, this.sort)
+        .then(results => (this.report = results))
         .catch(reason => (this.error = reason))
     },
     getPurchaseById(idPurchase) {

@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
+import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
@@ -23,12 +23,26 @@ const actions = [
     icon: Plus,
     label: 'Nuevo',
   },
+  {
+    event: 'onProductsReport',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte',
+  },
+  {
+    event: 'onProductsReportDetail',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte detallado',
+  },
 ]
 const events = {
   onNewPurchase: newPurchase,
   onRefresh: getPurchases,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
+  onProductsReport: downloadReport,
+  onProductsReportDetail: downloadReportDetail,
 }
 let purchases = reactive([])
 let loading = ref(true)
@@ -37,6 +51,7 @@ const { paginator } = storeToRefs(storePurchase)
 
 let filters = ref({
   date: [],
+  code: '',
   supplier: '',
   amount: [0, 10000],
 })
@@ -112,6 +127,7 @@ function cleanFilter() {
   _.merge(storePurchase.paginator, { page: 1 })
   filters.value = {
     date: [],
+    code: '',
     supplier: '',
     amount: [0, 10000],
   }
@@ -119,12 +135,47 @@ function cleanFilter() {
   getPurchases()
 }
 
+function downloadReportDetail() {
+  loading.value = true
+  storePurchase.getPurchasesReportDetail(
+    objectUtils.cleanQueryEmpties(storePurchase.filters)
+  )
+}
+
+function downloadReport() {
+  loading.value = true
+  storePurchase.getPurchasesReport(
+    objectUtils.cleanQueryEmpties(storePurchase.filters)
+  )
+}
+
 const isFiltered = computed(() =>
   _.isEqual(filters.value, {
     date: [],
+    code: '',
     supplier: '',
     amount: [0, 10000],
   })
+)
+
+watch(
+  () => storePurchase.reportDetail,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ReporteDetalladoCompras.xlsx')
+    }
+  }
+)
+
+watch(
+  () => storePurchase.report,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ReporteCompras.xlsx')
+    }
+  }
 )
 </script>
 

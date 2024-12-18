@@ -68,9 +68,10 @@ function showFilters() {
 }
 
 function downloadReport() {
-  console.log("hoola")
   loading.value = true
-  storeProduct.getProductsReport(objectUtils.cleanQueryEmpties(storeProduct.filters))
+  storeProduct.getProductsReport(
+    objectUtils.cleanQueryEmpties(storeProduct.filters)
+  )
 }
 
 watch(

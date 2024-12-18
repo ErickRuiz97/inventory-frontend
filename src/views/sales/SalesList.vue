@@ -37,6 +37,7 @@ const { paginator } = storeToRefs(storeSale)
 
 let filters = ref({
   date: [],
+  code: '',
   customer: '',
   pay_types: '',
   amount: [0, 5000],
@@ -110,6 +111,7 @@ function cleanFilter() {
   _.merge(storeSale.paginator, { page: 1 })
   filters.value = {
     date: [],
+    code: '',
     customer: '',
     pay_types: '',
     amount: [0, 5000],
@@ -121,6 +123,7 @@ function cleanFilter() {
 const isFiltered = computed(() =>
   _.isEqual(filters.value, {
     date: [],
+    code: '',
     customer: '',
     pay_types: '',
     amount: [0, 5000],
