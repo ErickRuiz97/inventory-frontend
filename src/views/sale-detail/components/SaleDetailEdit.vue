@@ -12,7 +12,20 @@ const props = defineProps({
       }
     },
   },
-})
+});
+
+function getSummary({ columns, data }) {
+  const sums = []
+  columns.forEach((column, index) => {
+    if (column.property === 'total_price') {
+      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
+      sums[index] = `Total: $${total.toFixed(2)}`
+    } else {
+      sums[index] = '';
+    }
+  })
+  return sums
+}
 
 let localValue = ref({
   detail: [],
@@ -54,13 +67,14 @@ watch(
                 localValue.sale.pay_type === 'TRANSFER'
               "
             />
+            <Iphone v-if="localValue.sale.pay_type === 'TRANSFER'" />
           </el-icon>
           {{ _.find(payTypes, { value: localValue.sale.pay_type })?.label }}
         </p>
       </div>
     </div>
     <div class="mt-2">
-      <el-table :data="localValue.detail" fit>
+      <el-table :data="localValue.detail" show-summary :summary-method="getSummary" fit>
         <el-table-column
           prop="product.name"
           label="Producto"

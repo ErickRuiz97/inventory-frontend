@@ -11,7 +11,20 @@ const props = defineProps({
       }
     },
   },
-})
+});
+
+function getSummary({ columns, data }) {
+  const sums = []
+  columns.forEach((column, index) => {
+    if (column.property === 'total_price') {
+      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
+      sums[index] = `Total: $${total.toFixed(2)}`
+    } else {
+      sums[index] = '';
+    }
+  })
+  return sums
+}
 
 let localValue = ref({
   purchase: '',
@@ -35,18 +48,18 @@ watch(
   <div>
     <div class="row" v-if="localValue.purchase">
       <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3">
-        <label class="fw-bold mb-1">Proveedor</label>
-        <p class="text-muted mb-0">{{ localValue.purchase.supplier.name }}</p>
-      </div>
-      <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3">
-        <label class="fw-bold mb-1">Código</label>
+        <label class="fw-bold mb-1">Código Prov.</label>
         <p class="text-muted mb-0">
           {{ localValue.purchase.supplier.code }}
         </p>
       </div>
+      <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3">
+        <label class="fw-bold mb-1">Proveedor</label>
+        <p class="text-muted mb-0">{{ localValue.purchase.supplier.name }}</p>
+      </div>
     </div>
     <div class="mt-2">
-      <el-table :data="localValue.detail" fit>
+      <el-table :data="localValue.detail" show-summary :summary-method="getSummary" fit>
         <el-table-column
           prop="product.name"
           label="Producto"
