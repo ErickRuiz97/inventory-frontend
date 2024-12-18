@@ -8,6 +8,7 @@ export const productStore = defineStore('productStore', {
     create: null,
     update: null,
     error: null,
+    report: null,
     filters: {
       name: '',
       code: '',
@@ -34,6 +35,12 @@ export const productStore = defineStore('productStore', {
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
+    getProductsReport(query) {
+      productService
+            .getProductsReport(query, this.sort)
+            .then(results => (this.report = results))
+            .catch(reason => (this.error = reason))
+        },
     getProductById(idProduct) {
       productService
         .getProductById(idProduct)

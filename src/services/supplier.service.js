@@ -45,9 +45,22 @@ async function updateSupplier(id, body) {
   }
 }
 
+async function getSuppliersReport(query, sort) {
+  const axios = createAxios(true)
+  const queryParams = new URLSearchParams({ ...query, ...sort }).toString()
+  const urlPath = `suppliers/report?${queryParams}`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const supplierService = {
   getSuppliers,
   getSupplierById,
   createSupplier,
   updateSupplier,
+  getSuppliersReport
 }

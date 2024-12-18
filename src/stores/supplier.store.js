@@ -8,6 +8,7 @@ export const supplierStore = defineStore('supplierStore', {
     create: null,
     update: null,
     error: null,
+    report: null,
     filters: {
       name: '',
       code: '',
@@ -33,6 +34,12 @@ export const supplierStore = defineStore('supplierStore', {
           withPaginator ? { ...this.paginator, ...this.sort } : {},
         )
         .then(results => (this.list = results))
+        .catch(reason => (this.error = reason))
+    },
+    getSuppliersReport(query) {
+      supplierService
+        .getSuppliersReport(query, this.sort)
+        .then(results => (this.report = results))
         .catch(reason => (this.error = reason))
     },
     getSupplierById(idSupplier) {

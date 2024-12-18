@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
+import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
@@ -23,12 +23,19 @@ const actions = [
     icon: Plus,
     label: 'Nuevo',
   },
+  {
+    event: 'onSuppliersReport',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte',
+  },
 ]
 const events = {
   onNewSupplier: newSupplier,
   onRefresh: getSuppliers,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
+  onSuppliersReport: downloadReport,
 }
 let suppliers = reactive([])
 let loading = ref(true)
@@ -54,6 +61,11 @@ function getSuppliers() {
   )
 }
 
+function downloadReport() {
+  loading.value = true
+  storeSupplier.getSuppliersReport(objectUtils.cleanQueryEmpties(storeSupplier.filters))
+}
+
 function newSupplier() {
   router.push({ path: `/suppliers/create` })
 }
@@ -69,6 +81,16 @@ function eventHandler(eventKey) {
     ElMessage.warning('Evento no implementado')
   }
 }
+
+watch(
+  () => storeSupplier.report,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ProveedoresUsuarios.xlsx')
+    }
+  }
+)
 
 watch(
   () => storeSupplier.list,

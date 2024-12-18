@@ -142,7 +142,6 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-
       objectUtils.downloadFile(newVal, 'ReporteUsuarios.xlsx')
     }
   }

@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
+import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
@@ -23,12 +23,19 @@ const actions = [
     icon: Plus,
     label: 'Nuevo',
   },
+  {
+    event: 'onProductsReport',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte',
+  },
 ]
 const events = {
   onNewProduct: newProduct,
   onRefresh: getProducts,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
+  onProductsReport: downloadReport,
 }
 let products = reactive([])
 let loading = ref(true)
@@ -59,6 +66,22 @@ function newProduct() {
 function showFilters() {
   onShowFilters.value = true
 }
+
+function downloadReport() {
+  console.log("hoola")
+  loading.value = true
+  storeProduct.getProductsReport(objectUtils.cleanQueryEmpties(storeProduct.filters))
+}
+
+watch(
+  () => storeProduct.report,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ReporteProductos.xlsx')
+    }
+  }
+)
 
 function eventHandler(eventKey) {
   try {
