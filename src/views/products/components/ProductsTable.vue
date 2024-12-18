@@ -2,8 +2,13 @@
 import _ from 'lodash'
 import { objectUtils } from '@/utils'
 import { categories } from '@/constants'
-const emit = defineEmits(['clickRow'])
+import { storeToRefs } from 'pinia'
+import { productStore } from '@/stores'
 
+const storeProduct = productStore()
+const { sort } = storeToRefs(storeProduct)
+
+const emit = defineEmits(['clickRow', 'sortChange'])
 let props = defineProps({
   modelValue: {
     type: [Array],
@@ -17,18 +22,33 @@ let props = defineProps({
 function clickRow(row) {
   emit('clickRow', row)
 }
+function sortChange(row) {
+  if (!row.order) {
+    sort.value = { sort: 'created_at', order: 'descending' }
+    emit('sortChange', row)
+    return
+  } else sort.value = { sort: row.prop, order: row.order }
+  emit('sortChange', row)
+}
 </script>
 <template>
   <div>
     <el-table
       :data="props.modelValue"
       max-height="70vh"
+      :default-sort="{ prop: 'created_at', order: 'descending' }"
       @row-click="clickRow"
+      @sort-change="sortChange"
       v-loading="props.loading"
       class="tables"
     >
-      <el-table-column prop="code" label="Código" width="70" />
-      <el-table-column prop="name" label="Nombre" show-overflow-tooltip />
+      <el-table-column prop="code" label="Código" width="80" sortable />
+      <el-table-column
+        prop="name"
+        label="Nombre"
+        show-overflow-tooltip
+        sortable
+      />
       <el-table-column
         prop="description"
         label="Descripción"
@@ -51,16 +71,24 @@ function clickRow(row) {
       <el-table-column
         prop="purchase_price"
         label="Compra (C$)"
-        width="85"
+        width="110"
         align="right"
+        sortable
       />
       <el-table-column
         prop="sale_price"
         label="Venta (C$)"
-        width="85"
+        width="100"
         align="right"
+        sortable
       />
-      <el-table-column prop="trend" label="Tendencia" width="75" align="center">
+      <el-table-column
+        prop="trend"
+        label="Tendencia"
+        width="95"
+        align="center"
+        sortable
+      >
         <template #default="scope">
           <el-icon color="red" v-if="scope.row.trend == 'UPWARD'"
             ><caret-top
@@ -71,7 +99,13 @@ function clickRow(row) {
           <el-icon v-if="scope.row.trend == 'EQUAL'"><d-caret /></el-icon>
         </template>
       </el-table-column>
-      <el-table-column prop="stock" label="Und" width="50" align="center" />
+      <el-table-column
+        prop="stock"
+        label="Und"
+        width="70"
+        align="center"
+        sortable
+      />
     </el-table>
   </div>
 </template>

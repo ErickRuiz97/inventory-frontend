@@ -23,17 +23,21 @@ export const userStore = defineStore('userStore', {
       page: 1,
       total: 0,
     },
+    sort: {
+      sort: 'created_at',
+      order: 'descending',
+    },
   }),
   actions: {
     getUsers(query) {
       userService
-        .getUsers(query, this.paginator)
+        .getUsers(query, { ...this.paginator, ...this.sort })
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
     getUsersReport(query) {
       userService
-        .getUsersReport(query)
+        .getUsersReport(query, this.sort)
         .then(results => (this.report = results))
         .catch(reason => (this.error = reason))
     },

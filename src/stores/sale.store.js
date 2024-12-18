@@ -18,11 +18,15 @@ export const saleStore = defineStore('saleStore', {
       page: 1,
       total: 0,
     },
+    sort: {
+      sort: 'created_at',
+      order: 'descending',
+    },
   }),
   actions: {
     getSales(query) {
       saleService
-        .getSales(query, this.paginator)
+        .getSales(query, { ...this.paginator, ...this.sort })
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },

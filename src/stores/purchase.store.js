@@ -17,11 +17,15 @@ export const purchaseStore = defineStore('purchaseStore', {
       page: 1,
       total: 0,
     },
+    sort: {
+      sort: 'created_at',
+      order: 'descending',
+    },
   }),
   actions: {
     getPurchases(query) {
       purchaseService
-        .getPurchases(query, this.paginator)
+        .getPurchases(query, { ...this.paginator, ...this.sort })
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },

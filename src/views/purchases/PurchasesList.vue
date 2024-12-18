@@ -103,6 +103,11 @@ function confirmFilter() {
   getPurchases()
 }
 
+function sortChange() {
+  _.merge(storePurchase.paginator, { page: 1 })
+  getPurchases()
+}
+
 function cleanFilter() {
   _.merge(storePurchase.paginator, { page: 1 })
   filters.value = {
@@ -143,6 +148,7 @@ const isFiltered = computed(() =>
       <purchases-table
         v-model="purchases"
         @click-row="clickRow"
+        @sort-change="sortChange"
         :loading="loading"
       />
     </template>

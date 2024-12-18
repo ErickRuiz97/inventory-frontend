@@ -2,8 +2,13 @@
 import _ from 'lodash'
 import moment from 'moment'
 import { payTypes } from '@/constants'
+import { storeToRefs } from 'pinia'
+import { saleStore } from '@/stores'
 
-const emit = defineEmits(['clickRow'])
+const storeSale = saleStore()
+const { sort } = storeToRefs(storeSale)
+
+const emit = defineEmits(['clickRow', 'sortChange'])
 
 const props = defineProps({
   modelValue: {
@@ -23,6 +28,15 @@ function formatDate(date) {
 function clickRow(row) {
   emit('clickRow', row)
 }
+
+function sortChange(row) {
+  if (!row.order) {
+    sort.value = { sort: 'created_at', order: 'descending' }
+    emit('sortChange', row)
+    return
+  } else sort.value = { sort: row.prop, order: row.order }
+  emit('sortChange', row)
+}
 </script>
 
 <template>
@@ -30,16 +44,23 @@ function clickRow(row) {
     <el-table
       :data="props.modelValue"
       max-height="70vh"
+      :default-sort="{ prop: 'created_at', order: 'descending' }"
       v-loading="props.loading"
       @row-click="clickRow"
+      @sort-change="sortChange"
       class="tables"
     >
-      <el-table-column prop="created_at" label="Fecha" width="150">
+      <el-table-column prop="created_at" label="Fecha" width="150" sortable>
         <template #default="scope">{{
           formatDate(scope.row.created_at)
         }}</template>
       </el-table-column>
-      <el-table-column prop="customer" label="Cliente" show-overflow-tooltip />
+      <el-table-column
+        prop="customer"
+        label="Cliente"
+        show-overflow-tooltip
+        sortable
+      />
       <el-table-column prop="pay_type" label="Forma de pago" width="200">
         <template #default="scope">
           {{ _.find(payTypes, { value: scope.row.pay_type })?.label }}
@@ -51,6 +72,7 @@ function clickRow(row) {
         width="150"
         align="right"
         header-align="right"
+        sortable
       />
     </el-table>
   </div>

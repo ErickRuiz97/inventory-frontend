@@ -111,6 +111,11 @@ function confirmFilter() {
   getUsers()
 }
 
+function sortChange() {
+  _.merge(storeUser.paginator, { page: 1 })
+  getUsers()
+}
+
 function cleanFilter() {
   _.merge(storeUser.paginator, { page: 1 })
   filters.value = {
@@ -171,7 +176,12 @@ watch(
       <header-table :paginator="paginator" @change="getUsers" />
     </template>
     <template #table>
-      <users-table v-model="users" @click-row="clickRow" :loading="loading" />
+      <users-table
+        v-model="users"
+        @click-row="clickRow"
+        @sort-change="sortChange"
+        :loading="loading"
+      />
     </template>
     <template #filters>
       <user-filters v-model="filters" />

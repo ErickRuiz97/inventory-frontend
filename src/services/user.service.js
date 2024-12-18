@@ -23,9 +23,9 @@ async function getUsers(query, paginator) {
   }
 }
 
-async function getUsersReport(query) {
+async function getUsersReport(query, sort) {
   const axios = createAxios(true)
-  const queryParams = new URLSearchParams(query).toString()
+  const queryParams = new URLSearchParams({ ...query, ...sort }).toString()
   const urlPath = `users/report?${queryParams}`
   try {
     const response = await axios.get(urlPath, { responseType: 'blob' })

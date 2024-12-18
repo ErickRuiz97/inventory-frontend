@@ -101,6 +101,11 @@ function confirmFilter() {
   getSales()
 }
 
+function sortChange() {
+  _.merge(storeSale.paginator, { page: 1 })
+  getSales()
+}
+
 function cleanFilter() {
   _.merge(storeSale.paginator, { page: 1 })
   filters.value = {
@@ -140,7 +145,12 @@ const isFiltered = computed(() =>
       <header-table :paginator="paginator" @change="getSales" />
     </template>
     <template #table>
-      <sales-table v-model="sales" @click-row="clickRow" :loading="loading" />
+      <sales-table
+        v-model="sales"
+        @click-row="clickRow"
+        @sort-change="sortChange"
+        :loading="loading"
+      />
     </template>
     <template #filters>
       <sale-filters v-model="filters" />

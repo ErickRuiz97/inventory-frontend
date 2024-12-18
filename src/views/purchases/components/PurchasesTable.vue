@@ -1,8 +1,12 @@
 <script setup>
 import moment from 'moment'
+import { storeToRefs } from 'pinia'
+import { purchaseStore } from '@/stores'
 
-const emit = defineEmits(['clickRow'])
+const storePurchase = purchaseStore()
+const { sort } = storeToRefs(storePurchase)
 
+const emit = defineEmits(['clickRow', 'sortChange'])
 const props = defineProps({
   modelValue: {
     type: [Array],
@@ -21,23 +25,37 @@ function formatDate(date) {
 function clickRow(row) {
   emit('clickRow', row)
 }
+function sortChange(row) {
+  if (!row.order) {
+    sort.value = { sort: 'created_at', order: 'descending' }
+    emit('sortChange', row)
+    return
+  } else sort.value = { sort: row.prop, order: row.order }
+  emit('sortChange', row)
+}
 </script>
-
 <template>
   <div>
     <el-table
       :data="props.modelValue"
       max-height="70vh"
+      :default-sort="{ prop: 'created_at', order: 'descending' }"
       v-loading="props.loading"
       @row-click="clickRow"
+      @sort-change="sortChange"
       class="tables"
     >
-      <el-table-column prop="created_at" label="Fecha" width="150">
+      <el-table-column prop="created_at" label="Fecha" width="150" sortable>
         <template #default="scope">{{
           formatDate(scope.row.created_at)
         }}</template>
       </el-table-column>
-      <el-table-column prop="supplier" label="Proveedor" show-overflow-tooltip>
+      <el-table-column
+        prop="supplier.nombre"
+        label="Proveedor"
+        show-overflow-tooltip
+        sortable
+      >
         <template #default="scope">
           {{ scope.row.supplier.code }} - {{ scope.row.supplier.name }}
         </template>
@@ -48,6 +66,7 @@ function clickRow(row) {
         width="150"
         align="right"
         header-align="right"
+        sortable
       />
     </el-table>
   </div>

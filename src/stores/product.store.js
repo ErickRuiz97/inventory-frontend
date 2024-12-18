@@ -19,11 +19,18 @@ export const productStore = defineStore('productStore', {
       page: 1,
       total: 0,
     },
+    sort: {
+      sort: 'created_at',
+      order: 'descending',
+    },
   }),
   actions: {
     getProducts(query, withPaginator = true) {
       productService
-        .getProducts(query, withPaginator ? this.paginator : {})
+        .getProducts(
+          query,
+          withPaginator ? { ...this.paginator, ...this.sort } : {},
+        )
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },

@@ -20,11 +20,18 @@ export const supplierStore = defineStore('supplierStore', {
       page: 1,
       total: 0,
     },
+    sort: {
+      sort: 'created_at',
+      order: 'descending',
+    },
   }),
   actions: {
     getSuppliers(query, withPaginator = true) {
       supplierService
-        .getSuppliers(query, withPaginator ? this.paginator : {})
+        .getSuppliers(
+          query,
+          withPaginator ? { ...this.paginator, ...this.sort } : {},
+        )
         .then(results => (this.list = results))
         .catch(reason => (this.error = reason))
     },
