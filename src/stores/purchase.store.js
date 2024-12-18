@@ -9,6 +9,7 @@ export const purchaseStore = defineStore('purchaseStore', {
     error: null,
     filters: {
       date: [],
+      code: '',
       supplier: '',
       amount: [0, 10000],
     },

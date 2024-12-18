@@ -45,6 +45,7 @@ function sortChange(row) {
       @sort-change="sortChange"
       class="tables"
     >
+      <el-table-column prop="_id" label="Código" width="180" sortable />
       <el-table-column prop="created_at" label="Fecha" width="150" sortable>
         <template #default="scope">{{
           formatDate(scope.row.created_at)

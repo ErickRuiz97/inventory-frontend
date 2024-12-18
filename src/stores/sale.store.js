@@ -9,6 +9,7 @@ export const saleStore = defineStore('saleStore', {
     create: null,
     filters: {
       date: [],
+      code: '',
       customer: '',
       pay_types: '',
       amount: [0, 5000],

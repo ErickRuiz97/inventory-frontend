@@ -46,6 +46,9 @@ watch(
         value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
       />
     </el-form-item>
+    <el-form-item label="Código" prop="code" class="row">
+      <el-input v-model="localValue.code" />
+    </el-form-item>
     <el-form-item label="Cliente" prop="customer" class="row">
       <el-input v-model="localValue.customer" />
     </el-form-item>

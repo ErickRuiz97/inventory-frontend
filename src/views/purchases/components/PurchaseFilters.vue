@@ -48,6 +48,9 @@ watch(
         value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
       />
     </el-form-item>
+    <el-form-item label="Código" prop="code" class="row">
+      <el-input v-model="localValue.code" />
+    </el-form-item>
     <el-form-item label="Proveedor" prop="supplier" class="row">
       <el-select v-model="localValue.supplier" style="width: 100%" filterable>
         <el-option
