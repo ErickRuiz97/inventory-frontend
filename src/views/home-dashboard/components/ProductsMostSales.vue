@@ -51,22 +51,33 @@ watch(
         legend: {
           orient: 'vertical',
           left: 'right',
-          data: localValue.value.map(item => item.name),
         },
         series: [
           {
             name: 'Productos',
             type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: localValue.value,
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: true,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2,
+            },
+            label: {
+              show: false,
+              position: 'center',
+            },
             emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              label: {
+                show: true,
+                fontSize: 15,
+                fontWeight: 'bold',
               },
             },
+            labelLine: {
+              show: false,
+            },
+            data: localValue.value,
           },
         ],
       }
