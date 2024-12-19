@@ -4,53 +4,47 @@ import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart from 'vue-echarts'
+import { GridComponent } from 'echarts/components'
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+} from 'echarts/components'
 
-use([BarChart, CanvasRenderer])
+use([
+  BarChart,
+  CanvasRenderer,
+  GridComponent,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+])
 
 const option = ref({
-  textStyle: {
-    fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif',
-    fontWeight: 300,
+  title: {
+    text: 'Máximos proveedores',
+    left: 'left',
   },
-  dataset: {
-    dimensions: ['Product', '2015', '2016', '2017'],
-    source: [
-      {
-        Product: 'Matcha Latte',
-        2015: random(),
-        2016: random(),
-        2017: random(),
-      },
-      {
-        Product: 'Milk Tea',
-        2015: random(),
-        2016: random(),
-        2017: random(),
-      },
-      {
-        Product: 'Cheese Cocoa',
-        2015: random(),
-        2016: random(),
-        2017: random(),
-      },
-      {
-        Product: 'Walnut Brownie',
-        2015: random(),
-        2016: random(),
-        2017: random(),
-      },
-    ],
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b} : {c} ({d}%)',
   },
-  xAxis: [{ type: 'category' }],
-  yAxis: [{}],
-  series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
-})
 
-function random() {
-  return Math.round(300 + Math.random() * 700) / 10
-}
+  xAxis: {
+    data: ['Latte', 'Espresso', 'Mocha', 'Cappucino'],
+  },
+  yAxis: {
+    type: 'value',
+  },
+  series: [
+    {
+      type: 'bar',
+      data: [100, 50, 25, 10],
+    },
+  ],
+})
 </script>
 
 <template>
-  <v-chart :options="option" />
+  <v-chart :option="option" />
 </template>
