@@ -11,16 +11,19 @@ const props = defineProps({
       }
     },
   },
-});
+})
 
 function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'total_price') {
-      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
-      sums[index] = `Total: $${total.toFixed(2)}`
+      const total = data.reduce(
+        (sum, row) => sum + Number(row.total_price || 0),
+        0
+      )
+      sums[index] = `Total: C$ ${total.toFixed(2)}`
     } else {
-      sums[index] = '';
+      sums[index] = ''
     }
   })
   return sums
@@ -59,7 +62,12 @@ watch(
       </div>
     </div>
     <div class="mt-2">
-      <el-table :data="localValue.detail" show-summary :summary-method="getSummary" fit>
+      <el-table
+        :data="localValue.detail"
+        show-summary
+        :summary-method="getSummary"
+        fit
+      >
         <el-table-column
           prop="product.name"
           label="Producto"
@@ -72,7 +80,7 @@ watch(
         ></el-table-column>
         <el-table-column
           prop="total_price"
-          label="Precio total"
+          label="Precio total (C$)"
           align="right"
         ></el-table-column>
       </el-table>

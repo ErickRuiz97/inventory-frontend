@@ -1,7 +1,7 @@
 //General routes
 import LoginApp from '@/views/login/LoginApp.vue'
-import HomeView from '@/views/HomeView.vue'
-import NoAuth from '@/views/noAuth/NoAuth.vue'
+import NoAuth from '@/views/no-auth/NoAuth.vue'
+import HomeDashboard from '@/views/home-dashboard/HomeDashboard.vue'
 
 // Product routes
 import ProductsList from '@/views/products/ProductsList.vue'
@@ -43,8 +43,8 @@ export const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: HomeView,
-    meta: { breadcrumb: 'Home' },
+    component: HomeDashboard,
+    meta: { breadcrumb: 'Dashboard' },
   },
   {
     path: '/no-auth',

@@ -63,7 +63,7 @@ function sortChange(row) {
       </el-table-column>
       <el-table-column
         prop="total_amount"
-        label="Cantidad total C$"
+        label="Cantidad total (C$)"
         width="150"
         align="right"
         header-align="right"

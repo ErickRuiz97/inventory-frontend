@@ -98,15 +98,18 @@ function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'sale_price') {
-      sums[index] = 'Total';
+      sums[index] = 'Total'
     } else if (column.property === 'total_price') {
-      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
-      sums[index] = `$${total.toFixed(2)}`;
+      const total = data.reduce(
+        (sum, row) => sum + Number(row.total_price || 0),
+        0
+      )
+      sums[index] = `C$ ${total.toFixed(2)}`
     } else {
-      sums[index] = '';
+      sums[index] = ''
     }
   })
-  return sums;
+  return sums
 }
 
 const rules = reactive({
@@ -212,7 +215,7 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="purchase_price"
-      label="Precio de compra"
+      label="Precio de compra (C$)"
       class="col-sm-12 col-md-6 col-lg-3 col-xl-3"
     >
       <el-input
@@ -224,7 +227,7 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="sale_price"
-      label="Precio de venta"
+      label="Precio de venta (C$)"
       class="col-sm-12 col-md-6 col-lg-3 col-xl-3"
     >
       <el-input
@@ -254,7 +257,14 @@ function validForm() {
     >
   </div>
   <div class="mt-2">
-    <el-table :data="localValue" class="tables" show-summary :summary-method="getSummary" sum-text="Total" max-height="50vh">
+    <el-table
+      :data="localValue"
+      class="tables"
+      show-summary
+      :summary-method="getSummary"
+      sum-text="Total"
+      max-height="50vh"
+    >
       <el-table-column
         prop="name"
         label="Producto"
@@ -268,20 +278,20 @@ function validForm() {
       ></el-table-column>
       <el-table-column
         prop="purchase_price"
-        label="Precio de compra"
-        width="120"
+        label="Precio de compra (C$)"
+        width="140"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="sale_price"
-        label="Precio de venta"
-        width="100"
+        label="Precio de venta (C$)"
+        width="130"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="total_price"
-        label="Precio total"
-        width="100"
+        label="Precio total (C$)"
+        width="110"
         align="right"
       ></el-table-column>
       <el-table-column label="Acciones" width="100" align="center">

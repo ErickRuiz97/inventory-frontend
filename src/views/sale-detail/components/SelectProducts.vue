@@ -61,9 +61,11 @@ async function addProduct() {
     )
 
     if (index !== -1) {
-      localValue.value[index].units = Number(localValue.value[index].units) + Number(contract.units)
+      localValue.value[index].units =
+        Number(localValue.value[index].units) + Number(contract.units)
       localValue.value[index].total_price = (
-        Number(localValue.value[index].total_price) + Number(contract.total_price)
+        Number(localValue.value[index].total_price) +
+        Number(contract.total_price)
       ).toFixed(2)
     } else {
       localValue.value.push(contract)
@@ -128,21 +130,24 @@ const rules = reactive({
       trigger: ['blur', 'change'],
     },
   ],
-});
+})
 
 function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'sale_price') {
-      sums[index] = 'Total';
+      sums[index] = 'Total'
     } else if (column.property === 'total_price') {
-      const total = data.reduce((sum, row) => sum + Number(row.total_price || 0), 0)
-      sums[index] = `$${total.toFixed(2)}`;
+      const total = data.reduce(
+        (sum, row) => sum + Number(row.total_price || 0),
+        0
+      )
+      sums[index] = `C$ ${total.toFixed(2)}`
     } else {
-      sums[index] = '';
+      sums[index] = ''
     }
   })
-  return sums;
+  return sums
 }
 
 function validForm() {
@@ -196,7 +201,7 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="sale_price"
-      label="Precio de venta"
+      label="Precio de venta (C$)"
       class="col-sm-12 col-md-8 col-lg-4 col-xl-4"
     >
       <el-input
@@ -217,7 +222,14 @@ function validForm() {
     </el-button>
   </div>
   <div class="mt-2">
-    <el-table :data="localValue" class="" show-summary :summary-method="getSummary" sum-text="Total" max-height="50vh">
+    <el-table
+      :data="localValue"
+      class=""
+      show-summary
+      :summary-method="getSummary"
+      sum-text="Total"
+      max-height="50vh"
+    >
       <el-table-column
         prop="name"
         label="Producto"
@@ -231,14 +243,14 @@ function validForm() {
       ></el-table-column>
       <el-table-column
         prop="sale_price"
-        label="Precio de venta"
-        width="120"
+        label="Precio de venta (C$)"
+        width="130"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="total_price"
-        label="Precio total"
-        width="100"
+        label="Precio total (C$)"
+        width="110"
         align="right"
       ></el-table-column>
       <el-table-column label="Acciones" width="100" align="center">

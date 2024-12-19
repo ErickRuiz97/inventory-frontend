@@ -57,21 +57,24 @@ defineExpose({ validForm })
 <template>
   <div class="row">
     <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
-      <el-statistic title="Precio de compra" :value="localValue.purchase_price">
-            {{ localValue.purchase_price }}
-          </el-statistic>
+      <el-statistic
+        title="Precio de compra (C$)"
+        :value="localValue.purchase_price"
+      >
+        {{ localValue.purchase_price }}
+      </el-statistic>
     </div>
     <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
-      <el-statistic title="Precio de venta" :value="localValue.sale_price">
-            {{ localValue.purchase_price }}
-          </el-statistic>
+      <el-statistic title="Precio de venta (C$)" :value="localValue.sale_price">
+        {{ localValue.purchase_price }}
+      </el-statistic>
     </div>
     <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
       <el-statistic title="Unidades disponibles" :value="localValue.stock">
-            {{ localValue.purchase_price }}
-          </el-statistic>
+        {{ localValue.purchase_price }}
+      </el-statistic>
     </div>
-  </div>    
+  </div>
   <el-form
     ref="productElForm"
     :model="localValue"
@@ -126,7 +129,7 @@ defineExpose({ validForm })
             :value="item.value"
           />
         </el-select>
-      </el-form-item>   
+      </el-form-item>
     </div>
   </el-form>
 </template>
