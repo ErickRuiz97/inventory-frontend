@@ -12,8 +12,8 @@ use([LineChart, CanvasRenderer, GridComponent])
 // Configuración del gráfico
 const option = ref({
   title: {
-    text: 'Tendencia de Ventas',
-    left: 'center',
+    text: 'Precio de productos',
+    left: 'left',
   },
   tooltip: {
     trigger: 'axis', // Activa el tooltip al pasar por los ejes
