@@ -101,8 +101,31 @@ watch(
       ></actions-header>
     </template>
     <template #body>
+      <div v-if="isEdit" class="row">
+        <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
+          <el-statistic
+            title="Precio de compra (C$)"
+            :value="product.purchase_price"
+          >
+            {{ product.purchase_price }}
+          </el-statistic>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
+          <el-statistic
+            title="Precio de venta (C$)"
+            :value="product.sale_price"
+          >
+            {{ product.purchase_price }}
+          </el-statistic>
+        </div>
+        <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
+          <el-statistic title="Unidades disponibles" :value="product.stock">
+            {{ product.purchase_price }}
+          </el-statistic>
+        </div>
+      </div>
       <product-form ref="formProduct" v-model="product" />
-      <product-prices v-model="product.graph" />
+      <product-prices v-if="isEdit" v-model="product.graph" />
     </template>
   </detail-general>
 </template>
