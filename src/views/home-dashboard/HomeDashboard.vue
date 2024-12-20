@@ -11,6 +11,7 @@ import { dashboardStore } from '@/stores'
 const storeDashboard = dashboardStore()
 let dashboard = ref({
   top_10_products: [],
+  top_3_suppliers: [],
 })
 onMounted(() => {
   storeDashboard.getDashboard()
@@ -44,7 +45,7 @@ watch(
             <products-most-sales v-model="dashboard.top_10_products" />
           </div>
           <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
-            <suppliers-most-expends />
+            <suppliers-most-expends v-model="dashboard.top_3_suppliers" />
           </div>
         </div>
         <div class="row">
