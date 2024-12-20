@@ -5,7 +5,6 @@ import { ElMessage } from 'element-plus'
 import ListGeneral from '@/components/ListGeneral.vue'
 import ProductsMostSales from './components/ProductsMostSales.vue'
 import SuppliersMostExpends from './components/SuppliersMostExpends.vue'
-import ProductsPrices from './components/ProductsPrices.vue'
 import { dashboardStore } from '@/stores'
 
 const storeDashboard = dashboardStore()
@@ -46,11 +45,6 @@ watch(
           </div>
           <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12">
             <suppliers-most-expends v-model="dashboard.top_3_suppliers" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12">
-            <products-prices />
           </div>
         </div>
       </el-scrollbar>

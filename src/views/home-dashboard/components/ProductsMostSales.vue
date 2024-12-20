@@ -54,7 +54,6 @@ watch(
         },
         series: [
           {
-            name: 'Productos',
             type: 'pie',
             radius: ['50%', '70%'],
             avoidLabelOverlap: true,
@@ -96,6 +95,6 @@ watch(
 </template>
 <style scoped>
 .chart {
-  height: 30vh;
+  height: 60vh;
 }
 </style>
