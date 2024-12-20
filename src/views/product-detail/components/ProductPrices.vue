@@ -56,7 +56,7 @@ watch(
           trigger: 'axis', // Activa el tooltip al pasar por los ejes
         },
         legend: {
-          data: localValue.value.map(val => val.year), // Nombres de las líneas
+          data: localValue.value.map(val => `${val.year}`), // Nombres de las líneas
           top: 'bottom',
         },
         xAxis: {
@@ -85,9 +85,6 @@ function formatSeries(contracts) {
       type: 'line', // Tipo de gráfico: Línea
       data: makeData(contract.prices), // Datos de la línea para 2024
       smooth: true, // Suaviza la línea
-      itemStyle: {
-        color: '#5470C6', // Color de la línea
-      },
     }
     series.push(serie)
   }
