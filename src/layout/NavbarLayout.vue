@@ -19,17 +19,21 @@ function ChangePassword() {
 </script>
 <template>
   <div class="toolbar">
-    <span class="primary-color">{{ storeAuth.userEmail }}</span>
+    <span class="primary-color me-1">{{ storeAuth.userEmail }}</span>
     <el-dropdown>
-      <el-icon class="ms-1 primary-color">
-        <CaretBottom />
-      </el-icon>
+      <el-avatar
+        :size="32"
+        class="mr-3"
+        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+      />
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-if="storeAuth.isAdmin()" @click="goToConfig"
             >Configuración</el-dropdown-item
           >
-          <el-dropdown-item @click="ChangePassword">Cambiar contraseña</el-dropdown-item>
+          <el-dropdown-item @click="ChangePassword"
+            >Cambiar contraseña</el-dropdown-item
+          >
           <el-dropdown-item @click="singOut">Cerrar sesión</el-dropdown-item>
         </el-dropdown-menu>
       </template>
