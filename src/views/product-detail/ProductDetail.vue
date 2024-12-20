@@ -7,9 +7,9 @@ import { Check } from '@element-plus/icons-vue'
 import DetailGeneral from '@/components/DetailGeneral.vue'
 import ProductForm from './components/ProductForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
+import ProductPrices from './components/ProductPrices.vue'
 
 import { productStore } from '@/stores'
-
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
@@ -32,6 +32,7 @@ let product = ref({
   name: '',
   description: '',
   categories: [],
+  graph: [],
 })
 onMounted(() => {
   if (route.params.id) isEdit.value = true
@@ -101,6 +102,7 @@ watch(
     </template>
     <template #body>
       <product-form ref="formProduct" v-model="product" />
+      <product-prices v-model="product.graph" />
     </template>
   </detail-general>
 </template>
