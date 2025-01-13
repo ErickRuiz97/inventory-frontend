@@ -6,6 +6,8 @@ export const saleStore = defineStore('saleStore', {
     list: null,
     entity: null,
     error: null,
+    reportDetail: null,
+    report: null,
     create: null,
     filters: {
       date: [],
@@ -25,6 +27,18 @@ export const saleStore = defineStore('saleStore', {
     },
   }),
   actions: {
+    getSalesReportDetail(query) {
+      saleService
+        .getSalesReportDetail(query, this.sort)
+        .then(results => (this.reportDetail = results))
+        .catch(reason => (this.error = reason))
+    },
+    getSalesReport(query) {
+      saleService
+        .getSalesReport(query, this.sort)
+        .then(results => (this.report = results))
+        .catch(reason => (this.error = reason))
+    },
     getSales(query) {
       saleService
         .getSales(query, { ...this.paginator, ...this.sort })

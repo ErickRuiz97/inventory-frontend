@@ -34,8 +34,34 @@ async function createSale(body) {
   }
 }
 
+async function getSalesReportDetail(query, paginator) {
+  const axios = createAxios(true)
+  const queryParams = new URLSearchParams({ ...query, ...paginator }).toString()
+  const urlPath = `sales/report-detail?${queryParams}`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+async function getSalesReport(query, paginator) {
+  const axios = createAxios(true)
+  const queryParams = new URLSearchParams({ ...query, ...paginator }).toString()
+  const urlPath = `sales/report?${queryParams}`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const saleService = {
   getSales,
   getSaleById,
   createSale,
+  getSalesReportDetail,
+  getSalesReport
 }

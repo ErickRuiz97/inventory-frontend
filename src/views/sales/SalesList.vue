@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import { onMounted, watch, ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
+import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
@@ -23,12 +23,26 @@ const actions = [
     icon: Plus,
     label: 'Nuevo',
   },
+  {
+    event: 'onSalesReport',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte',
+  },
+  {
+    event: 'onSalesReportDetail',
+    type: 'success',
+    icon: Document,
+    label: 'Reporte detallado',
+  },
 ]
 const events = {
   onNewSale: newSale,
   onRefresh: getSales,
   onFilter: showFilters,
   onCleanFilter: cleanFilter,
+  onSalesReport: downloadReport,
+  onSalesReportDetail: downloadReportDetail,
 }
 let sales = reactive([])
 let loading = ref(true)
@@ -68,6 +82,39 @@ function eventHandler(eventKey) {
     ElMessage.warning('Evento no implementado')
   }
 }
+function downloadReportDetail() {
+  loading.value = true
+  storeSale.getSalesReportDetail(
+    objectUtils.cleanQueryEmpties(storeSale.filters)
+  )
+}
+
+function downloadReport() {
+  loading.value = true
+  storeSale.getSalesReport(
+    objectUtils.cleanQueryEmpties(storeSale.filters)
+  )
+}
+
+watch(
+  () => storeSale.reportDetail,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ReporteDetalladoVentas.xlsx')
+    }
+  }
+)
+
+watch(
+  () => storeSale.report,
+  newVal => {
+    if (newVal) {
+      loading.value = false
+      objectUtils.downloadFile(newVal, 'ReporteVentas.xlsx')
+    }
+  }
+)
 
 watch(
   () => storeSale.list,
