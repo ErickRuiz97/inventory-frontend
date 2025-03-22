@@ -2,9 +2,9 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import BreadcrumbLayout from './layout/BreadcrumbLayout.vue'
-import MenuLayout from './layout/MenuLayout.vue'
-import NavbarLayout from './layout/NavbarLayout.vue'
+import BreadcrumbLayout from './BreadcrumbLayout.vue'
+import MenuLayout from './MenuLayout.vue'
+import NavbarLayout from './NavbarLayout.vue'
 
 const route = useRoute()
 
@@ -15,6 +15,3 @@ const isShowLayout = computed(() => {
 <template>
   <router-view></router-view>
 </template>
-
-<style scoped>
-</style>
