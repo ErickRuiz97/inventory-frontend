@@ -207,7 +207,6 @@ function validForm() {
       <el-input
         v-model.number="product.sale_price"
         placeholder="Precio de venta"
-        disabled
       />
     </el-form-item>
   </el-form>

@@ -79,6 +79,11 @@ watch(
           align="center"
         ></el-table-column>
         <el-table-column
+          prop="unity_price"
+          label="Precio unitario (C$)"
+          align="right"
+        ></el-table-column>
+        <el-table-column
           prop="total_price"
           label="Precio total (C$)"
           align="right"
