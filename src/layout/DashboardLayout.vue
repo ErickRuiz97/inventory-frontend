@@ -13,6 +13,7 @@ const isShowLayout = computed(() => {
 })
 </script>
 <template>
+  <el-config-provider namespace="ep">
   <el-container class="layout-container-demo color-back-gray">
     <el-aside
       v-if="isShowLayout"
@@ -38,4 +39,5 @@ const isShowLayout = computed(() => {
       </el-main>
     </el-container>
   </el-container>
+</el-config-provider>
 </template>
