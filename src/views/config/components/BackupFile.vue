@@ -31,7 +31,7 @@ watch(
 )
 </script>
 <template>
-  <div class="h-100">
+  <div class="mb-4">
     <el-button type="primary" size="large" class="col-12" @click="createBackup"
       >Generar respaldo</el-button
     >

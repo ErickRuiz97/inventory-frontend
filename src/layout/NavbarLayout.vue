@@ -1,6 +1,10 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { authStore } from '@/stores'
+import { configStore } from '@/stores'
+import { onMounted } from 'vue'
+
+const { getConfig } = configStore()
 
 const router = useRouter()
 const storeAuth = authStore()
@@ -16,6 +20,10 @@ function goToConfig() {
 function ChangePassword() {
   router.push({ name: 'ChangePassword' })
 }
+
+onMounted(() => {
+  getConfig()
+})
 </script>
 <template>
   <div class="toolbar">

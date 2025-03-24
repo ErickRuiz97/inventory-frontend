@@ -26,7 +26,43 @@ async function restoreDatabase(file) {
   }
 }
 
+async function getConfig() {
+  const axios = createAxios()
+  const urlPath = `config`
+  try {
+    const response = await axios.get(urlPath)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+async function createConfig(body) {
+  const axios = createAxios()
+  const urlPath = `config`
+  try {
+    const response = await axios.post(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+async function updateConfig(body) {
+  const axios = createAxios()
+  const urlPath = `config`
+  try {
+    const response = await axios.put(urlPath, body)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const configService = {
   createBackup,
   restoreDatabase,
+  getConfig,
+  createConfig,
+  updateConfig,
 }
