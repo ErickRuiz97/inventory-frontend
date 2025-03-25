@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch, ref } from 'vue'
+import { onMounted, watch, ref, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Check } from '@element-plus/icons-vue'
@@ -15,6 +15,9 @@ const router = useRouter()
 const isEdit = ref(false)
 const storeProduct = productStore()
 const formProduct = ref()
+
+let symbol = inject('currencySymbol', 'C$')
+
 const actions = [
   {
     event: 'onSave',
@@ -104,7 +107,7 @@ watch(
       <div v-if="isEdit" class="row">
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
           <el-statistic
-            title="Precio de compra (C$)"
+            :title="`Precio de compra (${symbol})`"
             :value="product.purchase_price"
           >
             {{ product.purchase_price }}
@@ -112,7 +115,7 @@ watch(
         </div>
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
           <el-statistic
-            title="Precio de venta (C$)"
+            :title="`Precio de venta (${symbol})`"
             :value="product.sale_price"
           >
             {{ product.purchase_price }}

@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, inject } from 'vue'
 
+let symbol = inject('currencySymbol', 'C$')
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -13,7 +14,7 @@ const props = defineProps({
   },
 })
 
-function getSummary({ columns, data }) {
+const getSummary = ({ columns, data }) => {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'total_price') {
@@ -21,7 +22,7 @@ function getSummary({ columns, data }) {
         (sum, row) => sum + Number(row.total_price || 0),
         0
       )
-      sums[index] = `Total: C$ ${total.toFixed(2)}`
+      sums[index] = `Total: ${symbol.value} ${total.toFixed(2)}`
     } else {
       sums[index] = ''
     }
@@ -80,12 +81,12 @@ watch(
         ></el-table-column>
         <el-table-column
           prop="unity_price"
-          label="Precio unitario (C$)"
+          :label="`Precio unitario (${symbol})`"
           align="right"
         ></el-table-column>
         <el-table-column
           prop="total_price"
-          label="Precio total (C$)"
+          :label="`Precio total (${symbol})`"
           align="right"
         ></el-table-column>
       </el-table>

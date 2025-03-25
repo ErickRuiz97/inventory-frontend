@@ -4,11 +4,12 @@ import moment from 'moment'
 import { payTypes } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { saleStore } from '@/stores'
-
+import { inject } from 'vue'
 const storeSale = saleStore()
 const { sort } = storeToRefs(storeSale)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
+let symbol = inject('currencySymbol', 'C$')
 
 const props = defineProps({
   modelValue: {
@@ -69,7 +70,7 @@ function sortChange(row) {
       </el-table-column>
       <el-table-column
         prop="total_amount"
-        label="Cantidad total (C$)"
+        :label="`Cantidad total (${symbol})`"
         width="150"
         align="right"
         header-align="right"
