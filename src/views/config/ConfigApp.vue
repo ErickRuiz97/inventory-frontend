@@ -1,14 +1,13 @@
 <script setup>
 import { watch, ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Check } from '@element-plus/icons-vue'
-import BackupFile from '../config/components/BackupFile.vue'
+import { Check, Download } from '@element-plus/icons-vue'
 import RestoreFile from '../config/components/RestoreFile.vue'
 import DetailGeneral from '@/components/DetailGeneral.vue'
-import ConfigForm from './components/ConfigForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
-
+import ConfigForm from './components/ConfigForm.vue'
 import { configStore } from '@/stores'
+import { objectUtils } from '@/utils'
 
 const storeConfig = configStore()
 const actions = [
@@ -18,11 +17,18 @@ const actions = [
     icon: Check,
     label: 'Guardar',
   },
+  {
+    event: 'onBackup',
+    type: 'default',
+    icon: Download,
+    label: 'Generar respaldo base de datos',
+  },
 ]
 const formConfig = ref()
 
 const events = {
   onSave: saveConfig,
+  onBackup: createBackup,
 }
 
 function saveConfig() {
@@ -33,12 +39,35 @@ function eventHandler(eventKey) {
   events[eventKey]()
 }
 
+async function createBackup() {
+  storeConfig.createBackup()
+}
+
 watch(
   () => storeConfig.create,
   value => {
     if (value) {
       ElMessage.success('Configuración guardada')
       storeConfig.getConfig()
+    }
+  }
+)
+
+watch(
+  () => storeConfig.errorBackup,
+  value => {
+    if (value) {
+      ElMessage.error(value)
+      storeConfig.errorBackup = null
+    }
+  }
+)
+
+watch(
+  () => storeConfig.backup,
+  newVal => {
+    if (newVal) {
+      objectUtils.downloadFile(newVal, 'Backup.zip')
     }
   }
 )
@@ -73,11 +102,10 @@ watch(
     </template>
     <template #body>
       <div class="row">
-        <div class="col-6">
+        <div class="col-6 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <config-form ref="formConfig"></config-form>
         </div>
-        <div class="col-6">
-          <backup-file></backup-file>
+        <div class="col-6 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <restore-file></restore-file>
         </div>
       </div>
