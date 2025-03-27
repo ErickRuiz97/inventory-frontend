@@ -19,26 +19,24 @@ const symbol = computed(() => storeConfig.entity?.currency.symbol || '')
 provide('currencySymbol', symbol)
 </script>
 <template>
-  <el-config-provider namespace="ep">
-    <el-container class="layout-container-demo color-back-gray">
-      <el-aside id="aside-menu" width="200px" class="color-back-primary">
-        <menu-layout />
-      </el-aside>
-      <el-container>
-        <el-header id="navbar-layout">
-          <navbar-layout />
-        </el-header>
-        <el-main id="main-layout">
-          <div class="container">
-            <div v-if="isShowLayout" id="breadcrumb" class="row">
-              <breadcrumb-layout />
-            </div>
-            <div class="row" id="routing">
-              <router-view></router-view>
-            </div>
+  <el-container class="layout-container-demo color-back-gray">
+    <el-aside id="aside-menu" width="200px" class="color-back-primary">
+      <menu-layout />
+    </el-aside>
+    <el-container>
+      <el-header id="navbar-layout">
+        <navbar-layout />
+      </el-header>
+      <el-main id="main-layout">
+        <div class="container">
+          <div v-if="isShowLayout" id="breadcrumb" class="row">
+            <breadcrumb-layout />
           </div>
-        </el-main>
-      </el-container>
+          <div class="row" id="routing">
+            <router-view></router-view>
+          </div>
+        </div>
+      </el-main>
     </el-container>
-  </el-config-provider>
+  </el-container>
 </template>

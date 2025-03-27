@@ -1,7 +1,9 @@
 <script setup>
 </script>
-<template>
-  <router-view></router-view>
+<template >
+  <el-config-provider namespace="ep">
+    <router-view></router-view>
+  </el-config-provider>
 </template>
 
 <style scoped>
