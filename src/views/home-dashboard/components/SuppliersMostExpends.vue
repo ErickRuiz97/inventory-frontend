@@ -41,7 +41,7 @@ onMounted(() => {
   localValue.value = props.modelValue
 })
 
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 watch(
   () => props.modelValue,

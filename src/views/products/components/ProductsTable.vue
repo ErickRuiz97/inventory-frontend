@@ -9,7 +9,7 @@ const storeProduct = productStore()
 const { sort } = storeToRefs(storeProduct)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 let props = defineProps({
   modelValue: {

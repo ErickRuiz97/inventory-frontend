@@ -9,7 +9,7 @@ const storeSale = saleStore()
 const { sort } = storeToRefs(storeSale)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 const props = defineProps({
   modelValue: {

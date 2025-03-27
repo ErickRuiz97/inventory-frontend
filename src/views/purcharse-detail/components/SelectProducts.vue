@@ -6,7 +6,7 @@ import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
 
 const storeProduct = productStore()
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 let props = defineProps({
   modelValue: {
@@ -96,7 +96,7 @@ function deleteProduct(index) {
   localValue.value.splice(index, 1)
 }
 
-const getSummary = ({ columns, data }) => {
+function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'sale_price') {

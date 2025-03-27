@@ -5,7 +5,7 @@ import { purchaseStore } from '@/stores'
 import { inject } from 'vue'
 const storePurchase = purchaseStore()
 const { sort } = storeToRefs(storePurchase)
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 const emit = defineEmits(['clickRow', 'sortChange'])
 const props = defineProps({

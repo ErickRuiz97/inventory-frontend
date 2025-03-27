@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, watch, inject } from 'vue'
 
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -14,7 +14,7 @@ const props = defineProps({
   },
 })
 
-const getSummary = ({ columns, data }) => {
+function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'total_price') {

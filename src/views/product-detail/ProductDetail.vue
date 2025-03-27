@@ -16,7 +16,7 @@ const isEdit = ref(false)
 const storeProduct = productStore()
 const formProduct = ref()
 
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 const actions = [
   {

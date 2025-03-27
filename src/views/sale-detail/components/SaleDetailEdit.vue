@@ -3,7 +3,7 @@ import { onMounted, ref, watch, inject } from 'vue'
 import { payTypes } from '@/constants'
 import _ from 'lodash'
 
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 
 const props = defineProps({
   modelValue: {
@@ -16,7 +16,7 @@ const props = defineProps({
   },
 })
 
-const getSummary = ({ columns, data }) => {
+function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'total_price') {

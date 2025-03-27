@@ -5,7 +5,7 @@ import { productStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
 
-let symbol = inject('currencySymbol', 'C$')
+let symbol = inject('currencySymbol')
 const storeProduct = productStore()
 let props = defineProps({
   modelValue: {
@@ -133,7 +133,7 @@ const rules = reactive({
   ],
 })
 
-const getSummary = ({ columns, data }) => {
+function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'sale_price') {
