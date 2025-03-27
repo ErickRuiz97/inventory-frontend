@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, shallowRef } from 'vue'
+import { onMounted, ref, watch, shallowRef, inject } from 'vue'
 import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
 import { SVGRenderer } from 'echarts/renderers'
@@ -41,6 +41,8 @@ onMounted(() => {
   localValue.value = props.modelValue
 })
 
+let symbol = inject('currencySymbol')
+
 watch(
   () => props.modelValue,
   value => {
@@ -54,7 +56,7 @@ watch(
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{b} : {c} (C$)',
+          formatter: `{b} : {c} (${symbol.value})`,
         },
         itemStyle: {
           borderRadius: [20, 20, 0, 0],

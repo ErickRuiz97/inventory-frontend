@@ -58,10 +58,22 @@ async function getSalesReport(query, paginator) {
   }
 }
 
+async function getSaleReceiptById(idSale) {
+  const axios = createAxios(true)
+  const urlPath = `sales/${idSale}/receipt`
+  try {
+    const response = await axios.get(urlPath, { responseType: 'blob' })
+    return Promise.resolve({ data: response.data, headers: response.headers })
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const saleService = {
   getSales,
   getSaleById,
   createSale,
   getSalesReportDetail,
-  getSalesReport
+  getSalesReport,
+  getSaleReceiptById,
 }

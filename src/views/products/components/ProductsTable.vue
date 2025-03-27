@@ -4,11 +4,13 @@ import { objectUtils } from '@/utils'
 import { categories } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { productStore } from '@/stores'
-
+import { inject } from 'vue'
 const storeProduct = productStore()
 const { sort } = storeToRefs(storeProduct)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
+let symbol = inject('currencySymbol')
+
 let props = defineProps({
   modelValue: {
     type: [Array],
@@ -70,14 +72,14 @@ function sortChange(row) {
       </el-table-column>
       <el-table-column
         prop="purchase_price"
-        label="Compra (C$)"
+        :label="`Compra (${symbol})`"
         width="110"
         align="right"
         sortable
       />
       <el-table-column
         prop="sale_price"
-        label="Venta (C$)"
+        :label="`Venta (${symbol})`"
         width="100"
         align="right"
         sortable

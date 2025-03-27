@@ -9,6 +9,7 @@ export const saleStore = defineStore('saleStore', {
     reportDetail: null,
     report: null,
     create: null,
+    receipt: null,
     filters: {
       date: [],
       code: '',
@@ -49,6 +50,12 @@ export const saleStore = defineStore('saleStore', {
       saleService
         .getSaleById(idSale)
         .then(results => (this.entity = results))
+        .catch(reason => (this.error = reason))
+    },
+    getSaleReceiptById(idSale) {
+      saleService
+        .getSaleReceiptById(idSale)
+        .then(results => (this.receipt = results))
         .catch(reason => (this.error = reason))
     },
     createSale(body) {

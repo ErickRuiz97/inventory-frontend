@@ -3,6 +3,9 @@ import { configService } from '@/services'
 
 export const configStore = defineStore('configStore', {
   state: () => ({
+    entity: null,
+    create: null,
+    update: null,
     backup: null,
     errorBackup: null,
     restore: null,
@@ -20,6 +23,24 @@ export const configStore = defineStore('configStore', {
         .restoreDatabase(file)
         .then(result => (this.restore = result))
         .catch(reason => (this.errorRestore = reason))
+    },
+    getConfig(idSupplier) {
+      configService
+        .getConfig(idSupplier)
+        .then(results => (this.entity = results))
+        .catch(reason => (this.error = reason))
+    },
+    createConfig(body) {
+      configService
+        .createConfig(body)
+        .then(results => (this.create = results))
+        .catch(reason => (this.error = reason))
+    },
+    updateConfig(id, body) {
+      configService
+        .updateConfig(id, body)
+        .then(results => (this.update = results))
+        .catch(reason => (this.error = reason))
     },
   },
 })
