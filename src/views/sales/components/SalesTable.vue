@@ -63,6 +63,13 @@ function sortChange(row) {
         show-overflow-tooltip
         sortable
       />
+      <el-table-column
+        prop="user"
+        label="Usuario"
+        width="150"
+        align="let"
+        header-align="left"
+      />
       <el-table-column prop="pay_type" label="Forma de pago" width="200">
         <template #default="scope">
           {{ _.find(payTypes, { value: scope.row.pay_type })?.label }}

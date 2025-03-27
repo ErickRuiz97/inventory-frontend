@@ -63,6 +63,13 @@ function sortChange(row) {
         </template>
       </el-table-column>
       <el-table-column
+        prop="user"
+        label="Usuario"
+        width="150"
+        align="let"
+        header-align="left"
+      />
+      <el-table-column
         prop="total_amount"
         :label="`Cantidad total (${symbol})`"
         width="150"
