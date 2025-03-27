@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, ref, reactive, watch } from 'vue'
-import { categories } from '@/constants'
+import { onMounted, ref, reactive, watch, inject } from 'vue'
 
 const productElForm = ref()
+let categories = inject('categories')
 
 const props = defineProps({
   modelValue: {

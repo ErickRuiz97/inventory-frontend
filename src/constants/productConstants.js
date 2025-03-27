@@ -13,6 +13,6 @@ export const categories = [
   { label: 'Cuidado del bebé', value: 'CUIDADO_BEBE' },
   { label: 'Mascotas', value: 'MASCOTAS' },
   { label: 'Otros', value: 'OTROS' },
-  { label: 'Canasta basica', value: 'CANASTA_BASICA' },
+  { label: 'Canasta básica', value: 'CANASTA_BASICA' },
   { label: 'Seriales', value: 'SERIALES' },
 ]

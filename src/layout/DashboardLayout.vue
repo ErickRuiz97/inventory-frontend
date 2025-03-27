@@ -17,6 +17,9 @@ const isShowLayout = computed(() => {
 
 const symbol = computed(() => storeConfig.entity?.currency.symbol || '')
 provide('currencySymbol', symbol)
+
+const categories = computed(() => storeConfig.entity?.categories || [])
+provide('categories', categories)
 </script>
 <template>
   <el-container class="layout-container-demo color-back-gray">

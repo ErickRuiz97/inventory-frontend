@@ -1,7 +1,6 @@
 <script setup>
 import _ from 'lodash'
 import { objectUtils } from '@/utils'
-import { categories } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { productStore } from '@/stores'
 import { inject } from 'vue'
@@ -10,7 +9,7 @@ const { sort } = storeToRefs(storeProduct)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
 let symbol = inject('currencySymbol')
-
+let categories = inject('categories')
 let props = defineProps({
   modelValue: {
     type: [Array],
