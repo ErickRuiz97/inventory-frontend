@@ -36,6 +36,11 @@ let product = ref({
   description: '',
   categories: [],
   graph: [],
+  warranty: {
+    has_warranty: false,
+    measure: '',
+    quantity: '',
+  },
 })
 onMounted(() => {
   if (route.params.id) isEdit.value = true

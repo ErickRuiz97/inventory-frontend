@@ -1,6 +1,7 @@
 <script setup>
+import { Check, Close } from '@element-plus/icons-vue'
 import { onMounted, ref, reactive, watch, inject } from 'vue'
-
+import { measures_warranty } from '../../../constants/productConstants'
 const productElForm = ref()
 let categories = inject('categories')
 
@@ -8,7 +9,17 @@ const props = defineProps({
   modelValue: {
     type: Object,
     default: () => {
-      return { code: '', name: '', description: '', categories: [] }
+      return {
+        code: '',
+        name: '',
+        description: '',
+        categories: [],
+        warranty: {
+          has_warranty: false,
+          measure: '',
+          quantity: '',
+        },
+      }
     },
   },
 })
@@ -17,6 +28,11 @@ let localValue = ref({
   name: '',
   description: '',
   categories: [],
+  warranty: {
+    has_warranty: false,
+    measure: '',
+    quantity: '',
+  },
 })
 
 onMounted(() => {
@@ -109,6 +125,48 @@ defineExpose({ validForm })
             :value="item.value"
           />
         </el-select>
+      </el-form-item>
+    </div>
+    <div class="row">
+      <el-form-item
+        label="Garantía"
+        prop="warranty.has_warranty"
+        class="col-sm-12 col-md-2 col-lg-1 col-xl-1"
+      >
+        <el-switch
+          v-model="localValue.warranty.has_warranty"
+          inline-prompt
+          :active-icon="Check"
+          :inactive-icon="Close"
+        />
+      </el-form-item>
+      <el-form-item
+        v-if="localValue.warranty.has_warranty"
+        label="Tiempo"
+        prop="warranty.measure"
+        class="col-sm-12 col-md-6 col-lg-4 col-xl-4"
+      >
+        <el-select v-model="localValue.warranty.measure" placeholder="">
+          <el-option
+            v-for="item in measures_warranty"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        v-if="localValue.warranty.has_warranty"
+        label="Tiempo"
+        prop="warranty.quantity"
+        class="col-sm-12 col-md-4 col-lg-2 col-xl-2"
+      >
+        <el-input-number
+          v-model.number="localValue.warranty.quantity"
+          controls-position="right"
+          :min="0"
+          style="width: 100%"
+        />
       </el-form-item>
     </div>
   </el-form>
