@@ -1,4 +1,4 @@
-import { apiServer } from '../globalVars.js'
+import { API_URL } from '../globalVars.js'
 import axios from 'axios'
 
 function createAxios(withHeaders = false) {
@@ -9,7 +9,7 @@ function createAxios(withHeaders = false) {
     headers.Authorization = user.token
   }
   const instance = axios.create({
-    baseURL: apiServer,
+    baseURL: API_URL,
     headers,
   })
 
