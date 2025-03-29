@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, shallowRef, inject } from 'vue'
+import { onMounted, ref, watch, shallowRef } from 'vue'
 import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
 import { SVGRenderer } from 'echarts/renderers'
@@ -10,6 +10,8 @@ import {
   TooltipComponent,
   LegendComponent,
 } from 'echarts/components'
+import { useConfig } from '@/composables/useConfig'
+const { symbol } = useConfig()
 
 use([
   BarChart,
@@ -40,8 +42,6 @@ const option = shallowRef()
 onMounted(() => {
   localValue.value = props.modelValue
 })
-
-let symbol = inject('currencySymbol')
 
 watch(
   () => props.modelValue,

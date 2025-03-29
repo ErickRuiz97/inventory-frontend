@@ -1,25 +1,16 @@
 <script setup>
-import { computed, provide } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import BreadcrumbLayout from './BreadcrumbLayout.vue'
 import MenuLayout from './MenuLayout.vue'
 import NavbarLayout from './NavbarLayout.vue'
-import { configStore } from '@/stores'
-
-const storeConfig = configStore()
 
 const route = useRoute()
 
 const isShowLayout = computed(() => {
   return !['/login'].includes(route.path)
 })
-
-const symbol = computed(() => storeConfig.entity?.currency.symbol || '')
-provide('currencySymbol', symbol)
-
-const categories = computed(() => storeConfig.entity?.categories || [])
-provide('categories', categories)
 </script>
 <template>
   <el-container class="layout-container-demo color-back-gray">

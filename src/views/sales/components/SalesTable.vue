@@ -4,12 +4,12 @@ import moment from 'moment'
 import { payTypes } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { saleStore } from '@/stores'
-import { inject } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 const storeSale = saleStore()
 const { sort } = storeToRefs(storeSale)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
-let symbol = inject('currencySymbol')
+const { symbol } = useConfig()
 
 const props = defineProps({
   modelValue: {

@@ -3,13 +3,12 @@ import _ from 'lodash'
 import { objectUtils } from '@/utils'
 import { storeToRefs } from 'pinia'
 import { productStore } from '@/stores'
-import { inject } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 const storeProduct = productStore()
 const { sort } = storeToRefs(storeProduct)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
-let symbol = inject('currencySymbol')
-let categories = inject('categories')
+const { symbol, categories } = useConfig()
 let props = defineProps({
   modelValue: {
     type: [Array],

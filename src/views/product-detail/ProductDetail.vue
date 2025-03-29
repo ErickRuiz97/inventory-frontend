@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch, ref, inject } from 'vue'
+import { onMounted, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Check } from '@element-plus/icons-vue'
@@ -8,15 +8,16 @@ import DetailGeneral from '@/components/DetailGeneral.vue'
 import ProductForm from './components/ProductForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 import ProductPrices from './components/ProductPrices.vue'
-
 import { productStore } from '@/stores'
+import { useConfig } from '@/composables/useConfig'
+
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storeProduct = productStore()
 const formProduct = ref()
 
-let symbol = inject('currencySymbol')
+const { symbol } = useConfig()
 
 const actions = [
   {

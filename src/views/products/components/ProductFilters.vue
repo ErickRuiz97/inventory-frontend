@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref, watch, inject } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 
 const productQueryElForm = ref()
 const props = defineProps({
@@ -9,7 +10,7 @@ const props = defineProps({
   },
 })
 let localValue = ref({})
-let categories = inject('categories')
+const { categories } = useConfig()
 
 onMounted(() => {
   localValue.value = props.modelValue

@@ -1,9 +1,10 @@
 <script setup>
 import { Check, Close } from '@element-plus/icons-vue'
-import { onMounted, ref, reactive, watch, inject } from 'vue'
+import { onMounted, ref, reactive, watch } from 'vue'
 import { measures_warranty } from '../../../constants/productConstants'
 const productElForm = ref()
-let categories = inject('categories')
+import { useConfig } from '@/composables/useConfig'
+const { categories } = useConfig()
 
 const props = defineProps({
   modelValue: {
