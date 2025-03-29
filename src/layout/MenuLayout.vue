@@ -27,12 +27,7 @@ let activeIndex = ref(currentRoute)
 </script>
 <template>
   <el-scrollbar>
-    <el-menu
-      id="menu-layout"
-      class="sideNav"
-      :default-active="activeIndex"
-      style="background-color: #384150"
-    >
+    <el-menu id="menu-layout" class="sideNav" :default-active="activeIndex">
       <el-menu-item
         v-if="storeAuth.isSales()"
         index="/home"
