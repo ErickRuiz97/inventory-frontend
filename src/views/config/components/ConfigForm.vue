@@ -53,6 +53,16 @@ watch(
 
 const rules = reactive({})
 
+const handleUpload = file => {
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload = () => {
+    localValue.value.company.logo = reader.result
+    console.log(localValue.value.company.logo)
+  }
+  return false
+}
+
 defineExpose({ guardar })
 </script>
 <template>
@@ -70,6 +80,19 @@ defineExpose({ guardar })
         class="col-sm-12 col-md-8 col-lg-6 col-xl-6"
       >
         <el-input v-model="localValue.company.name" />
+      </el-form-item>
+      <el-form-item label="Logo" class="col-sm-12 col-md-4 col-lg-2 col-xl-2">
+        <el-upload
+          class="upload-demo"
+          action=""
+          :auto-upload="true"
+          :show-file-list="true"
+          :before-upload="handleUpload"
+        >
+          <el-button type="primary">{{
+            localValue.company.logo ? 'Cambiar Imagen' : 'Subir Imagen'
+          }}</el-button>
+        </el-upload>
       </el-form-item>
     </div>
     <div class="row">

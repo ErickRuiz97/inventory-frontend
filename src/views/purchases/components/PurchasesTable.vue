@@ -2,11 +2,11 @@
 import moment from 'moment'
 import { storeToRefs } from 'pinia'
 import { purchaseStore } from '@/stores'
-import { inject } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 const storePurchase = purchaseStore()
 const { sort } = storeToRefs(storePurchase)
-let symbol = inject('currencySymbol')
 
+const { symbol } = useConfig()
 const emit = defineEmits(['clickRow', 'sortChange'])
 const props = defineProps({
   modelValue: {

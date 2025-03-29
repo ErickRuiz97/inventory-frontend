@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, ref, watch, inject } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 
-let symbol = inject('currencySymbol')
+const { symbol } = useConfig()
 const props = defineProps({
   modelValue: {
     type: Object,

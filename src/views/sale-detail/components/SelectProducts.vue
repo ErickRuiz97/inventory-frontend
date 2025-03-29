@@ -1,11 +1,12 @@
 <script setup>
 import _ from 'lodash'
-import { onMounted, watch, ref, reactive, inject } from 'vue'
+import { onMounted, watch, ref, reactive } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 import { productStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
 
-let symbol = inject('currencySymbol')
+const { symbol } = useConfig()
 const storeProduct = productStore()
 let props = defineProps({
   modelValue: {
