@@ -1,4 +1,4 @@
-$--colors: (
+$colors-alt1: (
   'primary': (
     'base': #21ba45,
   ),
@@ -18,7 +18,67 @@ $--colors: (
     'base': #42b8dd,
   ),
 );
-
+$colors-alt2: (
+  'primary': (
+    'base': #3f51b5, // Azul oscuro
+  ),
+  'success': (
+    'base': #21ba45, // Verde (mantenido)
+  ),
+  'warning': (
+    'base': #ffc107, // Amarillo ámbar (mantenido)
+  ),
+  'danger': (
+    'base': #db2828, // Rojo (mantenido)
+  ),
+  'error': (
+    'base': #db2828, // Rojo (mantenido)
+  ),
+  'info': (
+    'base': #00bcd4, // Cian
+  ),
+);
+$colors-alt3: (
+  'primary': (
+    'base': #9c27b0, // Púrpura
+  ),
+  'success': (
+    'base': #21ba45, // Verde (mantenido)
+  ),
+  'warning': (
+    'base': #ff9800, // Naranja ámbar (mantenido)
+  ),
+  'danger': (
+    'base': #db2828, // Rojo (mantenido)
+  ),
+  'error': (
+    'base': #db2828, // Rojo (mantenido)
+  ),
+  'info': (
+    'base': #8bc34a, // Verde lima
+  ),
+);
+$colors-alt9: (
+  'primary': (
+    'base': #7b1fa2, // Morado medio oscuro
+  ),
+  'success': (
+    'base': #8bc34a, // Verde lima (ligeramente verdoso)
+  ),
+  'warning': (
+    'base': #ffc107, // Amarillo ámbar
+  ),
+  'danger': (
+    'base': #c62828, // Rojo oscuro (ligeramente rojizo)
+  ),
+  'error': (
+    'base': #c62828, // Rojo oscuro (ligeramente rojizo)
+  ),
+  'info': (
+    'base': #4527a0, // Morado medio oscuro
+  ),
+);
+$--colors :$colors-alt2;
 // we can add this to custom namespace, default is 'el'
 @forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
   $namespace: 'ep'
