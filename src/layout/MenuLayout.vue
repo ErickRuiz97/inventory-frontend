@@ -26,12 +26,11 @@ onMounted(() => {
 let activeIndex = ref(currentRoute)
 </script>
 <template>
-  <el-scrollbar>
+  <el-scrollbar style="background-color: #e0e0e0">
     <el-menu
       id="menu-layout"
-      class="sideNav"
       :default-active="activeIndex"
-      style="background-color: #384150"
+      style="background-color: #e0e0e0"
     >
       <el-menu-item
         v-if="storeAuth.isSales()"
@@ -39,7 +38,7 @@ let activeIndex = ref(currentRoute)
         @click="routerPush('/home')"
       >
         <el-icon><trend-charts /></el-icon>
-        Dashboard
+        <template #title>Dashboard</template>
       </el-menu-item>
       <el-menu-item
         v-if="storeAuth.isSales()"
@@ -47,7 +46,7 @@ let activeIndex = ref(currentRoute)
         @click="routerPush('/sales')"
       >
         <el-icon><sell /></el-icon>
-        Ventas
+        <template #title>Ventas</template>
       </el-menu-item>
       <el-menu-item
         v-if="storeAuth.isManager()"
@@ -55,7 +54,7 @@ let activeIndex = ref(currentRoute)
         @click="routerPush('/purchases')"
       >
         <el-icon><sold-out /></el-icon>
-        Compras
+        <template #title>Compras</template>
       </el-menu-item>
       <el-menu-item
         v-if="storeAuth.isAdmin()"
@@ -63,7 +62,7 @@ let activeIndex = ref(currentRoute)
         @click="routerPush('/suppliers')"
       >
         <el-icon><office-building /></el-icon>
-        Proveedores
+        <template #title>Proveedores</template>
       </el-menu-item>
       <el-menu-item
         v-if="storeAuth.isSales()"
@@ -71,7 +70,7 @@ let activeIndex = ref(currentRoute)
         @click="routerPush('/products')"
       >
         <el-icon><shop /></el-icon>
-        Productos
+        <template #title>Productos</template>
       </el-menu-item>
       <el-menu-item
         v-if="storeAuth.isAdmin()"
@@ -79,7 +78,7 @@ let activeIndex = ref(currentRoute)
         @click="routerPush('/users')"
       >
         <el-icon><user /></el-icon>
-        Usuarios
+        <template #title>Usuarios</template>
       </el-menu-item>
     </el-menu>
   </el-scrollbar>

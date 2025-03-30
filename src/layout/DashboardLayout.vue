@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import BreadcrumbLayout from './BreadcrumbLayout.vue'
@@ -8,28 +7,23 @@ import NavbarLayout from './NavbarLayout.vue'
 
 const route = useRoute()
 
-const isShowLayout = computed(() => {
-  return !['/login'].includes(route.path)
-})
+
 </script>
 <template>
-  <el-config-provider namespace="ep">
-  <el-container class="layout-container-demo color-back-gray">
+  <el-container class="layout-container-demo color-back-gray" style="height: 100vh;">
     <el-aside
-      v-if="isShowLayout"
       id="aside-menu"
       width="200px"
-      class="color-back-primary"
       >
-      <menu-layout />
+      <menu-layout class="h-100" />
     </el-aside>
     <el-container>
-      <el-header v-if="isShowLayout" id="navbar-layout">
+      <el-header id="navbar-layout">
         <navbar-layout />
       </el-header>
       <el-main id="main-layout">
         <div class="container">
-          <div v-if="isShowLayout" id="breadcrumb" class="row">
+          <div id="breadcrumb" class="row">
             <breadcrumb-layout />
           </div>
           <div class="row" id="routing">
@@ -39,5 +33,4 @@ const isShowLayout = computed(() => {
       </el-main>
     </el-container>
   </el-container>
-</el-config-provider>
 </template>
