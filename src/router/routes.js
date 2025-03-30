@@ -2,8 +2,6 @@
 import LoginApp from '@/views/login/LoginApp.vue'
 import NoAuth from '@/views/no-auth/NoAuth.vue'
 
-
-
 // Suppliers routes
 import SuppliersList from '@/views/suppliers/SuppliersList.vue'
 import SupplierDetail from '@/views/supplier-detail/SupplierDetail.vue'
@@ -33,7 +31,7 @@ import ProductDetail from '@/views/product-detail/ProductDetail.vue'
 import LoginLayout from '@/layout/LoginLayout.vue'
 
 const dashboardPages = {
-  path:"/",
+  path: '/',
   component: DashboardLayout,
   children: [
     {
@@ -42,13 +40,13 @@ const dashboardPages = {
       component: HomeDashboard,
       meta: { breadcrumb: 'Dashboard' },
     },
-  ]
+  ],
 }
-const productPages ={
-  path : "/products",
-  redirect : "/products",
-  component : DashboardLayout,
-  children : [
+const productPages = {
+  path: '/products',
+  redirect: '/products',
+  component: DashboardLayout,
+  children: [
     {
       path: '/products',
       name: 'ProductsList',
@@ -61,21 +59,27 @@ const productPages ={
       path: 'create',
       name: 'ProductCreate',
       component: ProductDetail,
-      meta: { breadcrumb: 'Crear producto', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'Crear producto',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
     {
       path: ':id',
       name: 'ProductEdit',
       component: ProductDetail,
       props: true,
-      meta: { breadcrumb: 'Editar producto', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'Editar producto',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
-  ]
-};
+  ],
+}
 const loginPages = {
-  path: "/login",
-  redirect: "/login",
-  component : LoginLayout,
+  path: '/login',
+  redirect: '/login',
+  component: LoginLayout,
   children: [
     {
       path: '/login',
@@ -88,14 +92,14 @@ const loginPages = {
       name: 'ChangePassword',
       component: ChangePassword,
       meta: { breadcrumb: 'Cambiar Contraseña' },
-    }
-  ]
-};
-const usersPages ={
-  path : "/users",
-  redirect : "/users",
-  component : DashboardLayout,
-  children : [
+    },
+  ],
+}
+const usersPages = {
+  path: '/users',
+  redirect: '/users',
+  component: DashboardLayout,
+  children: [
     {
       path: '/users',
       name: 'UserList',
@@ -113,15 +117,18 @@ const usersPages ={
       name: 'UserUpdate',
       component: UserDetail,
       props: true,
-      meta: { breadcrumb: 'Editar usuario', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'Editar usuario',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
-  ]
-};
-const supplierPages ={
-  path : "/suppliers",
-  redirect : "/suppliers",
-  component : DashboardLayout,
-  children : [
+  ],
+}
+const supplierPages = {
+  path: '/suppliers',
+  redirect: '/suppliers',
+  component: DashboardLayout,
+  children: [
     {
       path: '/suppliers',
       name: 'SuppliersList',
@@ -133,7 +140,10 @@ const supplierPages ={
       path: 'create',
       name: 'SupplierCreate',
       component: SupplierDetail,
-      meta: { breadcrumb: 'Crear proveedor', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'Crear proveedor',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
     {
       path: ':id',
@@ -145,13 +155,13 @@ const supplierPages ={
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
     },
-  ]
-};
-const salesPages ={
-  path : "/sales",
-  redirect : "/sales",
-  component : DashboardLayout,
-  children : [
+  ],
+}
+const salesPages = {
+  path: '/sales',
+  redirect: '/sales',
+  component: DashboardLayout,
+  children: [
     {
       path: '/sales',
       name: 'SalesList',
@@ -170,13 +180,31 @@ const salesPages ={
       component: SaleDetail,
       meta: { breadcrumb: 'Detalle venta' },
     },
-  ]
-};
-const purchasesPages ={
-  path : "/purchases",
-  redirect : "/purchases",
-  component : DashboardLayout,
-  children : [
+  ],
+}
+
+const configPages = {
+  path: '/config-app',
+  redirect: '/config-app',
+  component: DashboardLayout,
+  children: [
+    {
+      path: '/config-app',
+      name: 'ConfigApp',
+      component: ConfigApp,
+      props: true,
+      meta: {
+        breadcrumb: 'Configuración de la aplicación',
+        requiresAuth: 'ADMIN',
+      },
+    },
+  ],
+}
+const purchasesPages = {
+  path: '/purchases',
+  redirect: '/purchases',
+  component: DashboardLayout,
+  children: [
     {
       path: '/purchases',
       name: 'PurchasesList',
@@ -195,13 +223,13 @@ const purchasesPages ={
       component: PurchaseDetail,
       meta: { breadcrumb: 'Detalle compra' },
     },
-  ]
-};
+  ],
+}
 export const routes = [
   {
-    path:"/",
+    path: '/',
     redirect: '/home',
-    name:"Dashboard",
+    name: 'Dashboard',
     meta: { public: true },
   },
   {
@@ -219,5 +247,6 @@ export const routes = [
   supplierPages,
   salesPages,
   purchasesPages,
-  loginPages
+  loginPages,
+  configPages,
 ]

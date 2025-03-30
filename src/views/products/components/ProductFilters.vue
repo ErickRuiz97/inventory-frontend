@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import { categories } from '@/constants'
+import { useConfig } from '@/composables/useConfig'
 
 const productQueryElForm = ref()
 const props = defineProps({
@@ -10,6 +10,7 @@ const props = defineProps({
   },
 })
 let localValue = ref({})
+const { categories } = useConfig()
 
 onMounted(() => {
   localValue.value = props.modelValue
@@ -36,6 +37,7 @@ watch(
       <el-select
         v-model="localValue.categories"
         style="width: 100%"
+        placeholder=" "
         multiple
         filterable
       >

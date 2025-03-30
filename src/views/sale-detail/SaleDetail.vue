@@ -2,7 +2,7 @@
 import { onMounted, watch, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Check } from '@element-plus/icons-vue'
+import { Check, Printer } from '@element-plus/icons-vue'
 
 import DetailGeneral from '@/components/DetailGeneral.vue'
 import SaleForm from './components/SaleForm.vue'
@@ -10,6 +10,7 @@ import SaleDetailEdit from './components/SaleDetailEdit.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { saleStore } from '@/stores'
+import { objectUtils } from '@/utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,6 +20,7 @@ const formSale = ref()
 const actions = reactive([])
 const events = {
   onSave: saveSale,
+  onPrint: printReceipt,
 }
 
 let sale = ref({
@@ -28,8 +30,15 @@ let sale = ref({
 })
 onMounted(() => {
   if (route.params.id) isEdit.value = true
-  if (isEdit.value) storeSale.getSaleById(route.params.id)
-  else
+  if (isEdit.value) {
+    storeSale.getSaleById(route.params.id)
+    actions.push({
+      event: 'onPrint',
+      type: 'primary',
+      icon: Printer,
+      label: 'Imprimir factura',
+    })
+  } else
     actions.push({
       event: 'onSave',
       type: 'primary',
@@ -49,6 +58,10 @@ async function saveSale() {
   }
 }
 
+async function printReceipt() {
+  storeSale.getSaleReceiptById(route.params.id)
+}
+
 watch(
   () => storeSale.entity,
   value => {
@@ -64,6 +77,25 @@ watch(
     if (value) {
       ElMessage.success('Compra creada')
       router.push({ path: '/sales' })
+    }
+  }
+)
+
+watch(
+  () => storeSale.create,
+  value => {
+    if (value) {
+      ElMessage.success('Compra creada')
+      router.push({ path: '/sales' })
+    }
+  }
+)
+
+watch(
+  () => storeSale.receipt,
+  value => {
+    if (value) {
+      objectUtils.downloadFile(value, 'Factura.pdf')
     }
   }
 )

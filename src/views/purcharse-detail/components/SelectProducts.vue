@@ -4,8 +4,11 @@ import { onMounted, ref, reactive, watch } from 'vue'
 import { productStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
+import { useConfig } from '@/composables/useConfig'
 
 const storeProduct = productStore()
+const { symbol } = useConfig()
+
 let props = defineProps({
   modelValue: {
     type: Array,
@@ -104,7 +107,7 @@ function getSummary({ columns, data }) {
         (sum, row) => sum + Number(row.total_price || 0),
         0
       )
-      sums[index] = `C$ ${total.toFixed(2)}`
+      sums[index] = `${symbol.value} ${total.toFixed(2)}`
     } else {
       sums[index] = ''
     }
@@ -215,7 +218,7 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="purchase_price"
-      label="Precio de compra (C$)"
+      :label="`Precio de compra (${symbol})`"
       class="col-sm-12 col-md-6 col-lg-3 col-xl-3"
     >
       <el-input
@@ -227,7 +230,7 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="sale_price"
-      label="Precio de venta (C$)"
+      :label="`Precio de venta (${symbol})`"
       class="col-sm-12 col-md-6 col-lg-3 col-xl-3"
     >
       <el-input
@@ -278,19 +281,19 @@ function validForm() {
       ></el-table-column>
       <el-table-column
         prop="purchase_price"
-        label="Precio de compra (C$)"
+        :label="`Precio de compra (${symbol})`"
         width="140"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="sale_price"
-        label="Precio de venta (C$)"
+        :label="`Precio de venta (${symbol})`"
         width="130"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="total_price"
-        label="Precio total (C$)"
+        :label="`Precio total (${symbol})`"
         width="110"
         align="right"
       ></el-table-column>

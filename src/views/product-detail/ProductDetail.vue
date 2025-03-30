@@ -8,13 +8,17 @@ import DetailGeneral from '@/components/DetailGeneral.vue'
 import ProductForm from './components/ProductForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 import ProductPrices from './components/ProductPrices.vue'
-
 import { productStore } from '@/stores'
+import { useConfig } from '@/composables/useConfig'
+
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storeProduct = productStore()
 const formProduct = ref()
+
+const { symbol } = useConfig()
+
 const actions = [
   {
     event: 'onSave',
@@ -33,6 +37,11 @@ let product = ref({
   description: '',
   categories: [],
   graph: [],
+  warranty: {
+    has_warranty: false,
+    measure: '',
+    quantity: '',
+  },
 })
 onMounted(() => {
   if (route.params.id) isEdit.value = true
@@ -104,7 +113,7 @@ watch(
       <div v-if="isEdit" class="row">
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
           <el-statistic
-            title="Precio de compra (C$)"
+            :title="`Precio de compra (${symbol})`"
             :value="product.purchase_price"
           >
             {{ product.purchase_price }}
@@ -112,7 +121,7 @@ watch(
         </div>
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
           <el-statistic
-            title="Precio de venta (C$)"
+            :title="`Precio de venta (${symbol})`"
             :value="product.sale_price"
           >
             {{ product.purchase_price }}

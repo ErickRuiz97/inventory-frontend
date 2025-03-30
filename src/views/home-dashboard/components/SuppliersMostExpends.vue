@@ -10,6 +10,8 @@ import {
   TooltipComponent,
   LegendComponent,
 } from 'echarts/components'
+import { useConfig } from '@/composables/useConfig'
+const { symbol } = useConfig()
 
 use([
   BarChart,
@@ -54,7 +56,7 @@ watch(
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{b} : {c} (C$)',
+          formatter: `{b} : {c} (${symbol.value})`,
         },
         itemStyle: {
           borderRadius: [20, 20, 0, 0],

@@ -1,10 +1,12 @@
 <script setup>
 import _ from 'lodash'
 import { onMounted, watch, ref, reactive } from 'vue'
+import { useConfig } from '@/composables/useConfig'
 import { productStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
 
+const { symbol } = useConfig()
 const storeProduct = productStore()
 let props = defineProps({
   modelValue: {
@@ -142,7 +144,7 @@ function getSummary({ columns, data }) {
         (sum, row) => sum + Number(row.total_price || 0),
         0
       )
-      sums[index] = `C$ ${total.toFixed(2)}`
+      sums[index] = `${symbol.value} ${total.toFixed(2)}`
     } else {
       sums[index] = ''
     }
@@ -201,7 +203,7 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="sale_price"
-      label="Precio de venta (C$)"
+      :label="`Precio de venta (${symbol})`"
       class="col-sm-12 col-md-8 col-lg-4 col-xl-4"
     >
       <el-input
@@ -242,13 +244,13 @@ function validForm() {
       ></el-table-column>
       <el-table-column
         prop="sale_price"
-        label="Precio de venta (C$)"
+        :label="`Precio de venta (${symbol})`"
         width="130"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="total_price"
-        label="Precio total (C$)"
+        :label="`Precio total (${symbol})`"
         width="110"
         align="right"
       ></el-table-column>

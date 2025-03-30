@@ -4,11 +4,12 @@ import moment from 'moment'
 import { payTypes } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { saleStore } from '@/stores'
-
+import { useConfig } from '@/composables/useConfig'
 const storeSale = saleStore()
 const { sort } = storeToRefs(storeSale)
 
 const emit = defineEmits(['clickRow', 'sortChange'])
+const { symbol } = useConfig()
 
 const props = defineProps({
   modelValue: {
@@ -62,6 +63,13 @@ function sortChange(row) {
         show-overflow-tooltip
         sortable
       />
+      <el-table-column
+        prop="user"
+        label="Usuario"
+        width="150"
+        align="let"
+        header-align="left"
+      />
       <el-table-column prop="pay_type" label="Forma de pago" width="200">
         <template #default="scope">
           {{ _.find(payTypes, { value: scope.row.pay_type })?.label }}
@@ -69,7 +77,7 @@ function sortChange(row) {
       </el-table-column>
       <el-table-column
         prop="total_amount"
-        label="Cantidad total (C$)"
+        :label="`Cantidad total (${symbol})`"
         width="150"
         align="right"
         header-align="right"
