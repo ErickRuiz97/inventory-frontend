@@ -87,12 +87,6 @@ const loginPages = {
       component: LoginApp,
       meta: { public: true },
     },
-    {
-      path: '/change-password',
-      name: 'ChangePassword',
-      component: ChangePassword,
-      meta: { breadcrumb: 'Cambiar Contraseña' },
-    },
   ],
 }
 const usersPages = {
@@ -121,6 +115,12 @@ const usersPages = {
         breadcrumb: 'Editar usuario',
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
+    },
+    {
+      path: '/change-password',
+      name: 'ChangePassword',
+      component: ChangePassword,
+      meta: { breadcrumb: 'Cambiar Contraseña' },
     },
   ],
 }
