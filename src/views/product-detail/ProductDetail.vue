@@ -40,7 +40,7 @@ let product = ref({
   warranty: {
     has_warranty: false,
     measure: '',
-    quantity: '',
+    quantity: 0,
   },
 })
 onMounted(() => {

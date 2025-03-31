@@ -18,7 +18,7 @@ const props = defineProps({
         warranty: {
           has_warranty: false,
           measure: '',
-          quantity: '',
+          quantity: 0,
         },
       }
     },
@@ -32,7 +32,7 @@ let localValue = ref({
   warranty: {
     has_warranty: false,
     measure: '',
-    quantity: '',
+    quantity: 0,
   },
 })
 
