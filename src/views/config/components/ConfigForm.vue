@@ -132,11 +132,11 @@ defineExpose({ guardar })
     <el-divider content-position="left">Productos</el-divider>
     <el-form-item
       label="Categorías"
-      prop="currency.value"
+      prop="product.categories"
       class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
     >
       <el-select
-        v-model="localValue.categories"
+        v-model="localValue.product.categories"
         style="width: 100%"
         filterable
         multiple
@@ -144,7 +144,7 @@ defineExpose({ guardar })
         default-first-option
       >
         <el-option
-          v-for="item in localValue.categories"
+          v-for="item in localValue.product.categories"
           :key="item.value"
           :label="item.label"
           :value="item.value"
