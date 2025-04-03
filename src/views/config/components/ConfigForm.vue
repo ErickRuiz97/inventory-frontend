@@ -24,7 +24,9 @@ let localValue = ref({
     value: '',
     symbol: '',
   },
-  categories: [],
+  product: {
+    categories: [],
+  },
 })
 
 onMounted(() => {
