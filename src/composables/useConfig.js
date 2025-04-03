@@ -7,7 +7,9 @@ export function useConfig() {
   const config = computed(() => storeConfig.entity)
   const symbol = computed(() => storeConfig.entity?.currency?.symbol || '')
   const logo = computed(() => storeConfig.entity?.company?.logo || '')
-  const categories = computed(() => storeConfig.entity?.categories || [])
+  const categories = computed(
+    () => storeConfig.entity?.product?.categories || [],
+  )
 
   return {
     config,
