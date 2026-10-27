@@ -1,9 +1,10 @@
 <script setup>
-import { ref, watch, reactive } from 'vue'
+import { ref, watch, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 import { authStore } from '@/stores'
+import { authService } from '@/services'
 import { demoUsers } from '@/constants'
 import { DEMO_PASSWORD } from '@/globalVars'
 
@@ -16,6 +17,18 @@ const loginForm = ref({
   password: '',
 })
 let loading = ref(false)
+const waking = ref(true)
+
+onMounted(() => {
+  authService
+    .awakeRequest()
+    .catch(() =>
+      ElMessage.warning(
+        'No se pudo conectar con el servidor. Intenta de nuevo en unos minutos.',
+      ),
+    )
+    .finally(() => (waking.value = false))
+})
 
 const rules = reactive({
   email: [
@@ -79,7 +92,11 @@ watch(
   <div class="container h-100 d-flex align-items-center justify-content-center">
     <div class="row w-100">
       <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 mx-auto">
-        <el-card class="card">
+        <el-card
+          class="card"
+          v-loading="waking"
+          element-loading-text="Despertando el servidor, puede tardar hasta un minuto..."
+        >
           <div class="card-body ps-0">
             <h5 class="card-subtitle mb-2 text-muted">Inicio de sesión</h5>
           </div>

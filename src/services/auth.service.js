@@ -13,6 +13,20 @@ async function loginRequest(body) {
   }
 }
 
+// Despierta la API gratuita de Render, que se apaga cuando no recibe tráfico
+async function awakeRequest() {
+  const axios = createAxios()
+  const urlPath = `awake`
+
+  try {
+    const response = await axios.get(urlPath)
+    return Promise.resolve(response.data)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const authService = {
   loginRequest,
+  awakeRequest,
 }
