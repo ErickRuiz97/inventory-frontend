@@ -4,6 +4,8 @@ import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 import { authStore } from '@/stores'
+import { demoUsers } from '@/constants'
+import { DEMO_PASSWORD } from '@/globalVars'
 
 const router = useRouter()
 const storeAuth = authStore()
@@ -46,6 +48,11 @@ function onSubmit() {
   })
 }
 
+function loginAsDemo(email) {
+  loginForm.value = { email, password: DEMO_PASSWORD }
+  onSubmit()
+}
+
 watch(
   () => storeAuth.login,
   value => {
@@ -55,7 +62,7 @@ watch(
         router.push({ path: '/' })
       }, '4000')
     }
-  }
+  },
 )
 watch(
   () => storeAuth.error,
@@ -65,7 +72,7 @@ watch(
       ElMessage.error('Usuario o contraseña incorrecto')
       storeAuth.error = null
     }
-  }
+  },
 )
 </script>
 <template>
@@ -94,13 +101,26 @@ watch(
               </el-button>
             </el-form-item>
           </el-form>
+          <template v-if="DEMO_PASSWORD">
+            <el-divider>¿Solo quieres explorar?</el-divider>
+            <p class="text-muted small">
+              Entra con un usuario de prueba, sin registrarte.
+            </p>
+            <div v-for="demo in demoUsers" :key="demo.email" class="mb-3">
+              <el-button
+                class="w-100"
+                :disabled="loading"
+                @click="loginAsDemo(demo.email)"
+              >
+                {{ demo.label }}
+              </el-button>
+              <div class="text-muted small mt-1">{{ demo.description }}</div>
+            </div>
+          </template>
         </el-card>
       </div>
     </div>
   </div>
 </template>
 
-
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
