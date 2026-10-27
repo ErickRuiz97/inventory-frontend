@@ -40,6 +40,13 @@ const dashboardPages = {
       component: HomeDashboard,
       meta: { breadcrumb: 'breadcrumb.dashboard' },
     },
+    {
+      path: '/no-auth',
+      name: 'NoAuth',
+      component: NoAuth,
+      props: true,
+      meta: { breadcrumb: 'breadcrumb.noAuth' },
+    },
   ],
 }
 const productPages = {
@@ -240,15 +247,6 @@ export const routes = [
     redirect: '/home',
     name: 'Dashboard',
     meta: { public: true },
-  },
-  {
-    path: '/no-auth',
-    name: 'NoAuth',
-    component: NoAuth,
-    props: true,
-    meta: {
-      breadcrumb: 'breadcrumb.noAuth',
-    },
   },
   dashboardPages,
   productPages,
