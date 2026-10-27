@@ -95,7 +95,7 @@
     "emailRequired": "Please enter your email",
     "passwordRequired": "Please enter your password",
     "invalidCredentials": "Incorrect user or password",
-    "waking": "Waking up the server, this can take up to a minute...",
+    "waking": "Connecting to the server...",
     "wakeError": "Could not connect to the server. Try again in a few minutes.",
     "demoDivider": "Just want to explore?",
     "demoHint": "Sign in with a test user, no registration needed.",

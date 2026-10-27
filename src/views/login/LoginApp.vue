@@ -103,6 +103,7 @@ watch(
             shadow="never"
             v-loading="waking"
             :element-loading-text="$t('login.waking')"
+            element-loading-background="rgba(255, 255, 255, 0.7)"
           >
             <div class="login-header">
               <div class="login-logo">
@@ -116,6 +117,7 @@ watch(
               :model="loginForm"
               :rules="rules"
               label-position="top"
+              :disabled="waking"
             >
               <el-form-item :label="$t('login.user')" prop="email">
                 <el-input
@@ -154,7 +156,7 @@ watch(
               <div v-for="demo in demoUsers" :key="demo.email" class="mb-3">
                 <el-button
                   class="w-100"
-                  :disabled="loading"
+                  :disabled="loading || waking"
                   @click="loginAsDemo(demo.email)"
                 >
                   {{ $t(demo.label) }}
@@ -188,6 +190,12 @@ watch(
   border-radius: 16px;
   padding: 16px 12px;
   box-shadow: 0 10px 30px rgba(63, 81, 181, 0.12);
+  :deep(.el-loading-mask) {
+    border-radius: inherit;
+  }
+  :deep(.el-loading-text) {
+    padding: 0 24px;
+  }
 }
 .login-header {
   text-align: center;

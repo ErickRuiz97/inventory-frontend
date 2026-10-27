@@ -95,7 +95,7 @@
     "emailRequired": "Por favor ingrese su email",
     "passwordRequired": "Por favor ingrese su contraseña",
     "invalidCredentials": "Usuario o contraseña incorrecto",
-    "waking": "Despertando el servidor, puede tardar hasta un minuto...",
+    "waking": "Conectando con el servidor...",
     "wakeError": "No se pudo conectar con el servidor. Intenta de nuevo en unos minutos.",
     "demoDivider": "¿Solo quieres explorar?",
     "demoHint": "Entra con un usuario de prueba, sin registrarte.",
