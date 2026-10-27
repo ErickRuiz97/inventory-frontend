@@ -9,12 +9,14 @@ import PurchaseForm from './components/PurchaseForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 import PurchaseDetailEdit from './components/PurchaseDetailEdit.vue'
 import { purchaseStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storePurchase = purchaseStore()
 const formPurchase = ref()
+const { t } = useI18n()
 const actions = reactive([])
 const events = {
   onSave: savePurchase,
@@ -32,7 +34,7 @@ onMounted(() => {
       event: 'onSave',
       type: 'primary',
       icon: Check,
-      label: 'Guardar',
+      label: 'common.save',
     })
 })
 
@@ -53,17 +55,17 @@ watch(
     if (value) {
       purchase.value = value
     }
-  }
+  },
 )
 
 watch(
   () => storePurchase.create,
   value => {
     if (value) {
-      ElMessage.success('Compra creada')
+      ElMessage.success(t('purchases.created'))
       router.push({ path: '/purchases' })
     }
-  }
+  },
 )
 
 watch(
@@ -73,7 +75,7 @@ watch(
       ElMessage.error(value)
       storePurchase.error = null
     }
-  }
+  },
 )
 </script>
 <template>
@@ -92,6 +94,4 @@ watch(
   </detail-general>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -47,7 +47,9 @@ _This project is not just a presentation letter, but a real showcase of my skill
 ✅ **Exportación a Excel** de todos los listados.
 ✅ **Configuración de la empresa**: logo, datos, moneda, categorías y código autogenerado de productos.
 ✅ **Respaldo y restauración** de la base de datos desde la interfaz.
-✅ **Modo claro/oscuro** y diseño responsivo con menú lateral (drawer).
+✅ **Interfaz en español e inglés**, que recuerda el idioma elegido e incluye los textos de Element Plus.
+✅ **Diseño responsivo** con menú lateral (drawer).
+✅ **Botones de usuarios de prueba** en el login y aviso mientras la API gratuita despierta.
 
 ### English:
 ✅ **Login** with JWT and role-protected routes (`ADMIN`, `MANAGER`, `SALES`).
@@ -59,7 +61,9 @@ _This project is not just a presentation letter, but a real showcase of my skill
 ✅ **Excel export** for every listing.
 ✅ **Company settings**: logo, details, currency, categories and auto-generated product codes.
 ✅ Database **backup and restore** from the UI.
-✅ **Light/dark mode** and responsive design with a side drawer menu.
+✅ **Spanish and English UI** that remembers the chosen language and includes Element Plus texts.
+✅ **Responsive design** with a side drawer menu.
+✅ **Test user buttons** on the login, plus a notice while the free API wakes up.
 
 ---
 
@@ -71,7 +75,7 @@ _This project is not just a presentation letter, but a real showcase of my skill
 - Vue Router (navegación | navigation)
 - Element Plus + Bootstrap (UI)
 - ECharts / vue-echarts (gráficos | charts)
-- VueUse (modo oscuro | dark mode)
+- Vue I18n (español e inglés | Spanish and English)
 - Axios (consumo de API | API consumption)
 - Moment (control de fechas | date control)
 - SASS, ESLint, Prettier
@@ -98,6 +102,8 @@ Crear un archivo `.env` en la raíz | Create a `.env` file at the root:
 
 ```env
 VITE_API_URI=http://localhost:8000
+# Opcional: muestra en el login los botones de usuarios de prueba | Optional: shows the test user buttons on the login
+VITE_DEMO_PASSWORD=
 ```
 
 ### Comandos | Commands

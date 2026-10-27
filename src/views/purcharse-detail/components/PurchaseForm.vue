@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref, reactive, watch } from 'vue'
 import { supplierStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
 
 import SelectProducts from './SelectProducts.vue'
 
 const purchaseElForm = ref()
+const { t } = useI18n()
 const storeSupplier = supplierStore()
 const props = defineProps({
   modelValue: {
@@ -30,14 +32,14 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 
 const rules = reactive({
   supplier_id: [
     {
       required: true,
-      message: 'Por favor ingrese el supplier',
+      message: () => t('purchases.supplierRequired'),
       trigger: 'blur',
     },
   ],
@@ -45,7 +47,7 @@ const rules = reactive({
     {
       type: 'array',
       required: true,
-      message: 'Por favor ingrese al menos un producto',
+      message: () => t('validation.atLeastOneProduct'),
       validator: (rule, value) => {
         return Array.isArray(value) && value.length > 0
       },
@@ -69,7 +71,7 @@ defineExpose({ validForm })
   >
     <div class="row">
       <el-form-item
-        label="Proveedor"
+        :label="$t('common.supplier')"
         prop="supplier_id"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -104,6 +106,4 @@ defineExpose({ validForm })
   </el-form>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

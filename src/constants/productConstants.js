@@ -1,7 +1,7 @@
 export const measures_warranty = [
-  { label: 'Horas', value: 'HOUR' },
-  { label: 'Días', value: 'DAY' },
-  { label: 'Semanas', value: 'WEEK' },
-  { label: 'Meses', value: 'MONTH' },
-  { label: 'Años', value: 'YEAR' },
+  { label: 'warrantyMeasures.HOUR', value: 'HOUR' },
+  { label: 'warrantyMeasures.DAY', value: 'DAY' },
+  { label: 'warrantyMeasures.WEEK', value: 'WEEK' },
+  { label: 'warrantyMeasures.MONTH', value: 'MONTH' },
+  { label: 'warrantyMeasures.YEAR', value: 'YEAR' },
 ]

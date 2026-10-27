@@ -2,8 +2,10 @@
 import { onMounted, ref, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { rolesUser } from '@/constants'
+import { useI18n } from 'vue-i18n'
 
 const userElForm = ref()
+const { t } = useI18n()
 const route = useRoute()
 const props = defineProps({
   modelValue: {
@@ -32,27 +34,37 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 
 const rules = reactive({
   email: [
     {
       required: true,
-      message: 'Por favor ingrese email valido',
+      message: () => t('users.emailRequired'),
       trigger: ['blur', 'change'],
       type: 'email',
     },
   ],
   password: [
-    { required: true, message: 'Contraseña requerida!', trigger: 'blur' },
+    {
+      required: true,
+      message: () => t('users.passwordRequired'),
+      trigger: 'blur',
+    },
     {
       min: 5,
-      message: 'Contraseña debe tener al menos 5 caracteres.',
+      message: () => t('users.passwordMinLength'),
       trigger: 'blur',
     },
   ],
-  roles: [{ required: true, message: 'Roles requeridos!', trigger: 'blur' }],
+  roles: [
+    {
+      required: true,
+      message: () => t('users.rolesRequired'),
+      trigger: 'blur',
+    },
+  ],
 })
 
 function validForm() {
@@ -69,7 +81,7 @@ defineExpose({ validForm })
   >
     <div class="row">
       <el-form-item
-        label="Email"
+        :label="$t('common.email')"
         prop="email"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -77,7 +89,7 @@ defineExpose({ validForm })
       </el-form-item>
 
       <el-form-item
-        label="Nombre completo"
+        :label="$t('users.fullName')"
         prop="full_name"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -86,7 +98,7 @@ defineExpose({ validForm })
     </div>
     <div class="row" v-if="!route.params.id">
       <el-form-item
-        label="Contraseña"
+        :label="$t('users.password')"
         prop="password"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -94,7 +106,7 @@ defineExpose({ validForm })
       </el-form-item>
 
       <el-form-item
-        label="Roles"
+        :label="$t('users.roles')"
         prop="roles"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -107,7 +119,7 @@ defineExpose({ validForm })
           <el-option
             v-for="item in rolesUser"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
@@ -115,5 +127,4 @@ defineExpose({ validForm })
     </div>
   </el-form>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

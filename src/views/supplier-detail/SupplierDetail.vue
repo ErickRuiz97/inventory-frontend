@@ -9,18 +9,20 @@ import SupplierForm from './components/SupplierForm.vue'
 import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { supplierStore } from '@/stores'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storeSupplier = supplierStore()
 const formSupplier = ref()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onSave',
     type: 'primary',
     icon: Check,
-    label: 'Guardar',
+    label: 'common.save',
   },
 ]
 const events = {
@@ -61,27 +63,27 @@ watch(
     if (value) {
       supplier.value = value
     }
-  }
+  },
 )
 
 watch(
   () => storeSupplier.create,
   value => {
     if (value) {
-      ElMessage.success('Proveedor creado')
+      ElMessage.success(t('suppliers.created'))
       router.push({ path: '/suppliers' })
     }
-  }
+  },
 )
 
 watch(
   () => storeSupplier.update,
   value => {
     if (value) {
-      ElMessage.success('Proveedor actualizado')
+      ElMessage.success(t('suppliers.updated'))
       router.push({ path: '/suppliers' })
     }
-  }
+  },
 )
 
 watch(
@@ -91,7 +93,7 @@ watch(
       ElMessage.error(value)
       storeSupplier.error = null
     }
-  }
+  },
 )
 </script>
 <template>
@@ -109,6 +111,4 @@ watch(
   </detail-general>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -6,6 +6,7 @@ import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 import ListGeneral from '@/components/ListGeneral.vue'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
@@ -16,24 +17,25 @@ import SaleFilters from './components/SaleFilters.vue'
 import { saleStore } from '@/stores'
 const router = useRouter()
 const storeSale = saleStore()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onNewSale',
     type: 'primary',
     icon: Plus,
-    label: 'Nuevo',
+    label: 'common.new',
   },
   {
     event: 'onSalesReport',
     type: 'success',
     icon: Document,
-    label: 'Reporte',
+    label: 'common.report',
   },
   {
     event: 'onSalesReportDetail',
     type: 'success',
     icon: Document,
-    label: 'Reporte detallado',
+    label: 'common.detailedReport',
   },
 ]
 const events = {
@@ -79,21 +81,19 @@ function eventHandler(eventKey) {
   try {
     events[eventKey]()
   } catch {
-    ElMessage.warning('Evento no implementado')
+    ElMessage.warning(t('common.eventNotImplemented'))
   }
 }
 function downloadReportDetail() {
   loading.value = true
   storeSale.getSalesReportDetail(
-    objectUtils.cleanQueryEmpties(storeSale.filters)
+    objectUtils.cleanQueryEmpties(storeSale.filters),
   )
 }
 
 function downloadReport() {
   loading.value = true
-  storeSale.getSalesReport(
-    objectUtils.cleanQueryEmpties(storeSale.filters)
-  )
+  storeSale.getSalesReport(objectUtils.cleanQueryEmpties(storeSale.filters))
 }
 
 watch(
@@ -101,9 +101,9 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ReporteDetalladoVentas.xlsx')
+      objectUtils.downloadFile(newVal, t('sales.detailedReportFile'))
     }
-  }
+  },
 )
 
 watch(
@@ -111,9 +111,9 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ReporteVentas.xlsx')
+      objectUtils.downloadFile(newVal, t('sales.reportFile'))
     }
-  }
+  },
 )
 
 watch(
@@ -122,7 +122,7 @@ watch(
     sales = reactive(value.items)
     _.merge(storeSale.paginator, { total: value.total })
     loading.value = false
-  }
+  },
 )
 
 watch(
@@ -130,7 +130,7 @@ watch(
   value => {
     _.merge(storeSale.paginator, value)
     getSales()
-  }
+  },
 )
 
 function clickRow(row) {
@@ -174,7 +174,7 @@ const isFiltered = computed(() =>
     customer: '',
     pay_types: '',
     amount: [0, 5000],
-  })
+  }),
 )
 </script>
 

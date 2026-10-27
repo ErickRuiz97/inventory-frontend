@@ -2,8 +2,10 @@
 import { onMounted, ref, reactive, watch } from 'vue'
 import { payTypes } from '@/constants'
 import SelectProducts from './SelectProducts.vue'
+import { useI18n } from 'vue-i18n'
 
 const saleElForm = ref()
+const { t } = useI18n()
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -32,14 +34,14 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 
 const rules = reactive({
   pay_type: [
     {
       required: true,
-      message: 'Por favor ingrese un tipo de pago',
+      message: () => t('sales.payTypeRequired'),
       trigger: 'blur',
     },
   ],
@@ -47,7 +49,7 @@ const rules = reactive({
     {
       type: 'array',
       required: true,
-      message: 'Por favor ingrese al menos un producto',
+      message: () => t('validation.atLeastOneProduct'),
       validator: (rule, value) => {
         return Array.isArray(value) && value.length > 0
       },
@@ -71,14 +73,17 @@ defineExpose({ validForm })
   >
     <div class="row">
       <el-form-item
-        label="Cliente"
+        :label="$t('common.customer')"
         prop="customer"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
-        <el-input v-model="localValue.customer" placeholder="Cliente" />
+        <el-input
+          v-model="localValue.customer"
+          :placeholder="$t('common.customer')"
+        />
       </el-form-item>
       <el-form-item
-        label="Tipo de pago"
+        :label="$t('sales.payTypeField')"
         prop="pay_type"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -86,7 +91,7 @@ defineExpose({ validForm })
           <el-option
             v-for="item in payTypes"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
@@ -109,6 +114,4 @@ defineExpose({ validForm })
   </el-form>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

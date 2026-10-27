@@ -8,20 +8,22 @@ import ActionsHeader from '@/components/ActionsHeader.vue'
 import ConfigForm from './components/ConfigForm.vue'
 import { configStore } from '@/stores'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 const storeConfig = configStore()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onSave',
     type: 'primary',
     icon: Check,
-    label: 'Guardar',
+    label: 'common.save',
   },
   {
     event: 'onBackup',
     type: 'default',
     icon: Download,
-    label: 'Generar respaldo base de datos',
+    label: 'config.backup',
   },
 ]
 const formConfig = ref()
@@ -47,10 +49,10 @@ watch(
   () => storeConfig.create,
   value => {
     if (value) {
-      ElMessage.success('Configuración guardada')
+      ElMessage.success(t('config.saved'))
       storeConfig.getConfig()
     }
-  }
+  },
 )
 
 watch(
@@ -60,26 +62,26 @@ watch(
       ElMessage.error(value)
       storeConfig.errorBackup = null
     }
-  }
+  },
 )
 
 watch(
   () => storeConfig.backup,
   newVal => {
     if (newVal) {
-      objectUtils.downloadFile(newVal, 'Backup.zip')
+      objectUtils.downloadFile(newVal, t('config.backupFile'))
     }
-  }
+  },
 )
 
 watch(
   () => storeConfig.update,
   value => {
     if (value) {
-      ElMessage.success('Configuración guardada')
+      ElMessage.success(t('config.saved'))
       storeConfig.getConfig()
     }
-  }
+  },
 )
 
 watch(
@@ -88,7 +90,7 @@ watch(
     if (value) {
       ElMessage.error(value)
     }
-  }
+  },
 )
 </script>
 <template>
@@ -113,6 +115,4 @@ watch(
   </detail-general>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

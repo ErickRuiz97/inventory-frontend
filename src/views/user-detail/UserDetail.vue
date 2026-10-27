@@ -10,18 +10,20 @@ import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { userStore } from '@/stores'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storeUser = userStore()
 const formUser = ref()
+const { t } = useI18n()
 const actions = ref([
   {
     event: 'onSave',
     type: 'primary',
     icon: Check,
-    label: 'Guardar',
+    label: 'common.save',
   },
 ])
 const events = {
@@ -72,57 +74,57 @@ watch(
           event: 'onDelete',
           type: 'danger',
           icon: CircleClose,
-          label: 'Desactivar',
+          label: 'users.deactivate',
         })
       else
         actions.value.push({
           event: 'onActive',
           type: 'success',
           icon: CirclePlus,
-          label: 'Activar',
+          label: 'users.activate',
         })
     }
-  }
+  },
 )
 
 watch(
   () => storeUser.delete,
   value => {
     if (value) {
-      ElMessage.success('Usuario eliminado')
+      ElMessage.success(t('users.deactivated'))
       router.push({ path: '/users' })
     }
-  }
+  },
 )
 
 watch(
   () => storeUser.active,
   value => {
     if (value) {
-      ElMessage.success('Usuario activado')
+      ElMessage.success(t('users.activated'))
       router.push({ path: '/users' })
     }
-  }
+  },
 )
 
 watch(
   () => storeUser.create,
   value => {
     if (value) {
-      ElMessage.success('Usuario creado')
+      ElMessage.success(t('users.created'))
       router.push({ path: '/users' })
     }
-  }
+  },
 )
 
 watch(
   () => storeUser.update,
   value => {
     if (value) {
-      ElMessage.success('Usuario actualizado')
+      ElMessage.success(t('users.updated'))
       router.push({ path: '/users' })
     }
-  }
+  },
 )
 
 watch(
@@ -132,7 +134,7 @@ watch(
       ElMessage.error(value)
       storeUser.error = null
     }
-  }
+  },
 )
 </script>
 <template>
@@ -149,5 +151,4 @@ watch(
     </template>
   </detail-general>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

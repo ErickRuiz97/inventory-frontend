@@ -1,6 +1,7 @@
 <script setup>
 import moment from 'moment'
-import { onMounted, ref, shallowRef, watch } from 'vue'
+import { onMounted, ref, shallowRef, watch, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { use } from 'echarts/core'
 import { LineChart } from 'echarts/charts'
 import { SVGRenderer } from 'echarts/renderers'
@@ -21,6 +22,7 @@ use([
   TooltipComponent,
   LegendComponent,
 ])
+const { t, locale } = useI18n()
 const loading = shallowRef(true)
 let props = defineProps({
   modelValue: {
@@ -31,51 +33,48 @@ let props = defineProps({
   },
 })
 let localValue = ref([])
-const loadingOptions = {
-  text: 'Cargando…',
+const loadingOptions = computed(() => ({
+  text: t('common.loading'),
   color: '#485EBDFF',
   maskColor: 'rgba(255, 255, 255, 0.4)',
-}
+}))
 const option = shallowRef()
 onMounted(() => {
   localValue.value = props.modelValue
   loading.value = false
 })
 
-watch(
-  () => props.modelValue,
-  value => {
-    if (value) {
-      localValue.value = value
-      option.value = {
-        title: {
-          text: 'Precio de compra',
-          left: 'left',
+watch([() => props.modelValue, locale], ([value]) => {
+  if (value) {
+    localValue.value = value
+    option.value = {
+      title: {
+        text: t('common.purchasePrice'),
+        left: 'left',
+      },
+      tooltip: {
+        trigger: 'axis', // Activa el tooltip al pasar por los ejes
+      },
+      legend: {
+        data: localValue.value.map(val => `${val.year}`), // Nombres de las líneas
+        top: 'bottom',
+      },
+      xAxis: {
+        type: 'category',
+        data: obtenerFechasDelAño(2024), // Categorías del eje X
+        boundaryGap: false,
+        axisLabel: {
+          rotate: 90, // Rota las etiquetas 45 grados si son muy largas
         },
-        tooltip: {
-          trigger: 'axis', // Activa el tooltip al pasar por los ejes
-        },
-        legend: {
-          data: localValue.value.map(val => `${val.year}`), // Nombres de las líneas
-          top: 'bottom',
-        },
-        xAxis: {
-          type: 'category',
-          data: obtenerFechasDelAño(2024), // Categorías del eje X
-          boundaryGap: false,
-          axisLabel: {
-            rotate: 90, // Rota las etiquetas 45 grados si son muy largas
-          },
-        },
-        yAxis: {
-          type: 'value', // Valores numéricos en el eje Y
-        },
-        series: formatSeries(localValue.value),
-      }
-      loading.value = false
+      },
+      yAxis: {
+        type: 'value', // Valores numéricos en el eje Y
+      },
+      series: formatSeries(localValue.value),
     }
+    loading.value = false
   }
-)
+})
 
 function formatSeries(contracts) {
   const series = []

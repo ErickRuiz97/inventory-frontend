@@ -1,9 +1,11 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const $route = useRoute()
+const { t } = useI18n()
 
 const breadcrumbs = computed(() => {
   const currentPath = $route.path
@@ -17,7 +19,9 @@ const breadcrumbs = computed(() => {
 
     breadcrumbsArray.unshift({
       path: parentRoute.path,
-      text: parentRoute.meta.breadcrumb || parentRoute.name,
+      text: parentRoute.meta.breadcrumb
+        ? t(parentRoute.meta.breadcrumb)
+        : parentRoute.name,
     })
 
     pathSegments.pop()
@@ -26,7 +30,7 @@ const breadcrumbs = computed(() => {
   // Agregamos el breadcrumb de la ruta actual al final
   breadcrumbsArray.push({
     path: $route.path,
-    text: $route.meta.breadcrumb || $route.name,
+    text: $route.meta.breadcrumb ? t($route.meta.breadcrumb) : $route.name,
   })
 
   return breadcrumbsArray
@@ -43,6 +47,4 @@ const breadcrumbs = computed(() => {
   </el-breadcrumb>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

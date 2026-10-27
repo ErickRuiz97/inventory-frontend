@@ -1,7 +1,5 @@
 <script setup>
-import _ from 'lodash'
 import moment from 'moment'
-import { payTypes } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { saleStore } from '@/stores'
 import { useConfig } from '@/composables/useConfig'
@@ -51,33 +49,43 @@ function sortChange(row) {
       @sort-change="sortChange"
       class="tables"
     >
-      <el-table-column prop="_id" label="Código" width="180" sortable />
-      <el-table-column prop="created_at" label="Fecha" width="150" sortable>
+      <el-table-column
+        prop="_id"
+        :label="$t('common.code')"
+        width="180"
+        sortable
+      />
+      <el-table-column
+        prop="created_at"
+        :label="$t('common.date')"
+        width="150"
+        sortable
+      >
         <template #default="scope">{{
           formatDate(scope.row.created_at)
         }}</template>
       </el-table-column>
       <el-table-column
         prop="customer"
-        label="Cliente"
+        :label="$t('common.customer')"
         show-overflow-tooltip
         sortable
       />
       <el-table-column
         prop="user"
-        label="Usuario"
+        :label="$t('common.user')"
         width="150"
         align="let"
         header-align="left"
       />
-      <el-table-column prop="pay_type" label="Forma de pago" width="200">
+      <el-table-column prop="pay_type" :label="$t('sales.payType')" width="200">
         <template #default="scope">
-          {{ _.find(payTypes, { value: scope.row.pay_type })?.label }}
+          {{ $t(`payTypes.${scope.row.pay_type}`) }}
         </template>
       </el-table-column>
       <el-table-column
         prop="total_amount"
-        :label="`Cantidad total (${symbol})`"
+        :label="$t('common.totalAmount', { symbol })"
         width="150"
         align="right"
         header-align="right"
@@ -86,5 +94,4 @@ function sortChange(row) {
     </el-table>
   </div>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

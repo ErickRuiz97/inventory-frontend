@@ -31,7 +31,7 @@ function eventHandler(val) {
         :icon="action.icon"
         @click="eventHandler(action.event)"
         round
-        >{{ action.label }}</el-button
+        >{{ $t(action.label) }}</el-button
       >
     </div>
     <div class="float-end">
@@ -41,7 +41,7 @@ function eventHandler(val) {
         :icon="Refresh"
         @click="eventHandler('onRefresh')"
         round
-        >Refrescar</el-button
+        >{{ $t('common.refresh') }}</el-button
       >
       <el-button-group class="ms-1">
         <el-button
@@ -57,12 +57,11 @@ function eventHandler(val) {
           :icon="Filter"
           @click="eventHandler('onFilter')"
           round
-          >Filtrar</el-button
+          >{{ $t('common.filter') }}</el-button
         >
       </el-button-group>
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

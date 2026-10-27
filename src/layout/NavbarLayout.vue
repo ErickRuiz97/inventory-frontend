@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { authStore } from '@/stores'
 import { configStore } from '@/stores'
 import { onMounted } from 'vue'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 
 const { getConfig } = configStore()
 
@@ -27,6 +28,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="toolbar">
+    <language-switch class="me-2" />
     <span class="primary-color me-1">{{ storeAuth.userEmail }}</span>
     <el-dropdown>
       <el-avatar
@@ -36,13 +38,15 @@ onMounted(() => {
       />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-if="storeAuth.isAdmin()" @click="goToConfig"
-            >Configuración</el-dropdown-item
-          >
-          <el-dropdown-item @click="ChangePassword"
-            >Cambiar contraseña</el-dropdown-item
-          >
-          <el-dropdown-item @click="singOut">Cerrar sesión</el-dropdown-item>
+          <el-dropdown-item v-if="storeAuth.isAdmin()" @click="goToConfig">{{
+            $t('menu.settings')
+          }}</el-dropdown-item>
+          <el-dropdown-item @click="ChangePassword">{{
+            $t('menu.changePassword')
+          }}</el-dropdown-item>
+          <el-dropdown-item @click="singOut">{{
+            $t('menu.signOut')
+          }}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>

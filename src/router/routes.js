@@ -38,7 +38,7 @@ const dashboardPages = {
       path: '/home',
       name: 'Home',
       component: HomeDashboard,
-      meta: { breadcrumb: 'Dashboard' },
+      meta: { breadcrumb: 'breadcrumb.dashboard' },
     },
   ],
 }
@@ -52,7 +52,7 @@ const productPages = {
       name: 'ProductsList',
       component: ProductsList,
       meta: {
-        breadcrumb: 'Productos',
+        breadcrumb: 'breadcrumb.products',
       },
     },
     {
@@ -60,7 +60,7 @@ const productPages = {
       name: 'ProductCreate',
       component: ProductDetail,
       meta: {
-        breadcrumb: 'Crear producto',
+        breadcrumb: 'breadcrumb.createProduct',
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
     },
@@ -70,7 +70,7 @@ const productPages = {
       component: ProductDetail,
       props: true,
       meta: {
-        breadcrumb: 'Editar producto',
+        breadcrumb: 'breadcrumb.editProduct',
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
     },
@@ -98,13 +98,19 @@ const usersPages = {
       path: '/users',
       name: 'UserList',
       component: UsersList,
-      meta: { breadcrumb: 'Usuarios', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'breadcrumb.users',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
     {
       path: 'create',
       name: 'UserCreate',
       component: UserDetail,
-      meta: { breadcrumb: 'Crear usuario', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'breadcrumb.createUser',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
     {
       path: ':id',
@@ -112,7 +118,7 @@ const usersPages = {
       component: UserDetail,
       props: true,
       meta: {
-        breadcrumb: 'Editar usuario',
+        breadcrumb: 'breadcrumb.editUser',
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
     },
@@ -120,7 +126,7 @@ const usersPages = {
       path: '/change-password',
       name: 'ChangePassword',
       component: ChangePassword,
-      meta: { breadcrumb: 'Cambiar Contraseña' },
+      meta: { breadcrumb: 'breadcrumb.changePassword' },
     },
   ],
 }
@@ -134,14 +140,17 @@ const supplierPages = {
       name: 'SuppliersList',
       component: SuppliersList,
       props: true,
-      meta: { breadcrumb: 'Proveedores', requiresAuth: ['ADMIN', 'MANAGER'] },
+      meta: {
+        breadcrumb: 'breadcrumb.suppliers',
+        requiresAuth: ['ADMIN', 'MANAGER'],
+      },
     },
     {
       path: 'create',
       name: 'SupplierCreate',
       component: SupplierDetail,
       meta: {
-        breadcrumb: 'Crear proveedor',
+        breadcrumb: 'breadcrumb.createSupplier',
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
     },
@@ -151,7 +160,7 @@ const supplierPages = {
       component: SupplierDetail,
       props: true,
       meta: {
-        breadcrumb: 'Editar proveedor',
+        breadcrumb: 'breadcrumb.editSupplier',
         requiresAuth: ['ADMIN', 'MANAGER'],
       },
     },
@@ -166,19 +175,19 @@ const salesPages = {
       path: '/sales',
       name: 'SalesList',
       component: SalesList,
-      meta: { breadcrumb: 'Ventas' },
+      meta: { breadcrumb: 'breadcrumb.sales' },
     },
     {
       path: 'create',
       name: 'SaleCreate',
       component: SaleDetail,
-      meta: { breadcrumb: 'Registrar venta' },
+      meta: { breadcrumb: 'breadcrumb.createSale' },
     },
     {
       path: ':id',
       name: 'SaleDetail',
       component: SaleDetail,
-      meta: { breadcrumb: 'Detalle venta' },
+      meta: { breadcrumb: 'breadcrumb.saleDetail' },
     },
   ],
 }
@@ -194,7 +203,7 @@ const configPages = {
       component: ConfigApp,
       props: true,
       meta: {
-        breadcrumb: 'Configuración de la aplicación',
+        breadcrumb: 'breadcrumb.settings',
         requiresAuth: 'ADMIN',
       },
     },
@@ -209,19 +218,19 @@ const purchasesPages = {
       path: '/purchases',
       name: 'PurchasesList',
       component: PurchasesList,
-      meta: { breadcrumb: 'Compras' },
+      meta: { breadcrumb: 'breadcrumb.purchases' },
     },
     {
       path: 'create',
       name: 'PurchaseCreate',
       component: PurchaseDetail,
-      meta: { breadcrumb: 'Registrar compra' },
+      meta: { breadcrumb: 'breadcrumb.createPurchase' },
     },
     {
       path: ':id',
       name: 'PurchaseDetail',
       component: PurchaseDetail,
-      meta: { breadcrumb: 'Detalle compra' },
+      meta: { breadcrumb: 'breadcrumb.purchaseDetail' },
     },
   ],
 }
@@ -238,7 +247,7 @@ export const routes = [
     component: NoAuth,
     props: true,
     meta: {
-      breadcrumb: 'No autorizado',
+      breadcrumb: 'breadcrumb.noAuth',
     },
   },
   dashboardPages,

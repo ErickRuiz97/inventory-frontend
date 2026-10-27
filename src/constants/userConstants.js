@@ -1,19 +1,19 @@
 export const rolesUser = [
-  { label: 'Administrador', value: 'ADMIN' },
-  { label: 'Vendedor', value: 'SALES' },
-  { label: 'Gerente', value: 'MANAGER' },
+  { label: 'roles.ADMIN', value: 'ADMIN' },
+  { label: 'roles.SALES', value: 'SALES' },
+  { label: 'roles.MANAGER', value: 'MANAGER' },
 ]
 
 // Usuarios de prueba que se muestran en el login cuando VITE_DEMO_PASSWORD está definida
 export const demoUsers = [
   {
-    label: 'Entrar como vendedor',
-    description: 'Registra ventas y compras, y consulta productos.',
+    label: 'login.demoSalesLabel',
+    description: 'login.demoSalesDescription',
     email: 'ventas@qwerty.com',
   },
   {
-    label: 'Entrar como gerente',
-    description: 'Además gestiona productos, proveedores y usuarios.',
+    label: 'login.demoManagerLabel',
+    description: 'login.demoManagerDescription',
     email: 'gerente@qwerty.com',
   },
 ]

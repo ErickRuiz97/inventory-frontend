@@ -22,18 +22,22 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 </script>
 <template>
   <el-form ref="productQueryElForm" :model="localValue" label-position="top">
-    <el-form-item label="Código" prop="code" class="row">
+    <el-form-item :label="$t('common.code')" prop="code" class="row">
       <el-input v-model="localValue.code" maxlength="8" show-word-limit />
     </el-form-item>
-    <el-form-item label="Nombre" prop="name" class="row">
+    <el-form-item :label="$t('common.name')" prop="name" class="row">
       <el-input v-model="localValue.name" />
     </el-form-item>
-    <el-form-item label="Categorías" prop="categories" class="row">
+    <el-form-item
+      :label="$t('common.categories')"
+      prop="categories"
+      class="row"
+    >
       <el-select
         v-model="localValue.categories"
         style="width: 100%"
@@ -49,14 +53,13 @@ watch(
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="En existencia" prop="stock" class="row">
+    <el-form-item :label="$t('products.inStock')" prop="stock" class="row">
       <el-radio-group v-model="localValue.stock">
-        <el-radio value="ALL">Todos</el-radio>
-        <el-radio value="NO_STOCK">Sin existencia</el-radio>
-        <el-radio value="IN_STOCK">Con existencias</el-radio>
+        <el-radio value="ALL">{{ $t('common.all') }}</el-radio>
+        <el-radio value="NO_STOCK">{{ $t('products.noStock') }}</el-radio>
+        <el-radio value="IN_STOCK">{{ $t('products.withStock') }}</el-radio>
       </el-radio-group>
     </el-form-item>
   </el-form>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

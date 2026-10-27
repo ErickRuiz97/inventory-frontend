@@ -6,6 +6,7 @@ import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 import ListGeneral from '@/components/ListGeneral.vue'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
@@ -16,18 +17,19 @@ import ProductFilters from './components/ProductFilters.vue'
 import { productStore } from '@/stores'
 const router = useRouter()
 const storeProduct = productStore()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onNewProduct',
     type: 'primary',
     icon: Plus,
-    label: 'Nuevo',
+    label: 'common.new',
   },
   {
     event: 'onProductsReport',
     type: 'success',
     icon: Document,
-    label: 'Reporte',
+    label: 'common.report',
   },
 ]
 const events = {
@@ -70,7 +72,7 @@ function showFilters() {
 function downloadReport() {
   loading.value = true
   storeProduct.getProductsReport(
-    objectUtils.cleanQueryEmpties(storeProduct.filters)
+    objectUtils.cleanQueryEmpties(storeProduct.filters),
   )
 }
 
@@ -79,16 +81,16 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ReporteProductos.xlsx')
+      objectUtils.downloadFile(newVal, t('products.reportFile'))
     }
-  }
+  },
 )
 
 function eventHandler(eventKey) {
   try {
     events[eventKey]()
   } catch {
-    ElMessage.warning('Evento no implementado')
+    ElMessage.warning(t('common.eventNotImplemented'))
   }
 }
 
@@ -98,7 +100,7 @@ watch(
     products = reactive(value.items)
     _.merge(storeProduct.paginator, { total: value.total })
     loading.value = false
-  }
+  },
 )
 
 watch(
@@ -106,7 +108,7 @@ watch(
   value => {
     _.merge(storeProduct.paginator, value)
     getProducts()
-  }
+  },
 )
 
 function clickRow(row) {
@@ -148,7 +150,7 @@ const isFiltered = computed(() =>
     code: '',
     categories: [],
     stock: 'ALL',
-  })
+  }),
 )
 </script>
 

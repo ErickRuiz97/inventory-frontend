@@ -14,7 +14,7 @@ watch(
   () => props.isShowFilters,
   value => {
     onShowFilters.value = value
-  }
+  },
 )
 </script>
 <template>
@@ -41,21 +41,22 @@ watch(
       :show-close="false"
     >
       <template #header>
-        <h4>Filtro de búsqueda</h4>
+        <h4>{{ $t('common.searchFilter') }}</h4>
       </template>
       <template #default>
         <slot name="filters" />
       </template>
       <template #footer>
         <div style="flex: auto">
-          <el-button @click="$emit('cancelFilter')">Cancelar</el-button>
-          <el-button type="primary" @click="$emit('confirmFilter')"
-            >Aceptar</el-button
-          >
+          <el-button @click="$emit('cancelFilter')">{{
+            $t('common.cancel')
+          }}</el-button>
+          <el-button type="primary" @click="$emit('confirmFilter')">{{
+            $t('common.accept')
+          }}</el-button>
         </div>
       </template>
     </el-drawer>
   </div>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

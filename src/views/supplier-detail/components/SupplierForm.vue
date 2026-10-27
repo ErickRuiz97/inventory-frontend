@@ -1,7 +1,9 @@
 <script setup>
 import { onMounted, ref, reactive, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const supplierElForm = ref()
+const { t } = useI18n()
 
 const props = defineProps({
   modelValue: {
@@ -39,28 +41,28 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 
 const rules = reactive({
   name: [
     {
       required: true,
-      message: 'Por favor ingrese nombre del proveedor',
+      message: () => t('suppliers.nameRequired'),
       trigger: 'blur',
     },
   ],
   code: [
     {
       required: true,
-      message: 'Por favor ingrese un código de proveedor',
+      message: () => t('suppliers.codeRequired'),
       trigger: 'blur',
     },
   ],
   'contact.email': [
     {
       type: 'email',
-      message: 'Ingrese una email valido',
+      message: () => t('validation.validEmail'),
       trigger: 'blur',
     },
   ],
@@ -80,14 +82,14 @@ defineExpose({ validForm })
   >
     <div class="row">
       <el-form-item
-        label="Código"
+        :label="$t('common.code')"
         prop="code"
         class="col-sm-12 col-md-5 col-lg-4 col-xl-3"
       >
         <el-input v-model="localValue.code" maxlength="8" show-word-limit />
       </el-form-item>
       <el-form-item
-        label="Nombre"
+        :label="$t('common.name')"
         prop="name"
         class="col-sm-12 col-md-7 col-lg-6 col-xl-5"
       >
@@ -96,21 +98,21 @@ defineExpose({ validForm })
     </div>
     <div class="row">
       <el-form-item
-        label="Contacto"
+        :label="$t('common.contact')"
         prop="contact.name"
         class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
       >
         <el-input v-model="localValue.contact.name" />
       </el-form-item>
       <el-form-item
-        label="Email"
+        :label="$t('common.email')"
         prop="contact.email"
         class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
       >
         <el-input v-model="localValue.contact.email" />
       </el-form-item>
       <el-form-item
-        label="Teléfono"
+        :label="$t('common.phone')"
         prop="contact.phone"
         class="col-sm-12 col-md-6 col-lg-2 col-xl-2"
       >
@@ -120,6 +122,4 @@ defineExpose({ validForm })
   </el-form>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

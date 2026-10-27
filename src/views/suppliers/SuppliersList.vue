@@ -6,6 +6,7 @@ import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 import ListGeneral from '@/components/ListGeneral.vue'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
@@ -16,18 +17,19 @@ import SupplierFilters from './components/SupplierFilters.vue'
 import { supplierStore } from '@/stores'
 const router = useRouter()
 const storeSupplier = supplierStore()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onNewSupplier',
     type: 'primary',
     icon: Plus,
-    label: 'Nuevo',
+    label: 'common.new',
   },
   {
     event: 'onSuppliersReport',
     type: 'success',
     icon: Document,
-    label: 'Reporte',
+    label: 'common.report',
   },
 ]
 const events = {
@@ -57,13 +59,15 @@ onMounted(() => {
 function getSuppliers() {
   loading.value = true
   storeSupplier.getSuppliers(
-    objectUtils.cleanQueryEmpties(storeSupplier.filters)
+    objectUtils.cleanQueryEmpties(storeSupplier.filters),
   )
 }
 
 function downloadReport() {
   loading.value = true
-  storeSupplier.getSuppliersReport(objectUtils.cleanQueryEmpties(storeSupplier.filters))
+  storeSupplier.getSuppliersReport(
+    objectUtils.cleanQueryEmpties(storeSupplier.filters),
+  )
 }
 
 function newSupplier() {
@@ -78,7 +82,7 @@ function eventHandler(eventKey) {
   try {
     events[eventKey]()
   } catch {
-    ElMessage.warning('Evento no implementado')
+    ElMessage.warning(t('common.eventNotImplemented'))
   }
 }
 
@@ -87,9 +91,9 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ProveedoresUsuarios.xlsx')
+      objectUtils.downloadFile(newVal, t('suppliers.reportFile'))
     }
-  }
+  },
 )
 
 watch(
@@ -98,7 +102,7 @@ watch(
     suppliers = reactive(value.items)
     _.merge(storeSupplier.paginator, { total: value.total })
     loading.value = false
-  }
+  },
 )
 
 watch(
@@ -106,7 +110,7 @@ watch(
   value => {
     _.merge(storeSupplier.paginator, value)
     getSuppliers()
-  }
+  },
 )
 
 function clickRow(row) {
@@ -150,7 +154,7 @@ const isFiltered = computed(() =>
     contact_name: '',
     contact_email: '',
     contact_phone: '',
-  })
+  }),
 )
 </script>
 

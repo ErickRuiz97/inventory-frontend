@@ -6,6 +6,7 @@ import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 import ListGeneral from '@/components/ListGeneral.vue'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
@@ -16,24 +17,25 @@ import PurchaseFilters from './components/PurchaseFilters.vue'
 import { purchaseStore } from '@/stores'
 const router = useRouter()
 const storePurchase = purchaseStore()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onNewPurchase',
     type: 'primary',
     icon: Plus,
-    label: 'Nuevo',
+    label: 'common.new',
   },
   {
     event: 'onProductsReport',
     type: 'success',
     icon: Document,
-    label: 'Reporte',
+    label: 'common.report',
   },
   {
     event: 'onProductsReportDetail',
     type: 'success',
     icon: Document,
-    label: 'Reporte detallado',
+    label: 'common.detailedReport',
   },
 ]
 const events = {
@@ -64,7 +66,7 @@ onMounted(() => {
 function getPurchases() {
   loading.value = true
   storePurchase.getPurchases(
-    objectUtils.cleanQueryEmpties(storePurchase.filters)
+    objectUtils.cleanQueryEmpties(storePurchase.filters),
   )
 }
 
@@ -80,7 +82,7 @@ function eventHandler(eventKey) {
   try {
     events[eventKey]()
   } catch {
-    ElMessage.warning('Evento no implementado')
+    ElMessage.warning(t('common.eventNotImplemented'))
   }
 }
 
@@ -90,7 +92,7 @@ watch(
     purchases = reactive(value.items)
     _.merge(storePurchase.paginator, { total: value.total })
     loading.value = false
-  }
+  },
 )
 
 watch(
@@ -99,7 +101,7 @@ watch(
     _.merge(storePurchase.paginator, value)
 
     getPurchases()
-  }
+  },
 )
 
 function clickRow(row) {
@@ -138,14 +140,14 @@ function cleanFilter() {
 function downloadReportDetail() {
   loading.value = true
   storePurchase.getPurchasesReportDetail(
-    objectUtils.cleanQueryEmpties(storePurchase.filters)
+    objectUtils.cleanQueryEmpties(storePurchase.filters),
   )
 }
 
 function downloadReport() {
   loading.value = true
   storePurchase.getPurchasesReport(
-    objectUtils.cleanQueryEmpties(storePurchase.filters)
+    objectUtils.cleanQueryEmpties(storePurchase.filters),
   )
 }
 
@@ -155,7 +157,7 @@ const isFiltered = computed(() =>
     code: '',
     supplier: '',
     amount: [0, 10000],
-  })
+  }),
 )
 
 watch(
@@ -163,9 +165,9 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ReporteDetalladoCompras.xlsx')
+      objectUtils.downloadFile(newVal, t('purchases.detailedReportFile'))
     }
-  }
+  },
 )
 
 watch(
@@ -173,9 +175,9 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ReporteCompras.xlsx')
+      objectUtils.downloadFile(newVal, t('purchases.reportFile'))
     }
-  }
+  },
 )
 </script>
 

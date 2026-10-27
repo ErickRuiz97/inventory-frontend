@@ -39,34 +39,37 @@ function sortChange(row) {
       @sort-change="sortChange"
       class="tables"
     >
-      <el-table-column prop="code" label="Código" width="80" sortable />
+      <el-table-column
+        prop="code"
+        :label="$t('common.code')"
+        width="80"
+        sortable
+      />
       <el-table-column
         prop="name"
-        label="Nombre"
+        :label="$t('common.name')"
         show-overflow-tooltip
         sortable
       />
       <el-table-column
         prop="contact.name"
-        label="Contacto"
+        :label="$t('common.contact')"
         show-overflow-tooltip
         sortable
       />
       <el-table-column
         prop="contact.email"
-        label="Email"
+        :label="$t('common.email')"
         show-overflow-tooltip
         sortable
       />
       <el-table-column
         prop="contact.phone"
-        label="Teléfono"
+        :label="$t('common.phone')"
         show-overflow-tooltip
       />
     </el-table>
   </div>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

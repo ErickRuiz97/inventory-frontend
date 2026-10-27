@@ -1,7 +1,5 @@
 <script setup>
-import _ from 'lodash'
 import { objectUtils } from '@/utils'
-import { rolesUser } from '@/constants'
 import { storeToRefs } from 'pinia'
 import { userStore } from '@/stores'
 
@@ -43,22 +41,24 @@ function sortChange(row) {
       v-loading="props.loading"
       class="tables"
     >
-      <el-table-column prop="email" label="Email" sortable />
-      <el-table-column prop="full_name" label="Nombre completo" sortable />
-      <el-table-column prop="roles" label="Roles">
+      <el-table-column prop="email" :label="$t('common.email')" sortable />
+      <el-table-column
+        prop="full_name"
+        :label="$t('users.fullName')"
+        sortable
+      />
+      <el-table-column prop="roles" :label="$t('users.roles')">
         <template #default="scope">
           {{
             objectUtils.arrayStrUpperToStr(
-              scope.row.roles.map(
-                val => _.find(rolesUser, { value: val })?.label
-              ),
-              ' | '
+              scope.row.roles.map(val => $t(`roles.${val}`)),
+              ' | ',
             )
           }}
         </template>
       </el-table-column>
       <el-table-column
-        label="Activo"
+        :label="$t('users.active')"
         width="100"
         align="center"
         header-align="center"
@@ -73,5 +73,4 @@ function sortChange(row) {
     </el-table>
   </div>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

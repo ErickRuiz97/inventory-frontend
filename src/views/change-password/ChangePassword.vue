@@ -5,18 +5,20 @@ import { Check } from '@element-plus/icons-vue'
 import { userStore } from '@/stores'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 import DetailGeneral from '@/components/DetailGeneral.vue'
 
 const router = useRouter()
 const storeUser = reactive(userStore())
 const changePasswordForm = ref()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onSave',
     type: 'primary',
     icon: Check,
-    label: 'Guardar',
+    label: 'common.save',
   },
 ]
 const events = {
@@ -58,27 +60,27 @@ const rules = reactive({
   password: [
     {
       required: true,
-      message: 'Por favor ingrese la contraseña',
+      message: () => t('changePassword.passwordRequired'),
       trigger: 'blur',
     },
   ],
   newPassword: [
     {
       required: true,
-      message: 'Por favor ingrese la nueva contraseña',
+      message: () => t('changePassword.newPasswordRequired'),
       trigger: 'blur',
     },
   ],
   confirmNewPassword: [
     {
       required: true,
-      message: 'Por favor confirme la nueva contraseña',
+      message: () => t('changePassword.confirmRequired'),
       trigger: 'blur',
     },
     {
       validator: (rule, value) => {
         if (value !== infoNewPassword.value.newPassword) {
-          return new Error('Las contraseñas no coinciden')
+          return new Error(t('changePassword.mismatch'))
         }
         return true
       },
@@ -90,10 +92,10 @@ watch(
   () => storeUser.changePsw,
   value => {
     if (value) {
-      ElMessage.success('Contraseña cambiada exitosamente!')
+      ElMessage.success(t('changePassword.success'))
       router.push({ path: '/' })
     }
-  }
+  },
 )
 watch(
   () => storeUser.error,
@@ -102,7 +104,7 @@ watch(
       ElMessage.error(value)
       storeUser.error = null
     }
-  }
+  },
 )
 </script>
 
@@ -123,7 +125,7 @@ watch(
         label-position="top"
       >
         <el-form-item
-          label="Contraseña"
+          :label="$t('changePassword.password')"
           prop="password"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
@@ -134,7 +136,7 @@ watch(
           />
         </el-form-item>
         <el-form-item
-          label="Nueva contraseña"
+          :label="$t('changePassword.newPassword')"
           prop="newPassword"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >
@@ -145,7 +147,7 @@ watch(
           />
         </el-form-item>
         <el-form-item
-          label="Confirmar nueva contraseña"
+          :label="$t('changePassword.confirmNewPassword')"
           prop="confirmNewPassword"
           class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
         >

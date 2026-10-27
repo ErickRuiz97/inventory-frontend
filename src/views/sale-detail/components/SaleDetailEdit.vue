@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { useConfig } from '@/composables/useConfig'
-import { payTypes } from '@/constants'
-import _ from 'lodash'
+import { useI18n } from 'vue-i18n'
 
 const { symbol } = useConfig()
+const { t } = useI18n()
 
 const props = defineProps({
   modelValue: {
@@ -23,9 +23,9 @@ function getSummary({ columns, data }) {
     if (column.property === 'total_price') {
       const total = data.reduce(
         (sum, row) => sum + Number(row.total_price || 0),
-        0
+        0,
       )
-      sums[index] = `Total: ${symbol.value} ${total.toFixed(2)}`
+      sums[index] = `${t('common.total')}: ${symbol.value} ${total.toFixed(2)}`
     } else {
       sums[index] = ''
     }
@@ -47,18 +47,18 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 </script>
 <template>
   <div>
     <div v-if="localValue.sale" class="row">
       <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3">
-        <label class="fw-bold mb-1">Cliente</label>
+        <label class="fw-bold mb-1">{{ $t('common.customer') }}</label>
         <p class="text-muted mb-0">{{ localValue.sale.customer }}</p>
       </div>
       <div class="col-md-6 col-sm-12 col-lg-4 col-xl-3">
-        <label class="fw-bold mb-1">Forma de pago</label>
+        <label class="fw-bold mb-1">{{ $t('sales.payType') }}</label>
         <p class="text-muted mb-0">
           <el-icon>
             <CreditCard
@@ -75,7 +75,7 @@ watch(
             />
             <Iphone v-if="localValue.sale.pay_type === 'TRANSFER'" />
           </el-icon>
-          {{ _.find(payTypes, { value: localValue.sale.pay_type })?.label }}
+          {{ $t(`payTypes.${localValue.sale.pay_type}`) }}
         </p>
       </div>
     </div>
@@ -88,22 +88,22 @@ watch(
       >
         <el-table-column
           prop="product.name"
-          label="Producto"
+          :label="$t('common.product')"
           align="left"
         ></el-table-column>
         <el-table-column
           prop="units"
-          label="Unidades"
+          :label="$t('common.units')"
           align="center"
         ></el-table-column>
         <el-table-column
           prop="unity_price"
-          :label="`Precio unitario (${symbol})`"
+          :label="$t('common.unitPrice', { symbol })"
           align="right"
         ></el-table-column>
         <el-table-column
           prop="total_price"
-          :label="`Precio total (${symbol})`"
+          :label="$t('common.totalPrice', { symbol })"
           align="right"
         ></el-table-column>
       </el-table>

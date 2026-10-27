@@ -30,29 +30,29 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 </script>
 <template>
   <el-form ref="purchaseQueryElForm" :model="localValue" label-position="top">
-    <el-form-item label="Fecha" prop="date" class="row">
+    <el-form-item :label="$t('common.date')" prop="date" class="row">
       <el-date-picker
         v-model="localValue.date"
         type="daterange"
-        range-separator="a"
-        start-placeholder="Fecha inicial"
-        end-placeholder="Fecha final"
+        :range-separator="$t('common.dateRangeSeparator')"
+        :start-placeholder="$t('common.startDate')"
+        :end-placeholder="$t('common.endDate')"
         :default-time="defaultTime"
         value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
       />
     </el-form-item>
-    <el-form-item label="Código" prop="code" class="row">
+    <el-form-item :label="$t('common.code')" prop="code" class="row">
       <el-input v-model="localValue.code" />
     </el-form-item>
-    <el-form-item label="Cliente" prop="customer" class="row">
+    <el-form-item :label="$t('common.customer')" prop="customer" class="row">
       <el-input v-model="localValue.customer" />
     </el-form-item>
-    <el-form-item label="Formas de pago" prop="pay_types" class="row">
+    <el-form-item :label="$t('sales.payTypes')" prop="pay_types" class="row">
       <el-select
         v-model="localValue.pay_types"
         style="width: 100%"
@@ -62,12 +62,12 @@ watch(
         <el-option
           v-for="item in payTypes"
           :key="item.value"
-          :label="item.label"
+          :label="$t(item.label)"
           :value="item.value"
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="Gasto total" prop="amount" class="row">
+    <el-form-item :label="$t('common.totalSpent')" prop="amount" class="row">
       <el-slider
         v-model="localValue.amount"
         range
@@ -78,5 +78,4 @@ watch(
     </el-form-item>
   </el-form>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

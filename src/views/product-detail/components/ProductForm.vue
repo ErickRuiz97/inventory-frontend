@@ -4,7 +4,9 @@ import { onMounted, ref, reactive, watch } from 'vue'
 import { measures_warranty } from '../../../constants/productConstants'
 const productElForm = ref()
 import { useConfig } from '@/composables/useConfig'
+import { useI18n } from 'vue-i18n'
 const { categories } = useConfig()
+const { t } = useI18n()
 
 const props = defineProps({
   modelValue: {
@@ -46,21 +48,21 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 
 const rules = reactive({
   name: [
     {
       required: true,
-      message: 'Por favor ingrese nombre del producto',
+      message: () => t('products.nameRequired'),
       trigger: 'blur',
     },
   ],
   code: [
     {
       required: true,
-      message: 'Por favor ingrese un código de producto',
+      message: () => t('products.codeRequired'),
       trigger: 'blur',
     },
   ],
@@ -80,14 +82,14 @@ defineExpose({ validForm })
   >
     <div class="row">
       <el-form-item
-        label="Código"
+        :label="$t('common.code')"
         prop="code"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
         <el-input v-model="localValue.code" maxlength="8" show-word-limit />
       </el-form-item>
       <el-form-item
-        label="Nombre"
+        :label="$t('common.name')"
         prop="name"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -96,7 +98,7 @@ defineExpose({ validForm })
     </div>
     <div class="row">
       <el-form-item
-        label="Descripción"
+        :label="$t('common.description')"
         prop="description"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -109,7 +111,7 @@ defineExpose({ validForm })
         />
       </el-form-item>
       <el-form-item
-        label="Categorías"
+        :label="$t('common.categories')"
         prop="categories"
         class="col-sm-12 col-md-6 col-lg-5 col-xl-4"
       >
@@ -130,7 +132,7 @@ defineExpose({ validForm })
     </div>
     <div class="row">
       <el-form-item
-        label="Garantía"
+        :label="$t('products.warranty')"
         prop="warranty.has_warranty"
         class="col-sm-12 col-md-2 col-lg-1 col-xl-1"
       >
@@ -143,7 +145,7 @@ defineExpose({ validForm })
       </el-form-item>
       <el-form-item
         v-if="localValue.warranty.has_warranty"
-        label="Tiempo"
+        :label="$t('products.time')"
         prop="warranty.measure"
         class="col-sm-12 col-md-6 col-lg-4 col-xl-4"
       >
@@ -151,14 +153,14 @@ defineExpose({ validForm })
           <el-option
             v-for="item in measures_warranty"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
       </el-form-item>
       <el-form-item
         v-if="localValue.warranty.has_warranty"
-        label="Tiempo"
+        :label="$t('products.time')"
         prop="warranty.quantity"
         class="col-sm-12 col-md-4 col-lg-2 col-xl-2"
       >
@@ -173,6 +175,4 @@ defineExpose({ validForm })
   </el-form>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

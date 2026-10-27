@@ -27,7 +27,7 @@ const toggleDrawer = () => {
     style="background-color: #e0e0e0"
     size="50%"
     v-model="drawerVisible"
-    title="Menú"
+    :title="$t('menu.title')"
     direction="ltr"
   >
     <menu-options @select="closeDrawer" />

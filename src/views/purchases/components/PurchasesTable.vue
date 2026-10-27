@@ -46,15 +46,25 @@ function sortChange(row) {
       @sort-change="sortChange"
       class="tables"
     >
-      <el-table-column prop="_id" label="Código" width="180" sortable />
-      <el-table-column prop="created_at" label="Fecha" width="150" sortable>
+      <el-table-column
+        prop="_id"
+        :label="$t('common.code')"
+        width="180"
+        sortable
+      />
+      <el-table-column
+        prop="created_at"
+        :label="$t('common.date')"
+        width="150"
+        sortable
+      >
         <template #default="scope">{{
           formatDate(scope.row.created_at)
         }}</template>
       </el-table-column>
       <el-table-column
         prop="supplier.nombre"
-        label="Proveedor"
+        :label="$t('common.supplier')"
         show-overflow-tooltip
         sortable
       >
@@ -64,14 +74,14 @@ function sortChange(row) {
       </el-table-column>
       <el-table-column
         prop="user"
-        label="Usuario"
+        :label="$t('common.user')"
         width="150"
         align="let"
         header-align="left"
       />
       <el-table-column
         prop="total_amount"
-        :label="`Cantidad total (${symbol})`"
+        :label="$t('common.totalAmount', { symbol })"
         width="150"
         align="right"
         header-align="right"
@@ -81,5 +91,4 @@ function sortChange(row) {
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

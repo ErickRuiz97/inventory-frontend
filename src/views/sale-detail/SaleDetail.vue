@@ -11,12 +11,14 @@ import ActionsHeader from '@/components/ActionsHeader.vue'
 
 import { saleStore } from '@/stores'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storeSale = saleStore()
 const formSale = ref()
+const { t } = useI18n()
 const actions = reactive([])
 const events = {
   onSave: saveSale,
@@ -36,14 +38,14 @@ onMounted(() => {
       event: 'onPrint',
       type: 'primary',
       icon: Printer,
-      label: 'Imprimir factura',
+      label: 'sales.printReceipt',
     })
   } else
     actions.push({
       event: 'onSave',
       type: 'primary',
       icon: Check,
-      label: 'Guardar',
+      label: 'common.save',
     })
 })
 
@@ -68,36 +70,26 @@ watch(
     if (value) {
       sale.value = value
     }
-  }
+  },
 )
 
 watch(
   () => storeSale.create,
   value => {
     if (value) {
-      ElMessage.success('Compra creada')
+      ElMessage.success(t('sales.created'))
       router.push({ path: '/sales' })
     }
-  }
-)
-
-watch(
-  () => storeSale.create,
-  value => {
-    if (value) {
-      ElMessage.success('Compra creada')
-      router.push({ path: '/sales' })
-    }
-  }
+  },
 )
 
 watch(
   () => storeSale.receipt,
   value => {
     if (value) {
-      objectUtils.downloadFile(value, 'Factura.pdf')
+      objectUtils.downloadFile(value, t('sales.receiptFile'))
     }
-  }
+  },
 )
 
 watch(
@@ -107,7 +99,7 @@ watch(
       ElMessage.error(value)
       storeSale.error = null
     }
-  }
+  },
 )
 </script>
 <template>
@@ -126,6 +118,4 @@ watch(
   </detail-general>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

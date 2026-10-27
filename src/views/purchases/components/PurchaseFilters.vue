@@ -32,26 +32,26 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 </script>
 <template>
   <el-form ref="purchaseQueryElForm" :model="localValue" label-position="top">
-    <el-form-item label="Fecha" prop="date" class="row">
+    <el-form-item :label="$t('common.date')" prop="date" class="row">
       <el-date-picker
         v-model="localValue.date"
         type="daterange"
-        range-separator="a"
-        start-placeholder="Fecha inicial"
-        end-placeholder="Fecha final"
+        :range-separator="$t('common.dateRangeSeparator')"
+        :start-placeholder="$t('common.startDate')"
+        :end-placeholder="$t('common.endDate')"
         :default-time="defaultTime"
         value-format="YYYY-MM-DDTHH:mm:ss.SSSZ"
       />
     </el-form-item>
-    <el-form-item label="Código" prop="code" class="row">
+    <el-form-item :label="$t('common.code')" prop="code" class="row">
       <el-input v-model="localValue.code" />
     </el-form-item>
-    <el-form-item label="Proveedor" prop="supplier" class="row">
+    <el-form-item :label="$t('common.supplier')" prop="supplier" class="row">
       <el-select v-model="localValue.supplier" style="width: 100%" filterable>
         <el-option
           v-for="item in storeSupplier.list?.items"
@@ -61,7 +61,7 @@ watch(
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="Gasto total" prop="amount" class="row">
+    <el-form-item :label="$t('common.totalSpent')" prop="amount" class="row">
       <el-slider
         v-model="localValue.amount"
         range
@@ -72,5 +72,4 @@ watch(
     </el-form-item>
   </el-form>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

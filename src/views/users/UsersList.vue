@@ -6,6 +6,7 @@ import { Plus, Document } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { objectUtils } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 import ListGeneral from '@/components/ListGeneral.vue'
 import HeaderTable from '@/components/header-table/HeaderTable.vue'
@@ -17,18 +18,19 @@ import { userStore } from '@/stores'
 
 const router = useRouter()
 const storeUser = userStore()
+const { t } = useI18n()
 const actions = [
   {
     event: 'onNewUser',
     type: 'primary',
     icon: Plus,
-    label: 'Nuevo',
+    label: 'common.new',
   },
   {
     event: 'onUsersReport',
     type: 'success',
     icon: Document,
-    label: 'Reporte',
+    label: 'common.report',
   },
 ]
 const events = {
@@ -76,7 +78,7 @@ function eventHandler(eventKey) {
   try {
     events[eventKey]()
   } catch {
-    ElMessage.warning('Evento no implementado')
+    ElMessage.warning(t('common.eventNotImplemented'))
   }
 }
 watch(
@@ -85,7 +87,7 @@ watch(
     users = reactive(value.items)
     _.merge(storeUser.paginator, { total: value.total })
     loading.value = false
-  }
+  },
 )
 
 watch(
@@ -93,7 +95,7 @@ watch(
   value => {
     _.merge(storeUser.paginator, value)
     getUsers()
-  }
+  },
 )
 function clickRow(row) {
   router.push({ path: `/users/${row._id}` })
@@ -134,7 +136,7 @@ const isFiltered = computed(() =>
     email: '',
     roles: [],
     state: 'ALL',
-  })
+  }),
 )
 
 watch(
@@ -142,9 +144,9 @@ watch(
   newVal => {
     if (newVal) {
       loading.value = false
-      objectUtils.downloadFile(newVal, 'ReporteUsuarios.xlsx')
+      objectUtils.downloadFile(newVal, t('users.reportFile'))
     }
-  }
+  },
 )
 
 watch(
@@ -155,7 +157,7 @@ watch(
       ElMessage.error(value)
       storeUser.error = null
     }
-  }
+  },
 )
 </script>
 <template>

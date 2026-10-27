@@ -1,6 +1,7 @@
 import { API_URL } from '../globalVars.js'
 import axios from 'axios'
 import router from '@/router'
+import { i18n } from '@/i18n'
 
 function createAxios(withHeaders = false) {
   // return authorization header with jwt token
@@ -32,7 +33,7 @@ function createAxios(withHeaders = false) {
         }
         return Promise.reject(error.response.data.detail)
       } else {
-        return Promise.reject('Error al acceder a los servicios API')
+        return Promise.reject(i18n.global.t('common.apiError'))
       }
     },
   )

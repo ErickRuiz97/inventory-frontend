@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref, watch, shallowRef } from 'vue'
+import { onMounted, ref, watch, shallowRef, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { use } from 'echarts/core'
 import { BarChart } from 'echarts/charts'
 import { SVGRenderer } from 'echarts/renderers'
@@ -21,6 +22,7 @@ use([
   TooltipComponent,
   LegendComponent,
 ])
+const { t, locale } = useI18n()
 const loading = shallowRef(true)
 let props = defineProps({
   modelValue: {
@@ -31,11 +33,11 @@ let props = defineProps({
   },
 })
 let localValue = ref([])
-const loadingOptions = {
-  text: 'Cargando…',
+const loadingOptions = computed(() => ({
+  text: t('common.loading'),
   color: '#485EBDFF',
   maskColor: 'rgba(255, 255, 255, 0.4)',
-}
+}))
 
 const option = shallowRef()
 
@@ -43,40 +45,37 @@ onMounted(() => {
   localValue.value = props.modelValue
 })
 
-watch(
-  () => props.modelValue,
-  value => {
-    if (value) {
-      localValue.value = value
-      loading.value = false
-      option.value = {
-        title: {
-          text: 'Máximos proveedores',
-          left: 'left',
+watch([() => props.modelValue, locale], ([value]) => {
+  if (value) {
+    localValue.value = value
+    loading.value = false
+    option.value = {
+      title: {
+        text: t('dashboard.topSuppliers'),
+        left: 'left',
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: `{b} : {c} (${symbol.value})`,
+      },
+      itemStyle: {
+        borderRadius: [20, 20, 0, 0],
+      },
+      xAxis: {
+        data: localValue.value.map(item => item.name),
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          type: 'bar',
+          data: localValue.value.map(item => item.value),
         },
-        tooltip: {
-          trigger: 'item',
-          formatter: `{b} : {c} (${symbol.value})`,
-        },
-        itemStyle: {
-          borderRadius: [20, 20, 0, 0],
-        },
-        xAxis: {
-          data: localValue.value.map(item => item.name),
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            type: 'bar',
-            data: localValue.value.map(item => item.value),
-          },
-        ],
-      }
+      ],
     }
   }
-)
+})
 </script>
 
 <template>

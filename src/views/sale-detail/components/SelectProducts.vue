@@ -5,8 +5,10 @@ import { useConfig } from '@/composables/useConfig'
 import { productStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { Plus } from '@element-plus/icons-vue'
+import { useI18n } from 'vue-i18n'
 
 const { symbol } = useConfig()
+const { t } = useI18n()
 const storeProduct = productStore()
 let props = defineProps({
   modelValue: {
@@ -46,7 +48,7 @@ watch(
     if (value) {
       localValue.value = value
     }
-  }
+  },
 )
 
 function getProducts() {
@@ -59,7 +61,7 @@ async function addProduct() {
     const contract = makeProduct(product._id)
 
     const index = localValue.value.findIndex(
-      product => product._id == contract._id
+      product => product._id == contract._id,
     )
 
     if (index !== -1) {
@@ -97,34 +99,38 @@ const rules = reactive({
   _id: [
     {
       required: true,
-      message: 'Por favor selecciona un producto',
+      message: () => t('validation.selectProduct'),
       trigger: 'blur',
     },
   ],
   sale_price: [
     {
       required: true,
-      message: 'Valor requerido',
+      message: () => t('validation.required'),
       trigger: 'blur',
     },
-    { type: 'number', message: 'Debe ser un número', trigger: 'blur' },
+    {
+      type: 'number',
+      message: () => t('validation.mustBeNumber'),
+      trigger: 'blur',
+    },
     {
       type: 'number',
       min: 0.01,
-      message: 'Debe ser mayor que 0',
+      message: () => t('validation.greaterThanZero'),
       trigger: 'blur',
     },
   ],
   units: [
     {
       required: true,
-      message: 'Valor requerido',
+      message: () => t('validation.required'),
       trigger: ['blur', 'change'],
     },
     {
       validator: (rule, value, callback) => {
         if (value === 0) {
-          callback(new Error('Las unidades deben ser mayores que 0'))
+          callback(new Error(t('validation.unitsGreaterThanZero')))
         } else {
           callback()
         }
@@ -138,11 +144,11 @@ function getSummary({ columns, data }) {
   const sums = []
   columns.forEach((column, index) => {
     if (column.property === 'sale_price') {
-      sums[index] = 'Total'
+      sums[index] = t('common.total')
     } else if (column.property === 'total_price') {
       const total = data.reduce(
         (sum, row) => sum + Number(row.total_price || 0),
-        0
+        0,
       )
       sums[index] = `${symbol.value} ${total.toFixed(2)}`
     } else {
@@ -170,7 +176,7 @@ function validForm() {
   >
     <el-form-item
       prop="_id"
-      label="Producto"
+      :label="$t('common.product')"
       class="col-sm-12 col-md-12 col-lg-5 col-xl-5"
     >
       <el-select
@@ -190,25 +196,25 @@ function validForm() {
     </el-form-item>
     <el-form-item
       prop="units"
-      label="Unidades"
+      :label="$t('common.units')"
       class="col-sm-12 col-md-4 col-lg-3 col-xl-3"
     >
       <el-input
         ref="unitsInput"
         v-model.number="product.units"
-        placeholder="Unidades"
+        :placeholder="$t('common.units')"
         type="number"
         controls="false"
       />
     </el-form-item>
     <el-form-item
       prop="sale_price"
-      :label="`Precio de venta (${symbol})`"
+      :label="$t('common.salePriceWithSymbol', { symbol })"
       class="col-sm-12 col-md-8 col-lg-4 col-xl-4"
     >
       <el-input
         v-model.number="product.sale_price"
-        placeholder="Precio de venta"
+        :placeholder="$t('common.salePrice')"
       />
     </el-form-item>
   </el-form>
@@ -219,7 +225,7 @@ function validForm() {
       :icon="Plus"
       class="col-xl-4 col-lg-5 col-md-10 col-sm-11"
     >
-      Agregar producto
+      {{ $t('common.addProduct') }}
     </el-button>
   </div>
   <div class="mt-2">
@@ -228,33 +234,33 @@ function validForm() {
       class=""
       show-summary
       :summary-method="getSummary"
-      sum-text="Total"
+      :sum-text="$t('common.total')"
       max-height="50vh"
     >
       <el-table-column
         prop="name"
-        label="Producto"
+        :label="$t('common.product')"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column
         prop="units"
-        label="Unidades"
+        :label="$t('common.units')"
         width="100"
         align="center"
       ></el-table-column>
       <el-table-column
         prop="sale_price"
-        :label="`Precio de venta (${symbol})`"
+        :label="$t('common.salePriceWithSymbol', { symbol })"
         width="130"
         align="right"
       ></el-table-column>
       <el-table-column
         prop="total_price"
-        :label="`Precio total (${symbol})`"
+        :label="$t('common.totalPrice', { symbol })"
         width="110"
         align="right"
       ></el-table-column>
-      <el-table-column label="Acciones" width="100" align="center">
+      <el-table-column :label="$t('common.actions')" width="100" align="center">
         <template #default="scope">
           <el-button
             type="danger"

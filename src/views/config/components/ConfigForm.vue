@@ -6,9 +6,9 @@ const storeConfig = configStore()
 const configElForm = ref()
 
 const currencies = [
-  { label: 'Cordoba', value: 'NIO' },
-  { label: 'Dolar', value: 'USD' },
-  { label: 'Euro', value: 'EUR' },
+  { label: 'currencies.NIO', value: 'NIO' },
+  { label: 'currencies.USD', value: 'USD' },
+  { label: 'currencies.EUR', value: 'EUR' },
 ]
 
 let localValue = ref({
@@ -50,7 +50,7 @@ watch(
     if (value) {
       localValue.value = { ...value }
     }
-  }
+  },
 )
 
 const rules = reactive({})
@@ -74,16 +74,21 @@ defineExpose({ guardar })
     :rules="rules"
     label-position="top"
   >
-    <el-divider content-position="left">Datos generales</el-divider>
+    <el-divider content-position="left">{{
+      $t('config.generalData')
+    }}</el-divider>
     <div class="row">
       <el-form-item
-        label="Nombre"
+        :label="$t('common.name')"
         prop="company.name"
         class="col-sm-12 col-md-8 col-lg-6 col-xl-6"
       >
         <el-input v-model="localValue.company.name" />
       </el-form-item>
-      <el-form-item label="Logo" class="col-sm-12 col-md-4 col-lg-2 col-xl-2">
+      <el-form-item
+        :label="$t('config.logo')"
+        class="col-sm-12 col-md-4 col-lg-2 col-xl-2"
+      >
         <el-upload
           class="upload-demo"
           action=""
@@ -92,14 +97,16 @@ defineExpose({ guardar })
           :before-upload="handleUpload"
         >
           <el-button type="primary">{{
-            localValue.company.logo ? 'Cambiar Imagen' : 'Subir Imagen'
+            localValue.company.logo
+              ? $t('config.changeImage')
+              : $t('config.uploadImage')
           }}</el-button>
         </el-upload>
       </el-form-item>
     </div>
     <div class="row">
       <el-form-item
-        label="Slogan"
+        :label="$t('config.slogan')"
         prop="company.slogan"
         class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
       >
@@ -108,7 +115,7 @@ defineExpose({ guardar })
     </div>
     <div class="row">
       <el-form-item
-        label="Dirección"
+        :label="$t('config.address')"
         prop="company.direccion"
         class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
       >
@@ -117,23 +124,23 @@ defineExpose({ guardar })
     </div>
     <div class="row">
       <el-form-item
-        label="Teléfono"
+        :label="$t('common.phone')"
         prop="company.phone"
         class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
       >
         <el-input v-model="localValue.company.phone" />
       </el-form-item>
       <el-form-item
-        label="Email"
+        :label="$t('common.email')"
         prop="company.email"
         class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
       >
         <el-input v-model="localValue.company.email" />
       </el-form-item>
     </div>
-    <el-divider content-position="left">Productos</el-divider>
+    <el-divider content-position="left">{{ $t('menu.products') }}</el-divider>
     <el-form-item
-      label="Categorías"
+      :label="$t('common.categories')"
       prop="product.categories"
       class="col-sm-12 col-md-12 col-lg-12 col-xl-12"
     >
@@ -153,10 +160,10 @@ defineExpose({ guardar })
         />
       </el-select>
     </el-form-item>
-    <el-divider content-position="left">Facturación</el-divider>
+    <el-divider content-position="left">{{ $t('config.billing') }}</el-divider>
     <div class="row">
       <el-form-item
-        label="Moneda"
+        :label="$t('config.currency')"
         prop="currency.value"
         class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
       >
@@ -164,18 +171,18 @@ defineExpose({ guardar })
           v-model="localValue.currency.value"
           style="width: 100%"
           filterable
-          placeholder="Moneda"
+          :placeholder="$t('config.currency')"
         >
           <el-option
             v-for="item in currencies"
             :key="item.value"
-            :label="item.label"
+            :label="$t(item.label)"
             :value="item.value"
           />
         </el-select>
       </el-form-item>
       <el-form-item
-        label="Símbolo"
+        :label="$t('config.symbol')"
         prop="currency.symbol"
         class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
       >
@@ -185,6 +192,4 @@ defineExpose({ guardar })
   </el-form>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

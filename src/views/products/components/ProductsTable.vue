@@ -42,49 +42,54 @@ function sortChange(row) {
       v-loading="props.loading"
       class="tables"
     >
-      <el-table-column prop="code" label="Código" width="80" sortable />
+      <el-table-column
+        prop="code"
+        :label="$t('common.code')"
+        width="80"
+        sortable
+      />
       <el-table-column
         prop="name"
-        label="Nombre"
+        :label="$t('common.name')"
         show-overflow-tooltip
         sortable
       />
       <el-table-column
         prop="description"
-        label="Descripción"
+        :label="$t('common.description')"
         show-overflow-tooltip
       />
       <el-table-column
         prop="categories"
-        label="Categorías"
+        :label="$t('common.categories')"
         show-overflow-tooltip
       >
         <template #default="scope">{{
           objectUtils.arrayStrUpperToStr(
             scope.row.categories.map(
-              val => _.find(categories, { value: val })?.label
+              val => _.find(categories, { value: val })?.label,
             ),
-            ' | '
+            ' | ',
           )
         }}</template>
       </el-table-column>
       <el-table-column
         prop="purchase_price"
-        :label="`Compra (${symbol})`"
+        :label="$t('products.purchaseColumn', { symbol })"
         width="110"
         align="right"
         sortable
       />
       <el-table-column
         prop="sale_price"
-        :label="`Venta (${symbol})`"
+        :label="$t('products.saleColumn', { symbol })"
         width="100"
         align="right"
         sortable
       />
       <el-table-column
         prop="trend"
-        label="Tendencia"
+        :label="$t('products.trend')"
         width="95"
         align="center"
         sortable
@@ -101,7 +106,7 @@ function sortChange(row) {
       </el-table-column>
       <el-table-column
         prop="stock"
-        label="Und"
+        :label="$t('products.stockShort')"
         width="70"
         align="center"
         sortable
@@ -110,6 +115,4 @@ function sortChange(row) {
   </div>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -10,12 +10,14 @@ import ActionsHeader from '@/components/ActionsHeader.vue'
 import ProductPrices from './components/ProductPrices.vue'
 import { productStore } from '@/stores'
 import { useConfig } from '@/composables/useConfig'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const isEdit = ref(false)
 const storeProduct = productStore()
 const formProduct = ref()
+const { t } = useI18n()
 
 const { symbol } = useConfig()
 
@@ -24,7 +26,7 @@ const actions = [
     event: 'onSave',
     type: 'primary',
     icon: Check,
-    label: 'Guardar',
+    label: 'common.save',
   },
 ]
 const events = {
@@ -67,27 +69,27 @@ watch(
     if (value) {
       product.value = value
     }
-  }
+  },
 )
 
 watch(
   () => storeProduct.create,
   value => {
     if (value) {
-      ElMessage.success('Producto creado')
+      ElMessage.success(t('products.created'))
       router.push({ path: '/products' })
     }
-  }
+  },
 )
 
 watch(
   () => storeProduct.update,
   value => {
     if (value) {
-      ElMessage.success('Producto actualizado')
+      ElMessage.success(t('products.updated'))
       router.push({ path: '/products' })
     }
-  }
+  },
 )
 
 watch(
@@ -97,7 +99,7 @@ watch(
       ElMessage.error(value)
       storeProduct.error = null
     }
-  }
+  },
 )
 </script>
 <template>
@@ -113,7 +115,7 @@ watch(
       <div v-if="isEdit" class="row">
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
           <el-statistic
-            :title="`Precio de compra (${symbol})`"
+            :title="$t('common.purchasePriceWithSymbol', { symbol })"
             :value="product.purchase_price"
           >
             {{ product.purchase_price }}
@@ -121,14 +123,17 @@ watch(
         </div>
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
           <el-statistic
-            :title="`Precio de venta (${symbol})`"
+            :title="$t('common.salePriceWithSymbol', { symbol })"
             :value="product.sale_price"
           >
             {{ product.purchase_price }}
           </el-statistic>
         </div>
         <div class="col-md-3 col-sm-6 col-lg-4 col-xl-3">
-          <el-statistic title="Unidades disponibles" :value="product.stock">
+          <el-statistic
+            :title="$t('products.availableUnits')"
+            :value="product.stock"
+          >
             {{ product.purchase_price }}
           </el-statistic>
         </div>
@@ -139,6 +144,4 @@ watch(
   </detail-general>
 </template>
 
-
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -2,14 +2,17 @@
 import { ref, watch, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 import { authStore } from '@/stores'
 import { authService } from '@/services'
 import { demoUsers } from '@/constants'
 import { DEMO_PASSWORD } from '@/globalVars'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 
 const router = useRouter()
 const storeAuth = authStore()
+const { t } = useI18n()
 
 const loginElForm = ref()
 const loginForm = ref({
@@ -22,11 +25,7 @@ const waking = ref(true)
 onMounted(() => {
   authService
     .awakeRequest()
-    .catch(() =>
-      ElMessage.warning(
-        'No se pudo conectar con el servidor. Intenta de nuevo en unos minutos.',
-      ),
-    )
+    .catch(() => ElMessage.warning(t('login.wakeError')))
     .finally(() => (waking.value = false))
 })
 
@@ -34,7 +33,7 @@ const rules = reactive({
   email: [
     {
       required: true,
-      message: 'Por favor ingrese su email',
+      message: () => t('login.emailRequired'),
       trigger: 'blur',
       type: 'email',
     },
@@ -42,7 +41,7 @@ const rules = reactive({
   password: [
     {
       required: true,
-      message: 'Por favor ingrese su contraseña',
+      message: () => t('login.passwordRequired'),
       trigger: 'blur',
     },
   ],
@@ -82,7 +81,7 @@ watch(
   value => {
     if (value) {
       loading.value = false
-      ElMessage.error('Usuario o contraseña incorrecto')
+      ElMessage.error(t('login.invalidCredentials'))
       storeAuth.error = null
     }
   },
@@ -92,13 +91,18 @@ watch(
   <div class="container h-100 d-flex align-items-center justify-content-center">
     <div class="row w-100">
       <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 mx-auto">
+        <div class="text-end mb-1">
+          <language-switch />
+        </div>
         <el-card
           class="card"
           v-loading="waking"
-          element-loading-text="Despertando el servidor, puede tardar hasta un minuto..."
+          :element-loading-text="$t('login.waking')"
         >
           <div class="card-body ps-0">
-            <h5 class="card-subtitle mb-2 text-muted">Inicio de sesión</h5>
+            <h5 class="card-subtitle mb-2 text-muted">
+              {{ $t('login.title') }}
+            </h5>
           </div>
           <el-form
             ref="loginElForm"
@@ -106,22 +110,22 @@ watch(
             :rules="rules"
             label-position="top"
           >
-            <el-form-item label="Usuario" prop="email">
+            <el-form-item :label="$t('login.user')" prop="email">
               <el-input v-model="loginForm.email" />
             </el-form-item>
-            <el-form-item label="Contraseña" prop="password">
+            <el-form-item :label="$t('login.password')" prop="password">
               <el-input v-model="loginForm.password" type="password" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit" v-loading="loading">
-                Iniciar sesión
+                {{ $t('login.submit') }}
               </el-button>
             </el-form-item>
           </el-form>
           <template v-if="DEMO_PASSWORD">
-            <el-divider>¿Solo quieres explorar?</el-divider>
+            <el-divider>{{ $t('login.demoDivider') }}</el-divider>
             <p class="text-muted small">
-              Entra con un usuario de prueba, sin registrarte.
+              {{ $t('login.demoHint') }}
             </p>
             <div v-for="demo in demoUsers" :key="demo.email" class="mb-3">
               <el-button
@@ -129,9 +133,11 @@ watch(
                 :disabled="loading"
                 @click="loginAsDemo(demo.email)"
               >
-                {{ demo.label }}
+                {{ $t(demo.label) }}
               </el-button>
-              <div class="text-muted small mt-1">{{ demo.description }}</div>
+              <div class="text-muted small mt-1">
+                {{ $t(demo.description) }}
+              </div>
             </div>
           </template>
         </el-card>
