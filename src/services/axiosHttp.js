@@ -1,5 +1,6 @@
 import { API_URL } from '../globalVars.js'
 import axios from 'axios'
+import router from '@/router'
 
 function createAxios(withHeaders = false) {
   // return authorization header with jwt token
@@ -27,7 +28,7 @@ function createAxios(withHeaders = false) {
           localStorage.removeItem('user')
           location.reload(true)
         } else if ([403].includes(error.response.status)) {
-          location.hash = '/no-auth'
+          router.push({ name: 'NoAuth' })
         }
         return Promise.reject(error.response.data.detail)
       } else {
