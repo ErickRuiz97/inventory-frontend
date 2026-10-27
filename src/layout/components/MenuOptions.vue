@@ -32,7 +32,7 @@ let activeIndex = ref(currentRoute)
     @select="selectedItem"
     id="menu-layout"
     :default-active="activeIndex"
-    style="background-color: #e0e0e0"
+    style="background-color: #ffffff"
   >
     <el-menu-item
       v-if="storeAuth.isSales()"

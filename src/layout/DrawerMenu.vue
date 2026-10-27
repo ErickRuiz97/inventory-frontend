@@ -24,7 +24,7 @@ const toggleDrawer = () => {
     </el-button>
   </div>
   <el-drawer
-    style="background-color: #e0e0e0"
+    style="background-color: #ffffff"
     size="50%"
     v-model="drawerVisible"
     :title="$t('menu.title')"

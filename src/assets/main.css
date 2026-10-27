@@ -86,3 +86,59 @@
 .tables {
   width: 100%;
 }
+
+/* Retoque visual */
+.color-back-gray {
+  background-color: #f4f6fb;
+}
+#app .el-table {
+  background-color: #ffffff;
+}
+
+#aside-menu {
+  background-color: #ffffff;
+  border-right: 1px solid #e6e9f2;
+  box-shadow: 2px 0 8px rgba(30, 41, 89, 0.04);
+}
+#menu-layout {
+  padding: 12px 8px;
+}
+#menu-layout .ep-menu-item {
+  border-radius: 8px;
+  margin-bottom: 4px;
+  height: 44px;
+}
+#menu-layout .ep-menu-item:hover {
+  background-color: #f0f2fa;
+}
+#menu-layout .ep-menu-item.is-active {
+  background-color: #e8ebf7;
+  font-weight: 600;
+}
+
+#footer-layout {
+  height: 5vh;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-top: 1px solid #e6e9f2;
+}
+
+#navbar-layout {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e6e9f2;
+}
+
+#main-layout .ep-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(30, 41, 89, 0.06) !important;
+}
+
+#app .ep-table th.ep-table__cell {
+  background-color: #f7f8fc;
+  color: #4b5168;
+  font-weight: 600;
+}

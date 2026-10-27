@@ -2,7 +2,7 @@
 import MenuOptions from './components/MenuOptions.vue'
 </script>
 <template>
-  <el-scrollbar style="background-color: #e0e0e0">
+  <el-scrollbar style="background-color: #ffffff">
     <menu-options/>
   </el-scrollbar>
 </template>

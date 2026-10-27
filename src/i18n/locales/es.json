@@ -224,5 +224,10 @@
     "NIO": "Córdoba",
     "USD": "Dólar",
     "EUR": "Euro"
+  },
+  "footer": {
+    "createdBy": "Creado por {name}",
+    "contact": "Contáctame",
+    "collaborators": "Colaboradores"
   }
 }
